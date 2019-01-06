@@ -1,8 +1,9 @@
 package net.sf.fmj.media.multiplexer;
 
-import javax.media.*;
-import javax.media.format.*;
-import javax.media.protocol.*;
+import javax.media.Format;
+import javax.media.format.AudioFormat;
+import javax.media.format.VideoFormat;
+import javax.media.protocol.ContentDescriptor;
 
 /**
  *
@@ -13,20 +14,15 @@ import javax.media.protocol.*;
  * @author Ken Larson
  *
  */
-public class RawMux extends AbstractStreamCopyMux
-{
-    public RawMux()
-    {
-        super(new ContentDescriptor(ContentDescriptor.RAW));
-    }
+public class RawMux extends AbstractStreamCopyMux {
+	public RawMux() {
+		super(new ContentDescriptor(ContentDescriptor.RAW));
+	}
 
-    @Override
-    public Format[] getSupportedInputFormats()
-    {
-        // we'll take anything in a byte array.
-        return new Format[] {
-                new AudioFormat(null, -1.0, -1, -1, -1, -1, -1, -1.0,
-                        Format.byteArray),
-                new VideoFormat(null, null, -1, Format.byteArray, -1.0f) };
-    }
+	@Override
+	public Format[] getSupportedInputFormats() {
+		// we'll take anything in a byte array.
+		return new Format[] { new AudioFormat(null, -1.0, -1, -1, -1, -1, -1, -1.0, Format.byteArray),
+				new VideoFormat(null, null, -1, Format.byteArray, -1.0f) };
+	}
 }

@@ -8,6 +8,5 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public interface Effect extends Codec
-{
+public interface Effect extends Codec {
 }

@@ -8,12 +8,10 @@ package javax.media.protocol;
  * @author Ken Larson
  *
  */
-public abstract class PushDataSource extends DataSource
-{
-    public PushDataSource()
-    {
-        super(); // TODO: anything to do?
-    }
+public abstract class PushDataSource extends DataSource {
+	public PushDataSource() {
+		super(); // TODO: anything to do?
+	}
 
-    public abstract PushSourceStream[] getStreams();
+	public abstract PushSourceStream[] getStreams();
 }

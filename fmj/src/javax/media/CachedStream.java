@@ -8,15 +8,14 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public interface CachedStream
-{
-    public void abortRead();
+public interface CachedStream {
+	public void abortRead();
 
-    public boolean getEnabledBuffering();
+	public boolean getEnabledBuffering();
 
-    public void setEnabledBuffering(boolean b);
+	public void setEnabledBuffering(boolean b);
 
-    public boolean willReadBytesBlock(int numBytes);
+	public boolean willReadBytesBlock(int numBytes);
 
-    public boolean willReadBytesBlock(long offset, int numBytes);
+	public boolean willReadBytesBlock(long offset, int numBytes);
 }

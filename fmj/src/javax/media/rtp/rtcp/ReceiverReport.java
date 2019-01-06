@@ -8,7 +8,6 @@ package javax.media.rtp.rtcp;
  * @author Ken Larson
  *
  */
-public interface ReceiverReport extends Report
-{
-    // No additional methods.
+public interface ReceiverReport extends Report {
+	// No additional methods.
 }

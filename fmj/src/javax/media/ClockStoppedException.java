@@ -10,16 +10,13 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class ClockStoppedException extends MediaException
-{
-    public ClockStoppedException()
-    {
-        super();
-    }
+public class ClockStoppedException extends MediaException {
+	public ClockStoppedException() {
+		super();
+	}
 
-    public ClockStoppedException(String message)
-    {
-        super(message);
-    }
+	public ClockStoppedException(String message) {
+		super(message);
+	}
 
 }

@@ -6,124 +6,109 @@
  */
 package net.java.sip.communicator.impl.media.codec.audio.speex;
 
-import javax.media.*;
-import javax.media.format.*;
+import javax.media.Buffer;
+import javax.media.Format;
+import javax.media.ResourceUnavailableException;
+import javax.media.format.AudioFormat;
 
-import net.java.sip.communicator.impl.media.codec.*;
+import org.xiph.speex.SpeexEncoder;
 
-import org.xiph.speex.*;
+import net.java.sip.communicator.impl.media.codec.Constants;
 
 /**
  * The Speex Encoder
  *
  * @author Damian Minkov
  */
-public class JavaEncoder extends com.ibm.media.codec.audio.AudioCodec
-{
-    private Format lastFormat = null;
+public class JavaEncoder extends com.ibm.media.codec.audio.AudioCodec {
+	private Format lastFormat = null;
 
-    private static int FRAME_SIZE = 320;
+	private static int FRAME_SIZE = 320;
 
-    private SpeexEncoder encoder = null;
+	private SpeexEncoder encoder = null;
 
-    public JavaEncoder()
-    {
-        supportedInputFormats = new AudioFormat[] { new AudioFormat(
-                AudioFormat.LINEAR, 8000, 16, 1, AudioFormat.LITTLE_ENDIAN, // isBigEndian(),
-                AudioFormat.SIGNED // isSigned());
-        ) };
+	public JavaEncoder() {
+		supportedInputFormats = new AudioFormat[] {
+				new AudioFormat(AudioFormat.LINEAR, 8000, 16, 1, AudioFormat.LITTLE_ENDIAN, // isBigEndian(),
+						AudioFormat.SIGNED // isSigned());
+				) };
 
-        defaultOutputFormats = new AudioFormat[] { new AudioFormat(
-                Constants.SPEEX_RTP) };
+		defaultOutputFormats = new AudioFormat[] { new AudioFormat(Constants.SPEEX_RTP) };
 
-        PLUGIN_NAME = "pcm to speex converter";
-    }
+		PLUGIN_NAME = "pcm to speex converter";
+	}
 
-    @Override
-    public void close()
-    {
-    }
+	@Override
+	public void close() {
+	}
 
-    @Override
-    protected Format[] getMatchingOutputFormats(Format in)
-    {
-        AudioFormat af = (AudioFormat) in;
+	@Override
+	protected Format[] getMatchingOutputFormats(Format in) {
+		AudioFormat af = (AudioFormat) in;
 
-        supportedOutputFormats = new AudioFormat[] { new AudioFormat(
-                Constants.SPEEX_RTP, af.getSampleRate(), 8, af.getChannels(),
-                af.getEndian(), af.getSigned()) };
+		supportedOutputFormats = new AudioFormat[] { new AudioFormat(Constants.SPEEX_RTP, af.getSampleRate(), 8,
+				af.getChannels(), af.getEndian(), af.getSigned()) };
 
-        return supportedOutputFormats;
-    }
+		return supportedOutputFormats;
+	}
 
-    private void initConverter(AudioFormat inFormat)
-    {
-        lastFormat = inFormat;
+	private void initConverter(AudioFormat inFormat) {
+		lastFormat = inFormat;
 
-        encoder = new SpeexEncoder();
-        encoder.init(0, 4, (int) inFormat.getSampleRate(), 1);
-    }
+		encoder = new SpeexEncoder();
+		encoder.init(0, 4, (int) inFormat.getSampleRate(), 1);
+	}
 
-    @Override
-    public void open() throws ResourceUnavailableException
-    {
-    }
+	@Override
+	public void open() throws ResourceUnavailableException {
+	}
 
-    public int process(Buffer inputBuffer, Buffer outputBuffer)
-    {
-        if (!checkInputBuffer(inputBuffer))
-        {
-            return BUFFER_PROCESSED_FAILED;
-        }
+	@Override
+	public int process(Buffer inputBuffer, Buffer outputBuffer) {
+		if (!checkInputBuffer(inputBuffer)) {
+			return BUFFER_PROCESSED_FAILED;
+		}
 
-        if (isEOM(inputBuffer))
-        {
-            propagateEOM(outputBuffer);
-            return BUFFER_PROCESSED_OK;
-        }
+		if (isEOM(inputBuffer)) {
+			propagateEOM(outputBuffer);
+			return BUFFER_PROCESSED_OK;
+		}
 
-        Format newFormat = inputBuffer.getFormat();
+		Format newFormat = inputBuffer.getFormat();
 
-        if (lastFormat != newFormat)
-        {
-            initConverter((AudioFormat) newFormat);
-        }
+		if (lastFormat != newFormat) {
+			initConverter((AudioFormat) newFormat);
+		}
 
-        int inpLength = inputBuffer.getLength();
+		int inpLength = inputBuffer.getLength();
 
-        byte[] inpData = (byte[]) inputBuffer.getData();
-        int inOffset = inputBuffer.getOffset();
+		byte[] inpData = (byte[]) inputBuffer.getData();
+		int inOffset = inputBuffer.getOffset();
 
-        if (inpLength == 0)
-        {
-            return OUTPUT_BUFFER_NOT_FILLED;
-        }
+		if (inpLength == 0) {
+			return OUTPUT_BUFFER_NOT_FILLED;
+		}
 
-        if ((inpLength - inOffset) >= FRAME_SIZE)
-        {
-            encoder.processData(inpData, inOffset, FRAME_SIZE);
-            byte[] buff = new byte[encoder.getProcessedDataByteSize()];
-            encoder.getProcessedData(buff, 0);
+		if ((inpLength - inOffset) >= FRAME_SIZE) {
+			encoder.processData(inpData, inOffset, FRAME_SIZE);
+			byte[] buff = new byte[encoder.getProcessedDataByteSize()];
+			encoder.getProcessedData(buff, 0);
 
-            byte[] outData = validateByteArraySize(outputBuffer, buff.length);
+			byte[] outData = validateByteArraySize(outputBuffer, buff.length);
 
-            System.arraycopy(buff, 0, outData, outputBuffer.getOffset(),
-                    buff.length);
+			System.arraycopy(buff, 0, outData, outputBuffer.getOffset(), buff.length);
 
-            updateOutput(outputBuffer, outputFormat, outData.length, 0);
+			updateOutput(outputBuffer, outputFormat, outData.length, 0);
 
-            if ((inpLength - inOffset) > FRAME_SIZE)
-            {
-                inputBuffer.setOffset(inOffset + FRAME_SIZE);
+			if ((inpLength - inOffset) > FRAME_SIZE) {
+				inputBuffer.setOffset(inOffset + FRAME_SIZE);
 
-                return BUFFER_PROCESSED_OK | INPUT_BUFFER_NOT_CONSUMED;
-            } else
-            {
-                return BUFFER_PROCESSED_OK;
-            }
-        } else
-        {
-            return OUTPUT_BUFFER_NOT_FILLED;
-        }
-    }
+				return BUFFER_PROCESSED_OK | INPUT_BUFFER_NOT_CONSUMED;
+			} else {
+				return BUFFER_PROCESSED_OK;
+			}
+		} else {
+			return OUTPUT_BUFFER_NOT_FILLED;
+		}
+	}
 }

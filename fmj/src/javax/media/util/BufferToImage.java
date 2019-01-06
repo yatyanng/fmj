@@ -1,6 +1,6 @@
 package javax.media.util;
 
-import javax.media.format.*;
+import javax.media.format.VideoFormat;
 
 /**
  * Standard JMF class -- see <a href=
@@ -13,11 +13,9 @@ import javax.media.format.*;
  * @author Ken Larson
  *
  */
-public class BufferToImage extends net.sf.fmj.media.util.BufferToImage
-{
-    public BufferToImage(VideoFormat format)
-    {
-        super(format);
-    }
+public class BufferToImage extends net.sf.fmj.media.util.BufferToImage {
+	public BufferToImage(VideoFormat format) {
+		super(format);
+	}
 
 }

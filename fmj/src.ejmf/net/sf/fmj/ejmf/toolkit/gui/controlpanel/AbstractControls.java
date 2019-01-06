@@ -1,11 +1,21 @@
 package net.sf.fmj.ejmf.toolkit.gui.controlpanel;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Vector;
 
-import javax.media.*;
-import javax.swing.*;
+import javax.media.Controller;
+import javax.media.ControllerErrorEvent;
+import javax.media.ControllerEvent;
+import javax.media.ControllerListener;
+import javax.media.NotRealizedError;
+import javax.media.Player;
+import javax.media.StartEvent;
+import javax.media.StopEvent;
+import javax.swing.SwingUtilities;
 
-import net.sf.fmj.ejmf.toolkit.gui.controls.*;
+import net.sf.fmj.ejmf.toolkit.gui.controls.AbstractListenerControl;
+import net.sf.fmj.ejmf.toolkit.gui.controls.Skin;
 
 /**
  * The AbstractControls class:
@@ -26,157 +36,132 @@ import net.sf.fmj.ejmf.toolkit.gui.controls.*;
  * </ul>
  */
 
-abstract class AbstractControls implements ControllerListener
-{
-    class ControllerEventThread implements Runnable
-    {
-        private int state;
+abstract class AbstractControls implements ControllerListener {
+	class ControllerEventThread implements Runnable {
+		private int state;
 
-        public ControllerEventThread(int state)
-        {
-            this.state = state;
-        }
+		public ControllerEventThread(int state) {
+			this.state = state;
+		}
 
-        public void run()
-        {
-            setControlComponentState(state);
-        }
-    }
+		@Override
+		public void run() {
+			setControlComponentState(state);
+		}
+	}
 
-    private final Player player;
+	private final Player player;
 
-    private final Hashtable<String,AbstractListenerControl> controlTable
-        = new Hashtable<String,AbstractListenerControl>();
+	private final Hashtable<String, AbstractListenerControl> controlTable = new Hashtable<String, AbstractListenerControl>();
 
-    protected AbstractControls(Skin skin, Player player)
-    {
-        if (player.getState() < Controller.Realized)
-            throw new NotRealizedError("Player must be realized");
+	protected AbstractControls(Skin skin, Player player) {
+		if (player.getState() < Controller.Realized)
+			throw new NotRealizedError("Player must be realized");
 
-        this.player = player;
-        makeControls(skin);
-        setControlsPlayer(player);
-        player.addControllerListener(this);
-        setControlComponentState(player.getState()); // KAL: added because there
-                                                     // seems to be a race
-                                                     // condition where the
-                                                     // player can change states
-                                                     // before our listener gets
-                                                     // registered.
-    }
+		this.player = player;
+		makeControls(skin);
+		setControlsPlayer(player);
+		player.addControllerListener(this);
+		setControlComponentState(player.getState()); // KAL: added because there
+														// seems to be a race
+														// condition where the
+														// player can change states
+														// before our listener gets
+														// registered.
+	}
 
-    /**
-     * Add a Control to this AbstractControls object.
-     *
-     * @param name
-     *            Name of control
-     * @param alc
-     *            An AbstractListenerControl reference.
-     */
-    protected void addControl(String name, AbstractListenerControl alc)
-    {
-        controlTable.put(name, alc);
-    }
+	/**
+	 * Add a Control to this AbstractControls object.
+	 *
+	 * @param name Name of control
+	 * @param alc  An AbstractListenerControl reference.
+	 */
+	protected void addControl(String name, AbstractListenerControl alc) {
+		controlTable.put(name, alc);
+	}
 
-    /**
-     * This method fields ControllerEvents. Specifically, it looks for start,
-     * stop and error events and calls setControlComponentState with either
-     * Controller.Started or Controller.Prefetched to signal whether Controller
-     * is started or not.
-     * <p>
-     * Subclasses that override this method should invoke
-     * super.controllerUpdate() if default behavior is desired. to do anything
-     * meaningful.
-     *
-     * @param event
-     *            a ControllerEvent
-     */
-    public void controllerUpdate(ControllerEvent event)
-    {
-        if (event instanceof StartEvent)
-        {
-            SwingUtilities.invokeLater(new ControllerEventThread(
-                    Controller.Started));
+	/**
+	 * This method fields ControllerEvents. Specifically, it looks for start, stop
+	 * and error events and calls setControlComponentState with either
+	 * Controller.Started or Controller.Prefetched to signal whether Controller is
+	 * started or not.
+	 * <p>
+	 * Subclasses that override this method should invoke super.controllerUpdate()
+	 * if default behavior is desired. to do anything meaningful.
+	 *
+	 * @param event a ControllerEvent
+	 */
+	@Override
+	public void controllerUpdate(ControllerEvent event) {
+		if (event instanceof StartEvent) {
+			SwingUtilities.invokeLater(new ControllerEventThread(Controller.Started));
 
-        } else if (event instanceof StopEvent
-                || event instanceof ControllerErrorEvent)
-        {
-            SwingUtilities.invokeLater(new ControllerEventThread(
-                    Controller.Prefetched));
-        }
-    }
+		} else if (event instanceof StopEvent || event instanceof ControllerErrorEvent) {
+			SwingUtilities.invokeLater(new ControllerEventThread(Controller.Prefetched));
+		}
+	}
 
-    /**
-     * Returns a Control with a given name.
-     *
-     * @param name
-     *            String identifying an AbstractControlListener
-     * @return an AbstractControlListener identified by the name argument.
-     */
-    public AbstractListenerControl getControl(String name)
-    {
-        return controlTable.get(name);
-    }
+	/**
+	 * Returns a Control with a given name.
+	 *
+	 * @param name String identifying an AbstractControlListener
+	 * @return an AbstractControlListener identified by the name argument.
+	 */
+	public AbstractListenerControl getControl(String name) {
+		return controlTable.get(name);
+	}
 
-    /**
-     * Returns an array of Controls.
-     *
-     * @return an array of AbstractListenerControls associated with this Control
-     *         Panel.
-     */
-    public AbstractListenerControl[] getControls()
-    {
-        Vector<AbstractListenerControl> v
-            = new Vector<AbstractListenerControl>();
-        Enumeration<AbstractListenerControl> elements = controlTable.elements();
+	/**
+	 * Returns an array of Controls.
+	 *
+	 * @return an array of AbstractListenerControls associated with this Control
+	 *         Panel.
+	 */
+	public AbstractListenerControl[] getControls() {
+		Vector<AbstractListenerControl> v = new Vector<AbstractListenerControl>();
+		Enumeration<AbstractListenerControl> elements = controlTable.elements();
 
-        while (elements.hasMoreElements())
-            v.addElement(elements.nextElement());
+		while (elements.hasMoreElements())
+			v.addElement(elements.nextElement());
 
-        AbstractListenerControl[] controls
-            = new AbstractListenerControl[v.size()];
+		AbstractListenerControl[] controls = new AbstractListenerControl[v.size()];
 
-        v.copyInto(controls);
-        return controls;
-    }
+		v.copyInto(controls);
+		return controls;
+	}
 
-    /**
-     * Return the Player associated with this AbstractControls object.
-     *
-     * @return The Player associated with these controls.
-     */
-    public Player getPlayer()
-    {
-        return player;
-    }
+	/**
+	 * Return the Player associated with this AbstractControls object.
+	 *
+	 * @return The Player associated with these controls.
+	 */
+	public Player getPlayer() {
+		return player;
+	}
 
-    /**
-     * Build the controls managed by this AbstractControls object.
-     */
-    protected abstract void makeControls(Skin skin);
+	/**
+	 * Build the controls managed by this AbstractControls object.
+	 */
+	protected abstract void makeControls(Skin skin);
 
-    /**
-     * Set the display state of control components based on the state of the
-     * Player.
-     *
-     * @param state
-     *            The current state of the Player.
-     */
-    protected abstract void setControlComponentState(int state);
+	/**
+	 * Set the display state of control components based on the state of the Player.
+	 *
+	 * @param state The current state of the Player.
+	 */
+	protected abstract void setControlComponentState(int state);
 
-    /**
-     * For each control, calls its setPlayer method to establish the controls
-     * association with a Player.
-     *
-     * @param player
-     *            Player associated with this set of control.
-     */
-    private void setControlsPlayer(Player player)
-    {
-        Controller c = player;
-        Enumeration<AbstractListenerControl> e = controlTable.elements();
+	/**
+	 * For each control, calls its setPlayer method to establish the controls
+	 * association with a Player.
+	 *
+	 * @param player Player associated with this set of control.
+	 */
+	private void setControlsPlayer(Player player) {
+		Controller c = player;
+		Enumeration<AbstractListenerControl> e = controlTable.elements();
 
-        while (e.hasMoreElements())
-            e.nextElement().setController(c);
-    }
+		while (e.hasMoreElements())
+			e.nextElement().setController(c);
+	}
 }

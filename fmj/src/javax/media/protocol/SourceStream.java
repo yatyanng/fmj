@@ -8,13 +8,12 @@ package javax.media.protocol;
  * @author Ken Larson
  *
  */
-public interface SourceStream extends Controls
-{
-    public static final long LENGTH_UNKNOWN = -1L;
+public interface SourceStream extends Controls {
+	public static final long LENGTH_UNKNOWN = -1L;
 
-    public boolean endOfStream();
+	public boolean endOfStream();
 
-    public ContentDescriptor getContentDescriptor();
+	public ContentDescriptor getContentDescriptor();
 
-    public long getContentLength();
+	public long getContentLength();
 }

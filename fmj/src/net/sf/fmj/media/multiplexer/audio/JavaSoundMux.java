@@ -1,16 +1,22 @@
 package net.sf.fmj.media.multiplexer.audio;
 
-import java.io.*;
-import java.util.logging.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.logging.Logger;
 
-import javax.media.*;
+import javax.media.Format;
 import javax.media.format.AudioFormat;
-import javax.media.protocol.*;
-import javax.sound.sampled.*;
+import javax.media.protocol.ContentDescriptor;
+import javax.media.protocol.FileTypeDescriptor;
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 
-import net.sf.fmj.media.multiplexer.*;
-import net.sf.fmj.media.renderer.audio.*;
-import net.sf.fmj.utility.*;
+import net.sf.fmj.media.multiplexer.AbstractStreamCopyMux;
+import net.sf.fmj.media.multiplexer.StreamCopyPushDataSource;
+import net.sf.fmj.media.renderer.audio.JavaSoundUtils;
+import net.sf.fmj.utility.LoggerSingleton;
 
 /**
  *
@@ -29,86 +35,67 @@ import net.sf.fmj.utility.*;
  * @author Ken Larson
  *
  */
-public abstract class JavaSoundMux extends AbstractStreamCopyMux
-{
-    private class MyPushDataSource extends StreamCopyPushDataSource
-    {
-        final javax.sound.sampled.AudioFormat javaSoundFormats[];
+public abstract class JavaSoundMux extends AbstractStreamCopyMux {
+	private class MyPushDataSource extends StreamCopyPushDataSource {
+		final javax.sound.sampled.AudioFormat javaSoundFormats[];
 
-        public MyPushDataSource(ContentDescriptor outputContentDescriptor,
-                int numTracks, InputStream[] inputStreams, Format[] inputFormats)
-        {
-            super(outputContentDescriptor, numTracks, inputStreams,
-                    inputFormats);
-            javaSoundFormats = new javax.sound.sampled.AudioFormat[numTracks];
-            for (int track = 0; track < numTracks; ++track)
-            {
-                javaSoundFormats[track] = JavaSoundUtils
-                        .convertFormat((AudioFormat) inputFormats[track]);
-            }
-        }
+		public MyPushDataSource(ContentDescriptor outputContentDescriptor, int numTracks, InputStream[] inputStreams,
+				Format[] inputFormats) {
+			super(outputContentDescriptor, numTracks, inputStreams, inputFormats);
+			javaSoundFormats = new javax.sound.sampled.AudioFormat[numTracks];
+			for (int track = 0; track < numTracks; ++track) {
+				javaSoundFormats[track] = JavaSoundUtils.convertFormat((AudioFormat) inputFormats[track]);
+			}
+		}
 
-        @Override
-        protected void write(InputStream in, OutputStream out, int track)
-                throws IOException
-        {
-            JavaSoundMux.this.write(in, out, javaSoundFormats[track]);
-        }
+		@Override
+		protected void write(InputStream in, OutputStream out, int track) throws IOException {
+			JavaSoundMux.this.write(in, out, javaSoundFormats[track]);
+		}
 
-    }
+	}
 
-    private static final Logger logger = LoggerSingleton.logger;
+	private static final Logger logger = LoggerSingleton.logger;
 
-    // TODO: deal with n tracks properly
+	// TODO: deal with n tracks properly
 
-    private final AudioFileFormat.Type audioFileFormatType;
+	private final AudioFileFormat.Type audioFileFormatType;
 
-    private static final int MAX_TRACKS = 1;
+	private static final int MAX_TRACKS = 1;
 
-    public JavaSoundMux(final FileTypeDescriptor fileTypeDescriptor,
-            AudioFileFormat.Type audioFileFormatType)
-    {
-        super(fileTypeDescriptor);
-        this.audioFileFormatType = audioFileFormatType;
-    }
+	public JavaSoundMux(final FileTypeDescriptor fileTypeDescriptor, AudioFileFormat.Type audioFileFormatType) {
+		super(fileTypeDescriptor);
+		this.audioFileFormatType = audioFileFormatType;
+	}
 
-    @Override
-    protected StreamCopyPushDataSource createInputStreamPushDataSource(
-            ContentDescriptor outputContentDescriptor, int numTracks,
-            InputStream[] inputStreams, Format[] inputFormats)
-    {
-        return new MyPushDataSource(outputContentDescriptor, numTracks,
-                inputStreams, inputFormats);
-    }
+	@Override
+	protected StreamCopyPushDataSource createInputStreamPushDataSource(ContentDescriptor outputContentDescriptor,
+			int numTracks, InputStream[] inputStreams, Format[] inputFormats) {
+		return new MyPushDataSource(outputContentDescriptor, numTracks, inputStreams, inputFormats);
+	}
 
-    @Override
-    public Format[] getSupportedInputFormats()
-    {
-        // TODO: query AudioSystem
-        return new Format[] { new AudioFormat(AudioFormat.LINEAR) };
-    }
+	@Override
+	public Format[] getSupportedInputFormats() {
+		// TODO: query AudioSystem
+		return new Format[] { new AudioFormat(AudioFormat.LINEAR) };
+	}
 
-    @Override
-    public int setNumTracks(int numTracks)
-    {
-        return super.setNumTracks(numTracks > MAX_TRACKS ? MAX_TRACKS
-                : numTracks);
-    }
+	@Override
+	public int setNumTracks(int numTracks) {
+		return super.setNumTracks(numTracks > MAX_TRACKS ? MAX_TRACKS : numTracks);
+	}
 
-    protected void write(InputStream in, OutputStream out,
-            javax.sound.sampled.AudioFormat javaSoundFormat) throws IOException
-    {
-        final long lengthInFrames = Integer.MAX_VALUE; // TODO: get
-                                                       // java.io.IOException:
-                                                       // stream length not
-                                                       // specified for most
-                                                       // formats (WAV, AIFF)
-        final AudioInputStream ais = new AudioInputStream(in, javaSoundFormat,
-                lengthInFrames);
-        final AudioFileFormat.Type targetFileFormatType = audioFileFormatType;
-        final int bytesWritten = AudioSystem.write(ais, targetFileFormatType,
-                out);
-        logger.fine("Audio OutputStream bytes written: " + bytesWritten);
-    }
+	protected void write(InputStream in, OutputStream out, javax.sound.sampled.AudioFormat javaSoundFormat)
+			throws IOException {
+		final long lengthInFrames = Integer.MAX_VALUE; // TODO: get
+														// java.io.IOException:
+														// stream length not
+														// specified for most
+														// formats (WAV, AIFF)
+		final AudioInputStream ais = new AudioInputStream(in, javaSoundFormat, lengthInFrames);
+		final AudioFileFormat.Type targetFileFormatType = audioFileFormatType;
+		final int bytesWritten = AudioSystem.write(ais, targetFileFormatType, out);
+		logger.fine("Audio OutputStream bytes written: " + bytesWritten);
+	}
 
 }

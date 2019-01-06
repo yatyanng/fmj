@@ -6,132 +6,118 @@
  */
 package net.java.sip.communicator.impl.media.codec.audio.ilbc;
 
-import javax.media.*;
-import javax.media.format.*;
+import javax.media.Buffer;
+import javax.media.Control;
+import javax.media.Format;
+import javax.media.ResourceUnavailableException;
+import javax.media.format.AudioFormat;
 
-import net.java.sip.communicator.impl.media.codec.*;
-import net.java.sip.communicator.impl.media.codec.audio.*;
+import net.java.sip.communicator.impl.media.codec.Constants;
+import net.java.sip.communicator.impl.media.codec.audio.Utils;
 
 /**
  * The ilbc Encoder
  *
  * @author Damian Minkov
  */
-public class JavaEncoder extends com.ibm.media.codec.audio.AudioCodec
-{
-    private Format lastFormat = null;
+public class JavaEncoder extends com.ibm.media.codec.audio.AudioCodec {
+	private Format lastFormat = null;
 
-    private ilbc_encoder enc = null;
-    private int ILBC_NO_OF_BYTES = 0;
+	private ilbc_encoder enc = null;
+	private int ILBC_NO_OF_BYTES = 0;
 
-    public JavaEncoder()
-    {
-        supportedInputFormats = new AudioFormat[] { new AudioFormat(
-                AudioFormat.LINEAR, 8000, 16, 1, AudioFormat.LITTLE_ENDIAN, // isBigEndian(),
-                AudioFormat.SIGNED // isSigned());
-        ) };
+	public JavaEncoder() {
+		supportedInputFormats = new AudioFormat[] {
+				new AudioFormat(AudioFormat.LINEAR, 8000, 16, 1, AudioFormat.LITTLE_ENDIAN, // isBigEndian(),
+						AudioFormat.SIGNED // isSigned());
+				) };
 
-        defaultOutputFormats = new AudioFormat[] { new AudioFormat(
-                Constants.ILBC_RTP, 8000.0, 16, 1, AudioFormat.LITTLE_ENDIAN,
-                AudioFormat.SIGNED) };
+		defaultOutputFormats = new AudioFormat[] {
+				new AudioFormat(Constants.ILBC_RTP, 8000.0, 16, 1, AudioFormat.LITTLE_ENDIAN, AudioFormat.SIGNED) };
 
-        PLUGIN_NAME = "pcm to iLbc converter";
-    }
+		PLUGIN_NAME = "pcm to iLbc converter";
+	}
 
-    @Override
-    public void close()
-    {
-    }
+	@Override
+	public void close() {
+	}
 
-    @Override
-    public java.lang.Object[] getControls()
-    {
-        if (controls == null)
-        {
-            controls = new Control[1];
-            controls[0] = new com.sun.media.controls.SilenceSuppressionAdapter(
-                    this, false, false);
-        }
-        return controls;
-    }
+	@Override
+	public java.lang.Object[] getControls() {
+		if (controls == null) {
+			controls = new Control[1];
+			controls[0] = new com.sun.media.controls.SilenceSuppressionAdapter(this, false, false);
+		}
+		return controls;
+	}
 
-    @Override
-    protected Format[] getMatchingOutputFormats(Format in)
-    {
-        AudioFormat af = (AudioFormat) in;
+	@Override
+	protected Format[] getMatchingOutputFormats(Format in) {
+		AudioFormat af = (AudioFormat) in;
 
-        supportedOutputFormats = new AudioFormat[] { new AudioFormat(
-                Constants.ILBC_RTP, 8000.0, 16, 1, AudioFormat.LITTLE_ENDIAN,
-                AudioFormat.SIGNED) };
+		supportedOutputFormats = new AudioFormat[] {
+				new AudioFormat(Constants.ILBC_RTP, 8000.0, 16, 1, AudioFormat.LITTLE_ENDIAN, AudioFormat.SIGNED) };
 
-        return supportedOutputFormats;
-    }
+		return supportedOutputFormats;
+	}
 
-    private void initConverter(AudioFormat inFormat)
-    {
-        lastFormat = inFormat;
-    }
+	private void initConverter(AudioFormat inFormat) {
+		lastFormat = inFormat;
+	}
 
-    @Override
-    public void open() throws ResourceUnavailableException
-    {
-        int mode = Constants.ILBC_MODE;
-        enc = new ilbc_encoder(mode);
+	@Override
+	public void open() throws ResourceUnavailableException {
+		int mode = Constants.ILBC_MODE;
+		enc = new ilbc_encoder(mode);
 
-        if (mode == 20)
-            ILBC_NO_OF_BYTES = ilbc_constants.NO_OF_BYTES_20MS;
-        else if (mode == 30)
-            ILBC_NO_OF_BYTES = ilbc_constants.NO_OF_BYTES_30MS;
-    }
+		if (mode == 20)
+			ILBC_NO_OF_BYTES = ilbc_constants.NO_OF_BYTES_20MS;
+		else if (mode == 30)
+			ILBC_NO_OF_BYTES = ilbc_constants.NO_OF_BYTES_30MS;
+	}
 
-    public int process(Buffer inputBuffer, Buffer outputBuffer)
-    {
-        if (!checkInputBuffer(inputBuffer))
-        {
-            return BUFFER_PROCESSED_FAILED;
-        }
+	@Override
+	public int process(Buffer inputBuffer, Buffer outputBuffer) {
+		if (!checkInputBuffer(inputBuffer)) {
+			return BUFFER_PROCESSED_FAILED;
+		}
 
-        if (isEOM(inputBuffer))
-        {
-            propagateEOM(outputBuffer);
-            return BUFFER_PROCESSED_OK;
-        }
+		if (isEOM(inputBuffer)) {
+			propagateEOM(outputBuffer);
+			return BUFFER_PROCESSED_OK;
+		}
 
-        Format newFormat = inputBuffer.getFormat();
+		Format newFormat = inputBuffer.getFormat();
 
-        if (lastFormat != newFormat)
-        {
-            initConverter((AudioFormat) newFormat);
-        }
+		if (lastFormat != newFormat) {
+			initConverter((AudioFormat) newFormat);
+		}
 
-        int inpLength = inputBuffer.getLength();
-        int inOffset = inputBuffer.getOffset();
-        byte[] inpData = (byte[]) inputBuffer.getData();
+		int inpLength = inputBuffer.getLength();
+		int inOffset = inputBuffer.getOffset();
+		byte[] inpData = (byte[]) inputBuffer.getData();
 
-        if (inpLength == 0)
-        {
-            return OUTPUT_BUFFER_NOT_FILLED;
-        } else if (inpLength < enc.ULP_inst.blockl * 2)
-        {
-            return OUTPUT_BUFFER_NOT_FILLED;
-        }
+		if (inpLength == 0) {
+			return OUTPUT_BUFFER_NOT_FILLED;
+		} else if (inpLength < enc.ULP_inst.blockl * 2) {
+			return OUTPUT_BUFFER_NOT_FILLED;
+		}
 
-        short[] encoded_data = new short[ILBC_NO_OF_BYTES / 2];
+		short[] encoded_data = new short[ILBC_NO_OF_BYTES / 2];
 
-        int outLength = ILBC_NO_OF_BYTES;
-        byte[] outdata = validateByteArraySize(outputBuffer, outLength);
+		int outLength = ILBC_NO_OF_BYTES;
+		byte[] outdata = validateByteArraySize(outputBuffer, outLength);
 
-        short[] data = Utils.byteToShortArray(inpData, inOffset, inpLength,
-                true);
-        enc.encode(encoded_data, data);
+		short[] data = Utils.byteToShortArray(inpData, inOffset, inpLength, true);
+		enc.encode(encoded_data, data);
 
-        Utils.shortArrToByteArr(encoded_data, outdata, false);
+		Utils.shortArrToByteArr(encoded_data, outdata, false);
 
-        updateOutput(outputBuffer, outputFormat, outLength, 0);
+		updateOutput(outputBuffer, outputFormat, outLength, 0);
 
-        inputBuffer.setLength(inpLength - enc.ULP_inst.blockl * 2);
-        inputBuffer.setOffset(inOffset + enc.ULP_inst.blockl * 2);
+		inputBuffer.setLength(inpLength - enc.ULP_inst.blockl * 2);
+		inputBuffer.setOffset(inOffset + enc.ULP_inst.blockl * 2);
 
-        return BUFFER_PROCESSED_OK | INPUT_BUFFER_NOT_CONSUMED;
-    }
+		return BUFFER_PROCESSED_OK | INPUT_BUFFER_NOT_CONSUMED;
+	}
 }

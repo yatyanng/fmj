@@ -1,6 +1,6 @@
 package javax.media.control;
 
-import javax.media.*;
+import javax.media.Control;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,14 +10,13 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface FrameRateControl extends Control
-{
-    public float getFrameRate();
+public interface FrameRateControl extends Control {
+	public float getFrameRate();
 
-    public float getMaxSupportedFrameRate();
+	public float getMaxSupportedFrameRate();
 
-    public float getPreferredFrameRate();
+	public float getPreferredFrameRate();
 
-    public float setFrameRate(float newFrameRate);
+	public float setFrameRate(float newFrameRate);
 
 }

@@ -8,35 +8,34 @@ package javax.media.rtp;
  * @author Ken Larson
  *
  */
-public interface GlobalReceptionStats
-{
-    public int getBadRTCPPkts();
+public interface GlobalReceptionStats {
+	public int getBadRTCPPkts();
 
-    public int getBadRTPkts();
+	public int getBadRTPkts();
 
-    public int getBytesRecd();
+	public int getBytesRecd();
 
-    public int getLocalColls();
+	public int getLocalColls();
 
-    public int getMalformedBye();
+	public int getMalformedBye();
 
-    public int getMalformedRR();
+	public int getMalformedRR();
 
-    public int getMalformedSDES();
+	public int getMalformedSDES();
 
-    public int getMalformedSR();
+	public int getMalformedSR();
 
-    public int getPacketsLooped();
+	public int getPacketsLooped();
 
-    public int getPacketsRecd();
+	public int getPacketsRecd();
 
-    public int getRemoteColls();
+	public int getRemoteColls();
 
-    public int getRTCPRecd();
+	public int getRTCPRecd();
 
-    public int getSRRecd();
+	public int getSRRecd();
 
-    public int getTransmitFailed();
+	public int getTransmitFailed();
 
-    public int getUnknownTypes();
+	public int getUnknownTypes();
 }

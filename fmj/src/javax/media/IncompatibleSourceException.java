@@ -10,16 +10,13 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class IncompatibleSourceException extends MediaException
-{
-    public IncompatibleSourceException()
-    {
-        super();
-    }
+public class IncompatibleSourceException extends MediaException {
+	public IncompatibleSourceException() {
+		super();
+	}
 
-    public IncompatibleSourceException(String message)
-    {
-        super(message);
-    }
+	public IncompatibleSourceException(String message) {
+		super(message);
+	}
 
 }

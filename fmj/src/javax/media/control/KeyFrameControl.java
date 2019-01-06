@@ -1,6 +1,6 @@
 package javax.media.control;
 
-import javax.media.*;
+import javax.media.Control;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,11 +10,10 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface KeyFrameControl extends Control
-{
-    public int getKeyFrameInterval();
+public interface KeyFrameControl extends Control {
+	public int getKeyFrameInterval();
 
-    public int getPreferredKeyFrameInterval();
+	public int getPreferredKeyFrameInterval();
 
-    public int setKeyFrameInterval(int frames);
+	public int setKeyFrameInterval(int frames);
 }

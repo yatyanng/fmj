@@ -8,25 +8,20 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class StopTimeChangeEvent extends ControllerEvent
-{
-    Time stopTime;
+public class StopTimeChangeEvent extends ControllerEvent {
+	Time stopTime;
 
-    public StopTimeChangeEvent(Controller from, Time newStopTime)
-    {
-        super(from);
-        this.stopTime = newStopTime;
-    }
+	public StopTimeChangeEvent(Controller from, Time newStopTime) {
+		super(from);
+		this.stopTime = newStopTime;
+	}
 
-    public Time getStopTime()
-    {
-        return stopTime;
-    }
+	public Time getStopTime() {
+		return stopTime;
+	}
 
-    @Override
-    public String toString()
-    {
-        return getClass().getName() + "[source=" + getSource() + ",stopTime="
-                + stopTime + "]";
-    }
+	@Override
+	public String toString() {
+		return getClass().getName() + "[source=" + getSource() + ",stopTime=" + stopTime + "]";
+	}
 }

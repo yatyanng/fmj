@@ -8,16 +8,13 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class MediaError extends Error
-{
-    public MediaError()
-    {
-        super();
-    }
+public class MediaError extends Error {
+	public MediaError() {
+		super();
+	}
 
-    public MediaError(String message)
-    {
-        super(message);
-    }
+	public MediaError(String message) {
+		super(message);
+	}
 
 }

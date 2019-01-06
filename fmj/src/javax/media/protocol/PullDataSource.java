@@ -8,7 +8,6 @@ package javax.media.protocol;
  * @author Ken Larson
  *
  */
-public abstract class PullDataSource extends DataSource
-{
-    public abstract PullSourceStream[] getStreams();
+public abstract class PullDataSource extends DataSource {
+	public abstract PullSourceStream[] getStreams();
 }

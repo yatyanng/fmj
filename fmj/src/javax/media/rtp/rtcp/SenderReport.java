@@ -1,6 +1,6 @@
 package javax.media.rtp.rtcp;
 
-import javax.media.rtp.*;
+import javax.media.rtp.RTPStream;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,19 +10,18 @@ import javax.media.rtp.*;
  * @author Ken Larson
  *
  */
-public interface SenderReport extends Report
-{
-    public long getNTPTimeStampLSW();
+public interface SenderReport extends Report {
+	public long getNTPTimeStampLSW();
 
-    public long getNTPTimeStampMSW();
+	public long getNTPTimeStampMSW();
 
-    public long getRTPTimeStamp();
+	public long getRTPTimeStamp();
 
-    public long getSenderByteCount();
+	public long getSenderByteCount();
 
-    public Feedback getSenderFeedback();
+	public Feedback getSenderFeedback();
 
-    public long getSenderPacketCount();
+	public long getSenderPacketCount();
 
-    public RTPStream getStream();
+	public RTPStream getStream();
 }

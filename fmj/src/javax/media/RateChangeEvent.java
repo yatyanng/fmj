@@ -8,25 +8,20 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class RateChangeEvent extends ControllerEvent
-{
-    float rate;
+public class RateChangeEvent extends ControllerEvent {
+	float rate;
 
-    public RateChangeEvent(Controller from, float newRate)
-    {
-        super(from);
-        this.rate = newRate;
-    }
+	public RateChangeEvent(Controller from, float newRate) {
+		super(from);
+		this.rate = newRate;
+	}
 
-    public float getRate()
-    {
-        return rate;
-    }
+	public float getRate() {
+		return rate;
+	}
 
-    @Override
-    public String toString()
-    {
-        return getClass().getName() + "[source=" + getSource() + ",rate="
-                + rate + "]";
-    }
+	@Override
+	public String toString() {
+		return getClass().getName() + "[source=" + getSource() + ",rate=" + rate + "]";
+	}
 }

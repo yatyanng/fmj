@@ -8,18 +8,17 @@ package javax.media.rtp;
  * @author Ken Larson
  *
  */
-public interface ReceptionStats
-{
-    public int getPDUDuplicate();
+public interface ReceptionStats {
+	public int getPDUDuplicate();
 
-    public int getPDUInvalid();
+	public int getPDUInvalid();
 
-    public int getPDUlost();
+	public int getPDUlost();
 
-    public int getPDUMisOrd();
+	public int getPDUMisOrd();
 
-    public int getPDUProcessed();
+	public int getPDUProcessed();
 
-    public int getPDUDrop();
+	public int getPDUDrop();
 
 }

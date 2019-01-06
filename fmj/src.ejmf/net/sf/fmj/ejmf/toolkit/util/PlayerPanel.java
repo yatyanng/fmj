@@ -1,10 +1,14 @@
 package net.sf.fmj.ejmf.toolkit.util;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.io.IOException;
 
-import javax.media.*;
-import javax.swing.*;
+import javax.media.Manager;
+import javax.media.MediaLocator;
+import javax.media.NoPlayerException;
+import javax.media.Player;
+import javax.swing.JPanel;
 
 /**
  * This class is a panel that is intended to display a particular medium. It is
@@ -45,158 +49,141 @@ import javax.swing.*;
  * @author Steve Talley & Rob Gordon
  */
 
-public class PlayerPanel extends JPanel
-{
-    private static final Object _VISLOC = BorderLayout.CENTER;
-    private static final Object _CPLOC = BorderLayout.SOUTH;
-    private static final String LOADLABEL = "Loading Media...";
+public class PlayerPanel extends JPanel {
+	private static final Object _VISLOC = BorderLayout.CENTER;
+	private static final Object _CPLOC = BorderLayout.SOUTH;
+	private static final String LOADLABEL = "Loading Media...";
 
-    // public TitledBorder
-    // mediaBorder = new TitledBorder(
-    // BorderConstants.etchedBorder, "Media" );
+	// public TitledBorder
+	// mediaBorder = new TitledBorder(
+	// BorderConstants.etchedBorder, "Media" );
 
-    private JPanel mediaPanel;
-    private Player player;
+	private JPanel mediaPanel;
+	private Player player;
 
-    // private JLabel loadingLabel;
+	// private JLabel loadingLabel;
 
-    /**
-     * Constructs a PlayerPanel for the given MediaLocator.
-     *
-     * @exception IOException
-     *                If an I/O error occurs while accessing the media.
-     *
-     * @exception NoPlayerException
-     *                If a Player cannot be created from the given MediaLocator.
-     */
-    public PlayerPanel(MediaLocator locator) throws IOException,
-            NoPlayerException
-    {
-        player = Manager.createPlayer(locator);
+	/**
+	 * Constructs a PlayerPanel for the given MediaLocator.
+	 *
+	 * @exception IOException       If an I/O error occurs while accessing the
+	 *                              media.
+	 *
+	 * @exception NoPlayerException If a Player cannot be created from the given
+	 *                              MediaLocator.
+	 */
+	public PlayerPanel(MediaLocator locator) throws IOException, NoPlayerException {
+		player = Manager.createPlayer(locator);
 
-        this.setLayout(new BorderLayout());
-        // this.setLayout(new BorderLayout());
-        mediaPanel = new JPanel();
-        mediaPanel.setLayout(new BorderLayout());
-        // mediaPanel.setBorder(mediaBorder);
-        // setBorder( BorderConstants.emptyBorder );
+		this.setLayout(new BorderLayout());
+		// this.setLayout(new BorderLayout());
+		mediaPanel = new JPanel();
+		mediaPanel.setLayout(new BorderLayout());
+		// mediaPanel.setBorder(mediaBorder);
+		// setBorder( BorderConstants.emptyBorder );
 
-        // loadingLabel =
-        // new JLabel(LOADLABEL);
-        //
-        // loadingLabel.setFont(
-        // new Font("Dialog", Font.BOLD, 12) );
-        //
-        // add(loadingLabel);
-    }
+		// loadingLabel =
+		// new JLabel(LOADLABEL);
+		//
+		// loadingLabel.setFont(
+		// new Font("Dialog", Font.BOLD, 12) );
+		//
+		// add(loadingLabel);
+	}
 
-    public PlayerPanel(Player p) throws IOException, NoPlayerException
-    {
-        this.player = p;
+	public PlayerPanel(Player p) throws IOException, NoPlayerException {
+		this.player = p;
 
-        this.setLayout(new BorderLayout());
-        // this.setLayout(new BorderLayout());
-        mediaPanel = new JPanel();
-        mediaPanel.setLayout(new BorderLayout());
+		this.setLayout(new BorderLayout());
+		// this.setLayout(new BorderLayout());
+		mediaPanel = new JPanel();
+		mediaPanel.setLayout(new BorderLayout());
 
-    }
+	}
 
-    private Component addComponent(Component c, Object constraints)
-    {
-        if (c == null)
-        {
-            return c;
-        }
+	private Component addComponent(Component c, Object constraints) {
+		if (c == null) {
+			return c;
+		}
 
-        mediaPanel.add(c, constraints);
-        return c;
-    }
+		mediaPanel.add(c, constraints);
+		return c;
+	}
 
-    /**
-     * Adds the Player's control component to this PlayerPanel.
-     *
-     * @return <addtext>
-     */
-    public Component addControlComponent()
-    {
-        return addControlComponent(player.getControlPanelComponent());
-    }
+	/**
+	 * Adds the Player's control component to this PlayerPanel.
+	 *
+	 * @return <addtext>
+	 */
+	public Component addControlComponent() {
+		return addControlComponent(player.getControlPanelComponent());
+	}
 
-    /**
-     * Adds a given component to the part of this PlayerPanel reserved for its
-     * Player's control component.
-     *
-     * @param cc
-     *            <addtext>
-     *
-     * @return <addtext>
-     */
-    public Component addControlComponent(Component cc)
-    {
-        // removeLoadingLabel();
-        addMediaPanel();
+	/**
+	 * Adds a given component to the part of this PlayerPanel reserved for its
+	 * Player's control component.
+	 *
+	 * @param cc <addtext>
+	 *
+	 * @return <addtext>
+	 */
+	public Component addControlComponent(Component cc) {
+		// removeLoadingLabel();
+		addMediaPanel();
 
-        return addComponent(cc, _CPLOC);
-    }
+		return addComponent(cc, _CPLOC);
+	}
 
-    /**
-     * Removes the initial "loading" label that appears while the media is
-     * loading.
-     */
-    // public void removeLoadingLabel() {
-    // if( isAncestorOf(loadingLabel) ) {
-    // remove(loadingLabel);
-    // }
-    // }
+	/**
+	 * Removes the initial "loading" label that appears while the media is loading.
+	 */
+	// public void removeLoadingLabel() {
+	// if( isAncestorOf(loadingLabel) ) {
+	// remove(loadingLabel);
+	// }
+	// }
 
-    public void addMediaPanel()
-    {
-        if (!isAncestorOf(mediaPanel))
-        {
-            add(mediaPanel, BorderLayout.CENTER);
-        }
-    }
+	public void addMediaPanel() {
+		if (!isAncestorOf(mediaPanel)) {
+			add(mediaPanel, BorderLayout.CENTER);
+		}
+	}
 
-    /**
-     * Adds the Player's visual component to this PlayerPanel.
-     *
-     * @return The Component added.
-     */
-    public Component addVisualComponent()
-    {
-        return addVisualComponent(player.getVisualComponent());
-    }
+	/**
+	 * Adds the Player's visual component to this PlayerPanel.
+	 *
+	 * @return The Component added.
+	 */
+	public Component addVisualComponent() {
+		return addVisualComponent(player.getVisualComponent());
+	}
 
-    /**
-     * Adds a given component to the part of this PlayerPanel reserved for its
-     * Player's visual component.
-     *
-     * @param cc
-     *            The Component to add.
-     *
-     * @return The Component added.
-     */
-    public Component addVisualComponent(Component cc)
-    {
-        // removeLoadingLabel();
-        addMediaPanel();
+	/**
+	 * Adds a given component to the part of this PlayerPanel reserved for its
+	 * Player's visual component.
+	 *
+	 * @param cc The Component to add.
+	 *
+	 * @return The Component added.
+	 */
+	public Component addVisualComponent(Component cc) {
+		// removeLoadingLabel();
+		addMediaPanel();
 
-        return addComponent(cc, _VISLOC);
-    }
+		return addComponent(cc, _VISLOC);
+	}
 
-    /**
-     * Get the media panel component
-     */
-    public JPanel getMediaPanel()
-    {
-        return mediaPanel;
-    }
+	/**
+	 * Get the media panel component
+	 */
+	public JPanel getMediaPanel() {
+		return mediaPanel;
+	}
 
-    /**
-     * Gets the Player for this PlayerPanel.
-     */
-    public Player getPlayer()
-    {
-        return player;
-    }
+	/**
+	 * Gets the Player for this PlayerPanel.
+	 */
+	public Player getPlayer() {
+		return player;
+	}
 }

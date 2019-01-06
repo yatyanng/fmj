@@ -8,16 +8,13 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class NotPrefetchedError extends MediaError
-{
-    public NotPrefetchedError()
-    {
-        super();
-    }
+public class NotPrefetchedError extends MediaError {
+	public NotPrefetchedError() {
+		super();
+	}
 
-    public NotPrefetchedError(String message)
-    {
-        super(message);
-    }
+	public NotPrefetchedError(String message) {
+		super(message);
+	}
 
 }

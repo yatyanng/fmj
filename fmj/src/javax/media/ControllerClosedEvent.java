@@ -8,25 +8,21 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class ControllerClosedEvent extends ControllerEvent
-{
-    protected String message;
+public class ControllerClosedEvent extends ControllerEvent {
+	protected String message;
 
-    public ControllerClosedEvent(Controller from)
-    {
-        super(from);
+	public ControllerClosedEvent(Controller from) {
+		super(from);
 
-    }
+	}
 
-    public ControllerClosedEvent(Controller from, String why)
-    {
-        super(from);
-        this.message = why;
+	public ControllerClosedEvent(Controller from, String why) {
+		super(from);
+		this.message = why;
 
-    }
+	}
 
-    public String getMessage()
-    {
-        return message;
-    }
+	public String getMessage() {
+		return message;
+	}
 }

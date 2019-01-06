@@ -6,11 +6,6 @@ package net.sf.fmj.media.rtp;
  *
  * @author Lyubomir Marinov
  */
-public enum GenerateSSRCCause
-{
-    CREATE_SEND_STREAM,
-    INIT_SESSION,
-    INITIALIZE,
-    LOCAL_COLLISION,
-    REMOVE_SEND_STREAM
+public enum GenerateSSRCCause {
+	CREATE_SEND_STREAM, INIT_SESSION, INITIALIZE, LOCAL_COLLISION, REMOVE_SEND_STREAM
 }

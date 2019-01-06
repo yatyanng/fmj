@@ -1,6 +1,6 @@
 package javax.media;
 
-import javax.media.datasink.*;
+import javax.media.datasink.DataSinkListener;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,23 +10,22 @@ import javax.media.datasink.*;
  * @author Ken Larson
  *
  */
-public interface DataSink extends MediaHandler, Controls
-{
-    public void addDataSinkListener(DataSinkListener listener);
+public interface DataSink extends MediaHandler, Controls {
+	public void addDataSinkListener(DataSinkListener listener);
 
-    public void close();
+	public void close();
 
-    public String getContentType();
+	public String getContentType();
 
-    public MediaLocator getOutputLocator();
+	public MediaLocator getOutputLocator();
 
-    public void open() throws java.io.IOException, SecurityException;
+	public void open() throws java.io.IOException, SecurityException;
 
-    public void removeDataSinkListener(DataSinkListener listener);
+	public void removeDataSinkListener(DataSinkListener listener);
 
-    public void setOutputLocator(MediaLocator output);
+	public void setOutputLocator(MediaLocator output);
 
-    public void start() throws java.io.IOException;
+	public void start() throws java.io.IOException;
 
-    public void stop() throws java.io.IOException;
+	public void stop() throws java.io.IOException;
 }

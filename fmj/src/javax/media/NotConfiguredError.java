@@ -8,16 +8,13 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class NotConfiguredError extends MediaError
-{
-    public NotConfiguredError()
-    {
-        super();
-    }
+public class NotConfiguredError extends MediaError {
+	public NotConfiguredError() {
+		super();
+	}
 
-    public NotConfiguredError(String message)
-    {
-        super(message);
-    }
+	public NotConfiguredError(String message) {
+		super(message);
+	}
 
 }

@@ -8,10 +8,8 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class AudioDeviceUnavailableEvent extends ControllerEvent
-{
-    public AudioDeviceUnavailableEvent(Controller from)
-    {
-        super(from);
-    }
+public class AudioDeviceUnavailableEvent extends ControllerEvent {
+	public AudioDeviceUnavailableEvent(Controller from) {
+		super(from);
+	}
 }

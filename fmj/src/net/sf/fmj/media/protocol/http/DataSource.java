@@ -1,8 +1,8 @@
 package net.sf.fmj.media.protocol.http;
 
-import java.net.*;
+import java.net.URL;
 
-import net.sf.fmj.media.protocol.*;
+import net.sf.fmj.media.protocol.URLDataSource;
 
 /**
  * HTTP protocol handler DataSource. TODO: move http-specific code from
@@ -11,16 +11,13 @@ import net.sf.fmj.media.protocol.*;
  * @author Ken Larson
  *
  */
-public class DataSource extends URLDataSource
-{
-    public DataSource()
-    {
-        super();
-    }
+public class DataSource extends URLDataSource {
+	public DataSource() {
+		super();
+	}
 
-    public DataSource(URL url)
-    {
-        super(url);
-    }
+	public DataSource(URL url) {
+		super(url);
+	}
 
 }

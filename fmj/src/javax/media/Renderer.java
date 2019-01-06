@@ -8,15 +8,14 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public interface Renderer extends PlugIn
-{
-    public Format[] getSupportedInputFormats();
+public interface Renderer extends PlugIn {
+	public Format[] getSupportedInputFormats();
 
-    public int process(Buffer buffer);
+	public int process(Buffer buffer);
 
-    public Format setInputFormat(Format format);
+	public Format setInputFormat(Format format);
 
-    public void start();
+	public void start();
 
-    public void stop();
+	public void stop();
 }

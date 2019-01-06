@@ -1,8 +1,8 @@
 package javax.media;
 
-import java.io.*;
+import java.io.IOException;
 
-import javax.media.protocol.*;
+import javax.media.protocol.ContentDescriptor;
 
 /**
  *
@@ -13,24 +13,24 @@ import javax.media.protocol.*;
  * @author Ken Larson
  *
  */
-public interface Demultiplexer extends PlugIn, MediaHandler, Duration
-{
-    public Time getDuration();
+public interface Demultiplexer extends PlugIn, MediaHandler, Duration {
+	@Override
+	public Time getDuration();
 
-    public Time getMediaTime();
+	public Time getMediaTime();
 
-    public ContentDescriptor[] getSupportedInputContentDescriptors();
+	public ContentDescriptor[] getSupportedInputContentDescriptors();
 
-    public Track[] getTracks() throws IOException, BadHeaderException;
+	public Track[] getTracks() throws IOException, BadHeaderException;
 
-    public boolean isPositionable();
+	public boolean isPositionable();
 
-    public boolean isRandomAccess();
+	public boolean isRandomAccess();
 
-    public Time setPosition(Time where, int rounding);
+	public Time setPosition(Time where, int rounding);
 
-    public void start() throws IOException;
+	public void start() throws IOException;
 
-    public void stop();
+	public void stop();
 
 }

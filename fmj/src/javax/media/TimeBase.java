@@ -10,9 +10,8 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public interface TimeBase
-{
-    public long getNanoseconds();
+public interface TimeBase {
+	public long getNanoseconds();
 
-    public Time getTime();
+	public Time getTime();
 }

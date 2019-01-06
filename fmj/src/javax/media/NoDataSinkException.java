@@ -9,16 +9,13 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class NoDataSinkException extends MediaException
-{
-    public NoDataSinkException()
-    {
-        super();
-    }
+public class NoDataSinkException extends MediaException {
+	public NoDataSinkException() {
+		super();
+	}
 
-    public NoDataSinkException(String message)
-    {
-        super(message);
-    }
+	public NoDataSinkException(String message) {
+		super(message);
+	}
 
 }

@@ -9,9 +9,8 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public interface Controls
-{
-    Object getControl(String controlType);
+public interface Controls {
+	Object getControl(String controlType);
 
-    Object[] getControls();
+	Object[] getControls();
 }

@@ -1,6 +1,6 @@
 package javax.media.control;
 
-import javax.media.*;
+import javax.media.Control;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,13 +10,12 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface BitRateControl extends Control
-{
-    public int getBitRate();
+public interface BitRateControl extends Control {
+	public int getBitRate();
 
-    public int getMaxSupportedBitRate();
+	public int getMaxSupportedBitRate();
 
-    public int getMinSupportedBitRate();
+	public int getMinSupportedBitRate();
 
-    public int setBitRate(int bitrate);
+	public int setBitRate(int bitrate);
 }

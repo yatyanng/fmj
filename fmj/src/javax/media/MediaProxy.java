@@ -1,6 +1,6 @@
 package javax.media;
 
-import javax.media.protocol.*;
+import javax.media.protocol.DataSource;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,8 +10,6 @@ import javax.media.protocol.*;
  * @author Ken Larson
  *
  */
-public interface MediaProxy extends MediaHandler
-{
-    public DataSource getDataSource() throws java.io.IOException,
-            NoDataSourceException;
+public interface MediaProxy extends MediaHandler {
+	public DataSource getDataSource() throws java.io.IOException, NoDataSourceException;
 }

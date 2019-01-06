@@ -8,16 +8,13 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class ConnectionErrorEvent extends ControllerErrorEvent
-{
-    public ConnectionErrorEvent(Controller from)
-    {
-        super(from);
-    }
+public class ConnectionErrorEvent extends ControllerErrorEvent {
+	public ConnectionErrorEvent(Controller from) {
+		super(from);
+	}
 
-    public ConnectionErrorEvent(Controller from, String why)
-    {
-        super(from, why);
-    }
+	public ConnectionErrorEvent(Controller from, String why) {
+		super(from, why);
+	}
 
 }

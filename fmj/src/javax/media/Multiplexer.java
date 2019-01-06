@@ -1,6 +1,7 @@
 package javax.media;
 
-import javax.media.protocol.*;
+import javax.media.protocol.ContentDescriptor;
+import javax.media.protocol.DataSource;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,21 +11,18 @@ import javax.media.protocol.*;
  * @author Ken Larson
  *
  */
-public interface Multiplexer extends PlugIn
-{
-    public DataSource getDataOutput();
+public interface Multiplexer extends PlugIn {
+	public DataSource getDataOutput();
 
-    public Format[] getSupportedInputFormats();
+	public Format[] getSupportedInputFormats();
 
-    public ContentDescriptor[] getSupportedOutputContentDescriptors(
-            Format[] inputs);
+	public ContentDescriptor[] getSupportedOutputContentDescriptors(Format[] inputs);
 
-    public int process(Buffer buffer, int trackID);
+	public int process(Buffer buffer, int trackID);
 
-    public ContentDescriptor setContentDescriptor(
-            ContentDescriptor outputContentDescriptor);
+	public ContentDescriptor setContentDescriptor(ContentDescriptor outputContentDescriptor);
 
-    public Format setInputFormat(Format format, int trackID);
+	public Format setInputFormat(Format format, int trackID);
 
-    public int setNumTracks(int numTracks);
+	public int setNumTracks(int numTracks);
 }

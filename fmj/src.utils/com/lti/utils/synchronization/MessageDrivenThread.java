@@ -5,61 +5,47 @@ package com.lti.utils.synchronization;
  *
  * @author Ken Larson
  */
-public class MessageDrivenThread extends CloseableThread
-{
-    private MessageDrivenThreadListener listener;
+public class MessageDrivenThread extends CloseableThread {
+	private MessageDrivenThreadListener listener;
 
-    private final ProducerConsumerQueue<Object> q
-        = new ProducerConsumerQueue<Object>();
+	private final ProducerConsumerQueue<Object> q = new ProducerConsumerQueue<Object>();
 
-    public MessageDrivenThread(ThreadGroup group, String threadName)
-    {
-        super(group, threadName);
-    }
+	public MessageDrivenThread(ThreadGroup group, String threadName) {
+		super(group, threadName);
+	}
 
-    public MessageDrivenThread(
-            ThreadGroup group, String threadName,
-            MessageDrivenThreadListener listener)
-    {
-        super(group, threadName);
-        this.listener = listener;
-    }
+	public MessageDrivenThread(ThreadGroup group, String threadName, MessageDrivenThreadListener listener) {
+		super(group, threadName);
+		this.listener = listener;
+	}
 
-    /**
-     * subclass should override to do message processing.
-     */
-    protected void doMessageReceived(Object o)
-    {
-        if (listener != null)
-            listener.onMessage(this, o);
-    }
+	/**
+	 * subclass should override to do message processing.
+	 */
+	protected void doMessageReceived(Object o) {
+		if (listener != null)
+			listener.onMessage(this, o);
+	}
 
-    public void post(Object msg) throws InterruptedException
-    {
-        q.put(msg);
-    }
+	public void post(Object msg) throws InterruptedException {
+		q.put(msg);
+	}
 
-    @Override
-    public void run()
-    {
-        try
-        {
-            while (!isClosing())
-            {
-                Object o = q.get();
+	@Override
+	public void run() {
+		try {
+			while (!isClosing()) {
+				Object o = q.get();
 
-                doMessageReceived(o);
-            }
-        } catch (InterruptedException e)
-        {
-        } finally
-        {
-            setClosed();
-        }
-    }
+				doMessageReceived(o);
+			}
+		} catch (InterruptedException e) {
+		} finally {
+			setClosed();
+		}
+	}
 
-    public void setListener(MessageDrivenThreadListener listener)
-    {
-        this.listener = listener;
-    }
+	public void setListener(MessageDrivenThreadListener listener) {
+		this.listener = listener;
+	}
 }

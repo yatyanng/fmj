@@ -32,10 +32,11 @@
 
 package net.sf.fmj.media.rtp;
 
-import java.io.*;
+import java.io.IOException;
 
-import javax.media.rtp.*;
-import javax.media.rtp.rtcp.*;
+import javax.media.rtp.RTPStream;
+import javax.media.rtp.rtcp.Feedback;
+import javax.media.rtp.rtcp.SenderReport;
 
 /**
  * Represents an RTCP Sender Report
@@ -44,117 +45,104 @@ import javax.media.rtp.rtcp.*;
  * @author Christian Vincenot
  * @version 1-1-alpha3
  */
-public class RTCPSenderReport extends RTCPReport implements SenderReport
-{
-    // The sender information
-    RTCPSenderInfo senderInformation = null;
+public class RTCPSenderReport extends RTCPReport implements SenderReport {
+	// The sender information
+	RTCPSenderInfo senderInformation = null;
 
-    // The RTPStream associated with the sender
-    private RTPStream stream = null;
+	// The RTPStream associated with the sender
+	private RTPStream stream = null;
 
-    /**
-     * Creates a new RTCPSenderReport
-     *
-     * @param data
-     *            The data of the report
-     * @param offset
-     *            The offset of the report in the data
-     * @param length
-     *            The length of the data
-     * @throws IOException
-     *             I/O Exception
-     */
-    public RTCPSenderReport(byte data[], int offset, int length)
-            throws IOException
-    {
-        super(data, offset, length);
+	/**
+	 * Creates a new RTCPSenderReport
+	 *
+	 * @param data   The data of the report
+	 * @param offset The offset of the report in the data
+	 * @param length The length of the data
+	 * @throws IOException I/O Exception
+	 */
+	public RTCPSenderReport(byte data[], int offset, int length) throws IOException {
+		super(data, offset, length);
 
-        senderInformation
-            = new RTCPSenderInfo(
-                    data,
-                    offset + RTCPHeader.SIZE,
-                    length - RTCPHeader.SIZE);
-    }
+		senderInformation = new RTCPSenderInfo(data, offset + RTCPHeader.SIZE, length - RTCPHeader.SIZE);
+	}
 
-    /**
-     * Returns the sender's timestamp's least significant word.
-     *
-     * @return the sender's timestamp's least significant word
-     */
-    public long getNTPTimeStampLSW()
-    {
-        return senderInformation.getNtpTimestampLSW();
-    }
+	/**
+	 * Returns the sender's timestamp's least significant word.
+	 *
+	 * @return the sender's timestamp's least significant word
+	 */
+	@Override
+	public long getNTPTimeStampLSW() {
+		return senderInformation.getNtpTimestampLSW();
+	}
 
-    /**
-     * Returns the sender's timestamp's most significant word.
-     *
-     * @return the sender's timestamp's most significant word
-     */
-    public long getNTPTimeStampMSW()
-    {
-        return senderInformation.getNtpTimestampMSW();
-    }
+	/**
+	 * Returns the sender's timestamp's most significant word.
+	 *
+	 * @return the sender's timestamp's most significant word
+	 */
+	@Override
+	public long getNTPTimeStampMSW() {
+		return senderInformation.getNtpTimestampMSW();
+	}
 
-    /**
-     * Returns the RTP timestamp.
-     *
-     * @return the RTP timestamp
-     */
-    public long getRTPTimeStamp()
-    {
-        return senderInformation.getRtpTimestamp();
-    }
+	/**
+	 * Returns the RTP timestamp.
+	 *
+	 * @return the RTP timestamp
+	 */
+	@Override
+	public long getRTPTimeStamp() {
+		return senderInformation.getRtpTimestamp();
+	}
 
-    /**
-     * Returns the number of bytes sent by this sender.
-     *
-     * @return the number of bytes sent by this sender
-     */
-    public long getSenderByteCount()
-    {
-        return senderInformation.getOctetCount();
-    }
+	/**
+	 * Returns the number of bytes sent by this sender.
+	 *
+	 * @return the number of bytes sent by this sender
+	 */
+	@Override
+	public long getSenderByteCount() {
+		return senderInformation.getOctetCount();
+	}
 
-    /**
-     * Returns the sender's feedbacks.
-     *
-     * @return the sender's feedbacks
-     */
-    public Feedback getSenderFeedback()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	/**
+	 * Returns the sender's feedbacks.
+	 *
+	 * @return the sender's feedbacks
+	 */
+	@Override
+	public Feedback getSenderFeedback() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    /**
-     * Returns the number of packets sent by this sender.
-     *
-     * @return the number of packets sent by this sender
-     */
-    public long getSenderPacketCount()
-    {
-        return senderInformation.getPacketCount();
-    }
+	/**
+	 * Returns the number of packets sent by this sender.
+	 *
+	 * @return the number of packets sent by this sender
+	 */
+	@Override
+	public long getSenderPacketCount() {
+		return senderInformation.getPacketCount();
+	}
 
-    /**
-     * Returns the RTPStream associated with the sender.
-     *
-     * @return the RTPStream associated with the sender
-     */
-    public RTPStream getStream()
-    {
-        return stream;
-    }
+	/**
+	 * Returns the RTPStream associated with the sender.
+	 *
+	 * @return the RTPStream associated with the sender
+	 */
+	@Override
+	public RTPStream getStream() {
+		return stream;
+	}
 
-    /**
-     * Sets the RTPStream associated with the sender.
-     *
-     * @param stream
-     *            the RTPStream associated with the sender
-     */
-    protected void setStream(RTPStream stream)
-    {
-        this.stream = stream;
-    }
+	/**
+	 * Sets the RTPStream associated with the sender.
+	 *
+	 * @param stream the RTPStream associated with the sender
+	 */
+	protected void setStream(RTPStream stream) {
+		this.stream = stream;
+	}
 }

@@ -1,8 +1,8 @@
 package javax.media;
 
-import java.io.*;
+import java.io.IOException;
 
-import javax.media.protocol.*;
+import javax.media.protocol.DataSource;
 
 /**
  * Standard JMF class -- see <a href=
@@ -14,8 +14,6 @@ import javax.media.protocol.*;
  * @author Ken Larson
  *
  */
-public interface MediaHandler
-{
-    public void setSource(DataSource source) throws IOException,
-            IncompatibleSourceException;
+public interface MediaHandler {
+	public void setSource(DataSource source) throws IOException, IncompatibleSourceException;
 }

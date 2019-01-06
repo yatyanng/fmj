@@ -8,30 +8,25 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class ControllerEvent extends MediaEvent
-{
-    Controller eventSrc;
+public class ControllerEvent extends MediaEvent {
+	Controller eventSrc;
 
-    public ControllerEvent(Controller from)
-    {
-        super(from);
-        eventSrc = from;
-    }
+	public ControllerEvent(Controller from) {
+		super(from);
+		eventSrc = from;
+	}
 
-    @Override
-    public Object getSource()
-    {
-        return eventSrc;
-    }
+	@Override
+	public Object getSource() {
+		return eventSrc;
+	}
 
-    public Controller getSourceController()
-    {
-        return eventSrc;
-    }
+	public Controller getSourceController() {
+		return eventSrc;
+	}
 
-    @Override
-    public String toString()
-    {
-        return getClass().getName() + "[source=" + eventSrc + "]";
-    }
+	@Override
+	public String toString() {
+		return getClass().getName() + "[source=" + eventSrc + "]";
+	}
 }

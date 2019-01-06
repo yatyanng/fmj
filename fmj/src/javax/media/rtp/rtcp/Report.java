@@ -1,8 +1,8 @@
 package javax.media.rtp.rtcp;
 
-import java.util.*;
+import java.util.Vector;
 
-import javax.media.rtp.*;
+import javax.media.rtp.Participant;
 
 /**
  * Standard JMF class -- see <a href=
@@ -12,13 +12,12 @@ import javax.media.rtp.*;
  * @author Ken Larson
  *
  */
-public interface Report
-{
-    public Vector getFeedbackReports();
+public interface Report {
+	public Vector getFeedbackReports();
 
-    public Participant getParticipant();
+	public Participant getParticipant();
 
-    public Vector getSourceDescription();
+	public Vector getSourceDescription();
 
-    public long getSSRC();
+	public long getSSRC();
 }

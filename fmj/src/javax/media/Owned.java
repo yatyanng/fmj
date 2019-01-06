@@ -10,7 +10,6 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public interface Owned
-{
-    public Object getOwner();
+public interface Owned {
+	public Object getOwner();
 }

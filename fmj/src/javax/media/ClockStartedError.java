@@ -8,16 +8,13 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class ClockStartedError extends MediaError
-{
-    public ClockStartedError()
-    {
-        super();
-    }
+public class ClockStartedError extends MediaError {
+	public ClockStartedError() {
+		super();
+	}
 
-    public ClockStartedError(String message)
-    {
-        super(message);
-    }
+	public ClockStartedError(String message) {
+		super(message);
+	}
 
 }

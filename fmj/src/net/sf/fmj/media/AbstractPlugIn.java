@@ -1,6 +1,7 @@
 package net.sf.fmj.media;
 
-import javax.media.*;
+import javax.media.PlugIn;
+import javax.media.ResourceUnavailableException;
 
 /**
  * Abstract implementation of PlugIn, useful for subclassing.
@@ -8,22 +9,21 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public abstract class AbstractPlugIn extends AbstractControls implements PlugIn
-{
-    public void close()
-    {
-    }
+public abstract class AbstractPlugIn extends AbstractControls implements PlugIn {
+	@Override
+	public void close() {
+	}
 
-    public String getName()
-    {
-        return getClass().getSimpleName(); // override to provide a better name
-    }
+	@Override
+	public String getName() {
+		return getClass().getSimpleName(); // override to provide a better name
+	}
 
-    public void open() throws ResourceUnavailableException
-    {
-    }
+	@Override
+	public void open() throws ResourceUnavailableException {
+	}
 
-    public void reset()
-    { // TODO
-    }
+	@Override
+	public void reset() { // TODO
+	}
 }

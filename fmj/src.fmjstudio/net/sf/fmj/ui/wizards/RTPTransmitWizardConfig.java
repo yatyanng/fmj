@@ -1,6 +1,6 @@
 package net.sf.fmj.ui.wizards;
 
-import javax.media.protocol.*;
+import javax.media.protocol.ContentDescriptor;
 
 /**
  * Configuration of RTP transmit wizard. Data-only. Suitable for storage
@@ -9,10 +9,8 @@ import javax.media.protocol.*;
  * @author Ken Larson
  *
  */
-public class RTPTransmitWizardConfig extends ProcessorWizardConfig
-{
-    public RTPTransmitWizardConfig()
-    {
-        contentDescriptor = new ContentDescriptor(ContentDescriptor.RAW_RTP);
-    }
+public class RTPTransmitWizardConfig extends ProcessorWizardConfig {
+	public RTPTransmitWizardConfig() {
+		contentDescriptor = new ContentDescriptor(ContentDescriptor.RAW_RTP);
+	}
 }

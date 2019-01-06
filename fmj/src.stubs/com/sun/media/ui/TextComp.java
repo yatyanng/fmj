@@ -6,6 +6,5 @@ package com.sun.media.ui;
  * @author Ken Larson
  *
  */
-public class TextComp
-{
+public class TextComp {
 }

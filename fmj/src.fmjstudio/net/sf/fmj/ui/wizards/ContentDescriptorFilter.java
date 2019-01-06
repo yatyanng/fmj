@@ -1,6 +1,6 @@
 package net.sf.fmj.ui.wizards;
 
-import javax.media.protocol.*;
+import javax.media.protocol.ContentDescriptor;
 
 /**
  * Used to filter which content descriptions are offered for which type of
@@ -9,8 +9,7 @@ import javax.media.protocol.*;
  * @author Ken Larson
  *
  */
-public interface ContentDescriptorFilter
-{
-    public boolean isCompatible(ContentDescriptor d);
+public interface ContentDescriptorFilter {
+	public boolean isCompatible(ContentDescriptor d);
 
 }

@@ -1,7 +1,7 @@
 package net.sf.fmj.media.multiplexer.audio;
 
-import javax.media.protocol.*;
-import javax.sound.sampled.*;
+import javax.media.protocol.FileTypeDescriptor;
+import javax.sound.sampled.AudioFileFormat;
 
 /**
  * AIFF audio multiplexer. TODO: doesn't work?
@@ -9,12 +9,9 @@ import javax.sound.sampled.*;
  * @author Ken Larson
  *
  */
-public class AIFFMux extends JavaSoundMux
-{
-    public AIFFMux()
-    {
-        super(new FileTypeDescriptor(FileTypeDescriptor.AIFF),
-                AudioFileFormat.Type.AIFF);
-    }
+public class AIFFMux extends JavaSoundMux {
+	public AIFFMux() {
+		super(new FileTypeDescriptor(FileTypeDescriptor.AIFF), AudioFileFormat.Type.AIFF);
+	}
 
 }

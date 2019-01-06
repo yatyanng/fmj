@@ -8,16 +8,13 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class DataLostErrorEvent extends ControllerClosedEvent
-{
-    public DataLostErrorEvent(Controller from)
-    {
-        super(from);
-    }
+public class DataLostErrorEvent extends ControllerClosedEvent {
+	public DataLostErrorEvent(Controller from) {
+		super(from);
+	}
 
-    public DataLostErrorEvent(Controller from, String why)
-    {
-        super(from, why);
-    }
+	public DataLostErrorEvent(Controller from, String why) {
+		super(from, why);
+	}
 
 }

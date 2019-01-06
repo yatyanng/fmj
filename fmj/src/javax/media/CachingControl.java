@@ -8,18 +8,18 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public interface CachingControl extends Control
-{
-    public static final long LENGTH_UNKNOWN = Long.MAX_VALUE;
+public interface CachingControl extends Control {
+	public static final long LENGTH_UNKNOWN = Long.MAX_VALUE;
 
-    public long getContentLength();
+	public long getContentLength();
 
-    public long getContentProgress();
+	public long getContentProgress();
 
-    public java.awt.Component getControlComponent();
+	@Override
+	public java.awt.Component getControlComponent();
 
-    public java.awt.Component getProgressBarComponent();
+	public java.awt.Component getProgressBarComponent();
 
-    public boolean isDownloading();
+	public boolean isDownloading();
 
 }

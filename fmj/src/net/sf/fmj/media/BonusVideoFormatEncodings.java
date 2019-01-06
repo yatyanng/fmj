@@ -6,11 +6,10 @@ package net.sf.fmj.media;
  * @author Ken Larson
  *
  */
-public class BonusVideoFormatEncodings
-{
-    public static final String GIF = "gif";
-    public static final String PNG = "png";
+public class BonusVideoFormatEncodings {
+	public static final String GIF = "gif";
+	public static final String PNG = "png";
 
-    public static final String[] ALL = new String[] { GIF, PNG };
+	public static final String[] ALL = new String[] { GIF, PNG };
 
 }

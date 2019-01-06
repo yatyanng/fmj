@@ -8,7 +8,6 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public interface Drainable
-{
-    public void drain();
+public interface Drainable {
+	public void drain();
 }

@@ -1,6 +1,6 @@
 package javax.media.rtp;
 
-import javax.media.rtp.event.*;
+import javax.media.rtp.event.SendStreamEvent;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,7 +10,6 @@ import javax.media.rtp.event.*;
  * @author Ken Larson
  *
  */
-public interface SendStreamListener extends java.util.EventListener
-{
-    public void update(SendStreamEvent event);
+public interface SendStreamListener extends java.util.EventListener {
+	public void update(SendStreamEvent event);
 }

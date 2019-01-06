@@ -1,8 +1,8 @@
 package net.sf.fmj.gui.controlpanelfactory;
 
-import java.awt.*;
+import java.awt.Component;
 
-import javax.media.*;
+import javax.media.Player;
 
 /**
  * A factory for a control panel component.
@@ -10,7 +10,6 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface ControlPanelFactory
-{
-    public Component getControlPanelComponent(Player p);
+public interface ControlPanelFactory {
+	public Component getControlPanelComponent(Player p);
 }

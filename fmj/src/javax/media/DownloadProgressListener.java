@@ -8,7 +8,6 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public interface DownloadProgressListener
-{
-    public void downloadUpdate();
+public interface DownloadProgressListener {
+	public void downloadUpdate();
 }

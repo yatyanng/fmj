@@ -6,76 +6,63 @@ package com.lti.utils.synchronization;
  *
  * @author Ken Larson
  */
-public class SynchronizedBoolean
-{
-    private boolean b = false;
+public class SynchronizedBoolean {
+	private boolean b = false;
 
-    public SynchronizedBoolean()
-    {
-        super();
-    }
+	public SynchronizedBoolean() {
+		super();
+	}
 
-    public SynchronizedBoolean(boolean initValue)
-    {
-        this.b = initValue;
-    }
+	public SynchronizedBoolean(boolean initValue) {
+		this.b = initValue;
+	}
 
-    /**
-     *
-     * If the value is oldValue, set to newValue and return true, otherwise
-     * return false.
-     */
-    public synchronized boolean getAndSet(boolean oldValue, boolean newValue)
-    {
-        if (b != oldValue)
-            return false;
-        setValue(newValue);
-        return true;
-    }
+	/**
+	 *
+	 * If the value is oldValue, set to newValue and return true, otherwise return
+	 * false.
+	 */
+	public synchronized boolean getAndSet(boolean oldValue, boolean newValue) {
+		if (b != oldValue)
+			return false;
+		setValue(newValue);
+		return true;
+	}
 
-    public synchronized boolean getValue()
-    {
-        return b;
-    }
+	public synchronized boolean getValue() {
+		return b;
+	}
 
-    public synchronized void setValue(boolean newValue)
-    {
-        if (b != newValue)
-        {
-            b = newValue;
-            notifyAll();
-        }
+	public synchronized void setValue(boolean newValue) {
+		if (b != newValue) {
+			b = newValue;
+			notifyAll();
+		}
 
-    }
+	}
 
-    public synchronized void waitUntil(boolean value)
-            throws InterruptedException
-    {
-        while (b != value)
-        {
-            wait();
-        }
+	public synchronized void waitUntil(boolean value) throws InterruptedException {
+		while (b != value) {
+			wait();
+		}
 
-    }
+	}
 
-    /**
-     * @return true if value matches value, false if timeout occurred
-     */
-    public synchronized boolean waitUntil(boolean value, int timeout)
-            throws InterruptedException
-    {
-        long start = System.currentTimeMillis();
-        while (b != value)
-        {
-            long now = System.currentTimeMillis();
-            long diff = now - start;
-            long wait = timeout - diff;
-            if (wait <= 0)
-                return false;
-            wait(wait);
-        }
-        return true;
+	/**
+	 * @return true if value matches value, false if timeout occurred
+	 */
+	public synchronized boolean waitUntil(boolean value, int timeout) throws InterruptedException {
+		long start = System.currentTimeMillis();
+		while (b != value) {
+			long now = System.currentTimeMillis();
+			long diff = now - start;
+			long wait = timeout - diff;
+			if (wait <= 0)
+				return false;
+			wait(wait);
+		}
+		return true;
 
-    }
+	}
 
 }

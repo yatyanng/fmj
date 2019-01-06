@@ -1,6 +1,6 @@
 package javax.media.control;
 
-import javax.media.*;
+import javax.media.Format;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,15 +10,14 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface FormatControl extends javax.media.Control
-{
-    public Format getFormat();
+public interface FormatControl extends javax.media.Control {
+	public Format getFormat();
 
-    public Format[] getSupportedFormats();
+	public Format[] getSupportedFormats();
 
-    public boolean isEnabled();
+	public boolean isEnabled();
 
-    public void setEnabled(boolean enabled);
+	public void setEnabled(boolean enabled);
 
-    public Format setFormat(Format format);
+	public Format setFormat(Format format);
 }

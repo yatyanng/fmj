@@ -1,26 +1,23 @@
 package net.sf.fmj.ui.wizards;
 
-import javax.media.*;
+import javax.media.Format;
 
 /**
  *
  * @author Ken Larson
  *
  */
-public class TrackConfig
-{
-    public boolean enabled;
-    public Format format;
+public class TrackConfig {
+	public boolean enabled;
+	public Format format;
 
-    public TrackConfig()
-    {
-        this(false, null);
-    }
+	public TrackConfig() {
+		this(false, null);
+	}
 
-    public TrackConfig(boolean enabled, Format format)
-    {
-        super();
-        this.enabled = enabled;
-        this.format = format;
-    }
+	public TrackConfig(boolean enabled, Format format) {
+		super();
+		this.enabled = enabled;
+		this.format = format;
+	}
 }

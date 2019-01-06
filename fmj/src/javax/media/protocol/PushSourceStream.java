@@ -1,6 +1,6 @@
 package javax.media.protocol;
 
-import java.io.*;
+import java.io.IOException;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,16 +10,15 @@ import java.io.*;
  * @author Ken Larson
  *
  */
-public interface PushSourceStream extends SourceStream
-{
-    public int getMinimumTransferSize();
+public interface PushSourceStream extends SourceStream {
+	public int getMinimumTransferSize();
 
-    /**
-     * According to API: Read from the stream without blocking. Returns -1 when
-     * the end of the media is reached. This implies that it can return zero if
-     * there is no data available.
-     */
-    public int read(byte[] buffer, int offset, int length) throws IOException;
+	/**
+	 * According to API: Read from the stream without blocking. Returns -1 when the
+	 * end of the media is reached. This implies that it can return zero if there is
+	 * no data available.
+	 */
+	public int read(byte[] buffer, int offset, int length) throws IOException;
 
-    public void setTransferHandler(SourceTransferHandler transferHandler);
+	public void setTransferHandler(SourceTransferHandler transferHandler);
 }

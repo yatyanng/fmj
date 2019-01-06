@@ -1,25 +1,22 @@
 package net.sf.fmj.ui.objeditor;
 
-import java.awt.*;
+import java.awt.Component;
 
 /**
  *
  * @author Ken Larson
  *
  */
-public class ComponentValidationException extends Exception
-{
-    private Component component;
+public class ComponentValidationException extends Exception {
+	private Component component;
 
-    public ComponentValidationException(Component component, String msg)
-    {
-        super(msg);
-        this.component = component;
-    }
+	public ComponentValidationException(Component component, String msg) {
+		super(msg);
+		this.component = component;
+	}
 
-    public Component getComponent()
-    {
-        return component;
-    }
+	public Component getComponent() {
+		return component;
+	}
 
 }

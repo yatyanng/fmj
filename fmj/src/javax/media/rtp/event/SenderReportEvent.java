@@ -1,7 +1,7 @@
 package javax.media.rtp.event;
 
-import javax.media.rtp.*;
-import javax.media.rtp.rtcp.*;
+import javax.media.rtp.SessionManager;
+import javax.media.rtp.rtcp.SenderReport;
 
 /**
  * Standard JMF class -- see <a href=
@@ -11,18 +11,15 @@ import javax.media.rtp.rtcp.*;
  * @author Ken Larson
  *
  */
-public class SenderReportEvent extends RemoteEvent
-{
-    private SenderReport report;
+public class SenderReportEvent extends RemoteEvent {
+	private SenderReport report;
 
-    public SenderReportEvent(SessionManager from, SenderReport report)
-    {
-        super(from);
-        this.report = report;
-    }
+	public SenderReportEvent(SessionManager from, SenderReport report) {
+		super(from);
+		this.report = report;
+	}
 
-    public SenderReport getReport()
-    {
-        return report;
-    }
+	public SenderReport getReport() {
+		return report;
+	}
 }

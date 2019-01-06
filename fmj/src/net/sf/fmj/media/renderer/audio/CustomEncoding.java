@@ -10,11 +10,9 @@ import javax.sound.sampled.AudioFormat.Encoding;
  * @author Ken Larson
  *
  */
-class CustomEncoding extends Encoding
-{
-    public CustomEncoding(String name)
-    {
-        super(name);
-    }
+class CustomEncoding extends Encoding {
+	public CustomEncoding(String name) {
+		super(name);
+	}
 
 }

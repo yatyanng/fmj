@@ -1,6 +1,6 @@
 package javax.media.control;
 
-import javax.media.*;
+import javax.media.Control;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,20 +10,19 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface BufferControl extends Control
-{
-    public static final long DEFAULT_VALUE = -1;
-    public static final long MAX_VALUE = -2;
+public interface BufferControl extends Control {
+	public static final long DEFAULT_VALUE = -1;
+	public static final long MAX_VALUE = -2;
 
-    public long getBufferLength();
+	public long getBufferLength();
 
-    public boolean getEnabledThreshold();
+	public boolean getEnabledThreshold();
 
-    public long getMinimumThreshold();
+	public long getMinimumThreshold();
 
-    public long setBufferLength(long time);
+	public long setBufferLength(long time);
 
-    public void setEnabledThreshold(boolean b);
+	public void setEnabledThreshold(boolean b);
 
-    public long setMinimumThreshold(long time);
+	public long setMinimumThreshold(long time);
 }

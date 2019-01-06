@@ -9,91 +9,73 @@
 
 package net.sf.fmj.ui.wizards;
 
-import java.io.*;
+import java.io.File;
 
-import net.sf.fmj.ui.wizard.*;
-import net.sf.fmj.utility.*;
+import net.sf.fmj.ui.wizard.WizardPanelDescriptor;
+import net.sf.fmj.utility.URLUtils;
 
 /**
  *
  * @author Ken Larson
  */
-public class FileDestPanelDescriptor extends WizardPanelDescriptor
-{
-    public static final String IDENTIFIER = FileDestPanelDescriptor.class
-            .getName();
+public class FileDestPanelDescriptor extends WizardPanelDescriptor {
+	public static final String IDENTIFIER = FileDestPanelDescriptor.class.getName();
 
-    private final TranscodeWizardResult result;
-    private final TranscodeWizardConfig config;
+	private final TranscodeWizardResult result;
+	private final TranscodeWizardConfig config;
 
-    public FileDestPanelDescriptor(final TranscodeWizardConfig config,
-            TranscodeWizardResult result)
-    {
-        super(IDENTIFIER, new FileDestPanel());
-        this.config = config;
-        this.result = result;
-    }
+	public FileDestPanelDescriptor(final TranscodeWizardConfig config, TranscodeWizardResult result) {
+		super(IDENTIFIER, new FileDestPanel());
+		this.config = config;
+		this.result = result;
+	}
 
-    @Override
-    public boolean aboutToDisplayPanel(Object prevId)
-    {
-        if (prevId == getBackPanelDescriptor())
-        {
-            if (config.destUrl != null)
-                getFileDestPanel()
-                        .getTextFile()
-                        .setText(
-                                URLUtils.extractValidNewFilePathFromFileUrl(config.destUrl));
+	@Override
+	public boolean aboutToDisplayPanel(Object prevId) {
+		if (prevId == getBackPanelDescriptor()) {
+			if (config.destUrl != null)
+				getFileDestPanel().getTextFile().setText(URLUtils.extractValidNewFilePathFromFileUrl(config.destUrl));
 
-            return true;
-        }
-        return super.aboutToDisplayPanel(prevId);
-    }
+			return true;
+		}
+		return super.aboutToDisplayPanel(prevId);
+	}
 
-    @Override
-    public boolean aboutToHidePanel(Object idOfNext)
-    {
-        if (idOfNext == getNextPanelDescriptor())
-        { // forward transition
+	@Override
+	public boolean aboutToHidePanel(Object idOfNext) {
+		if (idOfNext == getNextPanelDescriptor()) { // forward transition
 
-            String path = getFileDestPanel().getTextFile().getText();
-            if (path == null || path.equals(""))
-            {
-                showError("Destination file path may not be blank");
-                return false;
-            }
+			String path = getFileDestPanel().getTextFile().getText();
+			if (path == null || path.equals("")) {
+				showError("Destination file path may not be blank");
+				return false;
+			}
 
-            try
-            {
-                config.destUrl = URLUtils.createUrlStr(new File(path));
-                result.step4_setDestUrlAndStart(config);
-            } catch (WizardStepException e1)
-            {
-                showError(e1);
-                return false;
-            }
+			try {
+				config.destUrl = URLUtils.createUrlStr(new File(path));
+				result.step4_setDestUrlAndStart(config);
+			} catch (WizardStepException e1) {
+				showError(e1);
+				return false;
+			}
 
-            return true;
-        } else
-        {
-            return super.aboutToHidePanel(idOfNext);
-        }
-    }
+			return true;
+		} else {
+			return super.aboutToHidePanel(idOfNext);
+		}
+	}
 
-    @Override
-    public Object getBackPanelDescriptor()
-    {
-        return ContentAndTrackFormatPanelDescriptor.IDENTIFIER;
-    }
+	@Override
+	public Object getBackPanelDescriptor() {
+		return ContentAndTrackFormatPanelDescriptor.IDENTIFIER;
+	}
 
-    public FileDestPanel getFileDestPanel()
-    {
-        return (FileDestPanel) getPanelComponent();
-    }
+	public FileDestPanel getFileDestPanel() {
+		return (FileDestPanel) getPanelComponent();
+	}
 
-    @Override
-    public Object getNextPanelDescriptor()
-    {
-        return FINISH;
-    }
+	@Override
+	public Object getNextPanelDescriptor() {
+		return FINISH;
+	}
 }

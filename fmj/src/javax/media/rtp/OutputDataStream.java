@@ -8,7 +8,6 @@ package javax.media.rtp;
  * @author Ken Larson
  *
  */
-public interface OutputDataStream
-{
-    public int write(byte[] buffer, int offset, int length);
+public interface OutputDataStream {
+	public int write(byte[] buffer, int offset, int length);
 }

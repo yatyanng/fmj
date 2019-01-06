@@ -1,12 +1,17 @@
 package net.sf.fmj.media.content.merge;
 
-import java.io.*;
-import java.util.logging.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import javax.media.*;
-import javax.media.protocol.*;
+import javax.media.IncompatibleSourceException;
+import javax.media.Manager;
+import javax.media.MediaLocator;
+import javax.media.MediaProxy;
+import javax.media.NoDataSourceException;
+import javax.media.protocol.DataSource;
 
-import net.sf.fmj.utility.*;
+import net.sf.fmj.utility.LoggerSingleton;
 
 /**
  * MediaProxy Handler for merge protocol/content type, allowing multiple merged
@@ -22,74 +27,63 @@ import net.sf.fmj.utility.*;
  * @author Ken Larson
  *
  */
-public class Handler implements MediaProxy
-{
-    private static final Logger logger = LoggerSingleton.logger;
+public class Handler implements MediaProxy {
+	private static final Logger logger = LoggerSingleton.logger;
 
-    private net.sf.fmj.media.protocol.merge.DataSource source;
+	private net.sf.fmj.media.protocol.merge.DataSource source;
 
-    public DataSource getDataSource() throws IOException, NoDataSourceException
-    {
-        try
-        {
-            final String remainder = source.getLocator().getRemainder();
+	@Override
+	public DataSource getDataSource() throws IOException, NoDataSourceException {
+		try {
+			final String remainder = source.getLocator().getRemainder();
 
-            if (remainder.length() < 3)
-                throw new NoDataSourceException(
-                        "URL is too short to contain start char, end char, and at least 1 embedded URL");
+			if (remainder.length() < 3)
+				throw new NoDataSourceException(
+						"URL is too short to contain start char, end char, and at least 1 embedded URL");
 
-            final String startComponent = "" + remainder.charAt(0);
-            final String stopComponent = ""
-                    + remainder.charAt(remainder.length() - 1);
-            final String splitOn = "\\" + stopComponent + "\\" + startComponent; // TODO:
-                                                                                 // how
-                                                                                 // do
-                                                                                 // we
-                                                                                 // know
-                                                                                 // if
-                                                                                 // we
-                                                                                 // need
-                                                                                 // to
-                                                                                 // escape
-                                                                                 // these?
+			final String startComponent = "" + remainder.charAt(0);
+			final String stopComponent = "" + remainder.charAt(remainder.length() - 1);
+			final String splitOn = "\\" + stopComponent + "\\" + startComponent; // TODO:
+																					// how
+																					// do
+																					// we
+																					// know
+																					// if
+																					// we
+																					// need
+																					// to
+																					// escape
+																					// these?
 
-            final String[] urlComponents = remainder.substring(1,
-                    remainder.length() - 1).split(splitOn);
-            if (urlComponents.length == 0)
-                throw new NoDataSourceException("No URLs embedded within URL: "
-                        + source.getLocator());
+			final String[] urlComponents = remainder.substring(1, remainder.length() - 1).split(splitOn);
+			if (urlComponents.length == 0)
+				throw new NoDataSourceException("No URLs embedded within URL: " + source.getLocator());
 
-            final DataSource[] dataSourceComponents = new DataSource[urlComponents.length];
+			final DataSource[] dataSourceComponents = new DataSource[urlComponents.length];
 
-            for (int i = 0; i < urlComponents.length; ++i)
-            {
-                final String url = urlComponents[i];
-                dataSourceComponents[i] = Manager
-                        .createDataSource(new MediaLocator(url));
-            }
+			for (int i = 0; i < urlComponents.length; ++i) {
+				final String url = urlComponents[i];
+				dataSourceComponents[i] = Manager.createDataSource(new MediaLocator(url));
+			}
 
-            try
-            {
-                return Manager.createMergingDataSource(dataSourceComponents);
-            } catch (IncompatibleSourceException e)
-            {
-                logger.log(Level.WARNING, "" + e, e);
-                throw new NoDataSourceException("" + e);
-            }
-        } catch (NoDataSourceException e)
-        {
-            logger.log(Level.WARNING, "" + e, e);
-            throw e;
-        }
-    }
+			try {
+				return Manager.createMergingDataSource(dataSourceComponents);
+			} catch (IncompatibleSourceException e) {
+				logger.log(Level.WARNING, "" + e, e);
+				throw new NoDataSourceException("" + e);
+			}
+		} catch (NoDataSourceException e) {
+			logger.log(Level.WARNING, "" + e, e);
+			throw e;
+		}
+	}
 
-    public void setSource(DataSource source) throws IOException,
-            IncompatibleSourceException
-    {
-        if (!(source instanceof net.sf.fmj.media.protocol.merge.DataSource))
-            throw new IncompatibleSourceException();
+	@Override
+	public void setSource(DataSource source) throws IOException, IncompatibleSourceException {
+		if (!(source instanceof net.sf.fmj.media.protocol.merge.DataSource))
+			throw new IncompatibleSourceException();
 
-        this.source = (net.sf.fmj.media.protocol.merge.DataSource) source;
-    }
+		this.source = (net.sf.fmj.media.protocol.merge.DataSource) source;
+	}
 
 }

@@ -1,28 +1,23 @@
 package net.sf.fmj.media.rtp;
 
-public class RTCPSDES
-{
-    public static String toString(RTCPSDES chunks[])
-    {
-        String s = "";
-        for (int i = 0; i < chunks.length; i++)
-            s = s + chunks[i];
+public class RTCPSDES {
+	public static String toString(RTCPSDES chunks[]) {
+		String s = "";
+		for (int i = 0; i < chunks.length; i++)
+			s = s + chunks[i];
 
-        return s;
-    }
+		return s;
+	}
 
-    public int ssrc;
+	public int ssrc;
 
-    public RTCPSDESItem items[];
+	public RTCPSDESItem items[];
 
-    public RTCPSDES()
-    {
-    }
+	public RTCPSDES() {
+	}
 
-    @Override
-    public String toString()
-    {
-        return "\t\tSource Description for sync source " + ssrc + ":\n"
-                + RTCPSDESItem.toString(items);
-    }
+	@Override
+	public String toString() {
+		return "\t\tSource Description for sync source " + ssrc + ":\n" + RTCPSDESItem.toString(items);
+	}
 }

@@ -1,6 +1,7 @@
 package javax.media.control;
 
-import javax.media.*;
+import javax.media.Buffer;
+import javax.media.Control;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,7 +11,6 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface FrameGrabbingControl extends Control
-{
-    public Buffer grabFrame();
+public interface FrameGrabbingControl extends Control {
+	public Buffer grabFrame();
 }

@@ -1,6 +1,7 @@
 package javax.media.rtp.event;
 
-import javax.media.rtp.*;
+import javax.media.rtp.Participant;
+import javax.media.rtp.SessionManager;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,18 +11,15 @@ import javax.media.rtp.*;
  * @author Ken Larson
  *
  */
-public class NewParticipantEvent extends SessionEvent
-{
-    private Participant participant;
+public class NewParticipantEvent extends SessionEvent {
+	private Participant participant;
 
-    public NewParticipantEvent(SessionManager from, Participant participant)
-    {
-        super(from);
-        this.participant = participant;
-    }
+	public NewParticipantEvent(SessionManager from, Participant participant) {
+		super(from);
+		this.participant = participant;
+	}
 
-    public Participant getParticipant()
-    {
-        return participant;
-    }
+	public Participant getParticipant() {
+		return participant;
+	}
 }

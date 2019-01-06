@@ -8,7 +8,6 @@ package javax.media.protocol;
  * @author Ken Larson
  *
  */
-public abstract class PushBufferDataSource extends DataSource
-{
-    public abstract PushBufferStream[] getStreams();
+public abstract class PushBufferDataSource extends DataSource {
+	public abstract PushBufferStream[] getStreams();
 }

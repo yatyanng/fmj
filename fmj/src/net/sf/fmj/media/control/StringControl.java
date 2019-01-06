@@ -5,20 +5,19 @@ package net.sf.fmj.media.control;
  * information pertaining to the player. In most cases this will be a read-only
  * control.
  */
-public interface StringControl extends AtomicControl
-{
-    String getTitle();
+public interface StringControl extends AtomicControl {
+	String getTitle();
 
-    /**
-     * Returns the string value for this control.
-     */
-    String getValue();
+	/**
+	 * Returns the string value for this control.
+	 */
+	String getValue();
 
-    String setTitle(String title);
+	String setTitle(String title);
 
-    /**
-     * ??? Sets the string value for this control. Returns the actual string
-     * that was set.
-     */
-    String setValue(String value);
+	/**
+	 * ??? Sets the string value for this control. Returns the actual string that
+	 * was set.
+	 */
+	String setValue(String value);
 }

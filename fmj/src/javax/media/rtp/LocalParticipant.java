@@ -1,6 +1,6 @@
 package javax.media.rtp;
 
-import javax.media.rtp.rtcp.*;
+import javax.media.rtp.rtcp.SourceDescription;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,7 +10,6 @@ import javax.media.rtp.rtcp.*;
  * @author Ken Larson
  *
  */
-public interface LocalParticipant extends Participant
-{
-    public void setSourceDescription(SourceDescription[] sourceDesc);
+public interface LocalParticipant extends Participant {
+	public void setSourceDescription(SourceDescription[] sourceDesc);
 }

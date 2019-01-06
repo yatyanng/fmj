@@ -9,7 +9,6 @@ package javax.media.rtp;
  * @deprecated
  */
 @Deprecated
-public interface DataChannel
-{
-    public RTPPushDataSource getControlChannel();
+public interface DataChannel {
+	public RTPPushDataSource getControlChannel();
 }

@@ -8,7 +8,6 @@ package javax.media.protocol;
  * @author Ken Larson
  *
  */
-public interface BufferTransferHandler
-{
-    public void transferData(PushBufferStream stream);
+public interface BufferTransferHandler {
+	public void transferData(PushBufferStream stream);
 }

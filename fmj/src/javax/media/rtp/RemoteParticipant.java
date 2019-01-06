@@ -8,7 +8,6 @@ package javax.media.rtp;
  * @author Ken Larson
  *
  */
-public interface RemoteParticipant extends Participant
-{
-    // No methods.
+public interface RemoteParticipant extends Participant {
+	// No methods.
 }

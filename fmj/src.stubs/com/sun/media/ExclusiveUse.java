@@ -1,6 +1,5 @@
 package com.sun.media;
 
-public interface ExclusiveUse
-{
-    public boolean isExclusive();
+public interface ExclusiveUse {
+	public boolean isExclusive();
 }

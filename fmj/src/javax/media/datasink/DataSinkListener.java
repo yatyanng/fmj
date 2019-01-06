@@ -8,7 +8,6 @@ package javax.media.datasink;
  * @author Ken Larson
  *
  */
-public interface DataSinkListener
-{
-    public void dataSinkUpdate(DataSinkEvent event);
+public interface DataSinkListener {
+	public void dataSinkUpdate(DataSinkEvent event);
 }

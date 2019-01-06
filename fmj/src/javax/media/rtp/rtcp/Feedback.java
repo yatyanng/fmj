@@ -8,20 +8,19 @@ package javax.media.rtp.rtcp;
  * @author Ken Larson
  *
  */
-public interface Feedback
-{
-    public long getDLSR();
+public interface Feedback {
+	public long getDLSR();
 
-    public int getFractionLost();
+	public int getFractionLost();
 
-    public long getJitter();
+	public long getJitter();
 
-    public long getLSR();
+	public long getLSR();
 
-    public long getNumLost();
+	public long getNumLost();
 
-    public long getSSRC();
+	public long getSSRC();
 
-    public long getXtndSeqNum();
+	public long getXtndSeqNum();
 
 }

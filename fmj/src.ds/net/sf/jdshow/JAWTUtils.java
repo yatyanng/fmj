@@ -1,6 +1,6 @@
 package net.sf.jdshow;
 
-import java.awt.*;
+import java.awt.Canvas;
 
 /**
  * Get a window handle for a particular window. Adapted from
@@ -10,18 +10,16 @@ import java.awt.*;
  *
  */
 
-public final class JAWTUtils
-{
-    // static
-    // {
-    // System.loadLibrary("jdshow");
-    // }
+public final class JAWTUtils {
+	// static
+	// {
+	// System.loadLibrary("jdshow");
+	// }
 
-    public static native long getWindowHandle(Canvas canvas);
+	public static native long getWindowHandle(Canvas canvas);
 
-    private JAWTUtils()
-    {
-        super();
-    }
+	private JAWTUtils() {
+		super();
+	}
 
 }

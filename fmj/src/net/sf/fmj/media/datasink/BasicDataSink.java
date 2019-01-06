@@ -1,50 +1,45 @@
 package net.sf.fmj.media.datasink;
 
-import java.util.*;
+import java.util.Vector;
 
-import javax.media.datasink.*;
+import javax.media.datasink.DataSinkErrorEvent;
+import javax.media.datasink.DataSinkEvent;
+import javax.media.datasink.DataSinkListener;
+import javax.media.datasink.EndOfStreamEvent;
 
-public abstract class BasicDataSink implements javax.media.DataSink
-{
-    protected final Vector<DataSinkListener> listeners
-        = new Vector<DataSinkListener>(1);
+public abstract class BasicDataSink implements javax.media.DataSink {
+	protected final Vector<DataSinkListener> listeners = new Vector<DataSinkListener>(1);
 
-    public void addDataSinkListener(DataSinkListener dsl)
-    {
-        if ((dsl != null) && !listeners.contains(dsl))
-            listeners.addElement(dsl);
-    }
+	@Override
+	public void addDataSinkListener(DataSinkListener dsl) {
+		if ((dsl != null) && !listeners.contains(dsl))
+			listeners.addElement(dsl);
+	}
 
-    protected void removeAllListeners()
-    {
-        listeners.removeAllElements();
-    }
+	protected void removeAllListeners() {
+		listeners.removeAllElements();
+	}
 
-    public void removeDataSinkListener(DataSinkListener dsl)
-    {
-        if (dsl != null)
-            listeners.removeElement(dsl);
-    }
+	@Override
+	public void removeDataSinkListener(DataSinkListener dsl) {
+		if (dsl != null)
+			listeners.removeElement(dsl);
+	}
 
-    protected final void sendDataSinkErrorEvent(String reason)
-    {
-        sendEvent(new DataSinkErrorEvent(this, reason));
-    }
+	protected final void sendDataSinkErrorEvent(String reason) {
+		sendEvent(new DataSinkErrorEvent(this, reason));
+	}
 
-    protected final void sendEndofStreamEvent()
-    {
-        sendEvent(new EndOfStreamEvent(this));
-    }
+	protected final void sendEndofStreamEvent() {
+		sendEvent(new EndOfStreamEvent(this));
+	}
 
-    protected void sendEvent(DataSinkEvent event)
-    {
-        if (!listeners.isEmpty())
-        {
-            synchronized (listeners)
-            {
-                for (DataSinkListener listener : listeners)
-                    listener.dataSinkUpdate(event);
-            }
-        }
-    }
+	protected void sendEvent(DataSinkEvent event) {
+		if (!listeners.isEmpty()) {
+			synchronized (listeners) {
+				for (DataSinkListener listener : listeners)
+					listener.dataSinkUpdate(event);
+			}
+		}
+	}
 }

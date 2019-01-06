@@ -8,6 +8,5 @@ package javax.media.protocol;
  * @author Ken Larson
  *
  */
-public interface Controls extends javax.media.Controls
-{
+public interface Controls extends javax.media.Controls {
 }

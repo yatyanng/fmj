@@ -1,6 +1,6 @@
 package net.sf.fmj.utility;
 
-import javax.media.*;
+import javax.media.Format;
 
 /**
  * Holds information about a plugin.
@@ -8,19 +8,17 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public class PlugInInfo
-{
-    public final String className;
-    public final int type;
-    public final Format[] in;
-    public final Format[] out;
+public class PlugInInfo {
+	public final String className;
+	public final int type;
+	public final Format[] in;
+	public final Format[] out;
 
-    public PlugInInfo(String className, Format[] in, Format[] out, int type)
-    {
-        super();
-        this.className = className;
-        this.type = type;
-        this.in = in;
-        this.out = out;
-    }
+	public PlugInInfo(String className, Format[] in, Format[] out, int type) {
+		super();
+		this.className = className;
+		this.type = type;
+		this.in = in;
+		this.out = out;
+	}
 }

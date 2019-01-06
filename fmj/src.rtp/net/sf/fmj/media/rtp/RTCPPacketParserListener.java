@@ -3,19 +3,18 @@ package net.sf.fmj.media.rtp;
 /**
  * Created by gp on 6/23/14.
  */
-public interface RTCPPacketParserListener
-{
-    void enterSenderReport();
+public interface RTCPPacketParserListener {
+	void enterSenderReport();
 
-    void malformedSenderReport();
+	void malformedSenderReport();
 
-    void malformedReceiverReport();
+	void malformedReceiverReport();
 
-    void malformedSourceDescription();
+	void malformedSourceDescription();
 
-    void malformedEndOfParticipation();
+	void malformedEndOfParticipation();
 
-    void uknownPayloadType();
+	void uknownPayloadType();
 
-    void visitSendeReport(RTCPSRPacket rtcpSRPacket);
+	void visitSendeReport(RTCPSRPacket rtcpSRPacket);
 }

@@ -1,6 +1,6 @@
 package net.sf.fmj.utility;
 
-import java.util.logging.*;
+import java.util.logging.Logger;
 
 /**
  * Logger for use by all of FMJ.
@@ -8,7 +8,6 @@ import java.util.logging.*;
  * @author Ken Larson
  *
  */
-public final class LoggerSingleton
-{
-    public static final Logger logger = Logger.getLogger("fmj");
+public final class LoggerSingleton {
+	public static final Logger logger = Logger.getLogger("fmj");
 }

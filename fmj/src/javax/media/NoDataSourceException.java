@@ -9,16 +9,13 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class NoDataSourceException extends MediaException
-{
-    public NoDataSourceException()
-    {
-        super();
-    }
+public class NoDataSourceException extends MediaException {
+	public NoDataSourceException() {
+		super();
+	}
 
-    public NoDataSourceException(String message)
-    {
-        super(message);
-    }
+	public NoDataSourceException(String message) {
+		super(message);
+	}
 
 }

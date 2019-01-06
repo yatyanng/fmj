@@ -1,6 +1,7 @@
 package javax.media.control;
 
-import javax.media.*;
+import javax.media.Control;
+import javax.media.Time;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,16 +11,15 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface FramePositioningControl extends Control
-{
-    public static final Time TIME_UNKNOWN = Time.TIME_UNKNOWN;
-    public static final int FRAME_UNKNOWN = Integer.MAX_VALUE;
+public interface FramePositioningControl extends Control {
+	public static final Time TIME_UNKNOWN = Time.TIME_UNKNOWN;
+	public static final int FRAME_UNKNOWN = Integer.MAX_VALUE;
 
-    public Time mapFrameToTime(int frameNumber);
+	public Time mapFrameToTime(int frameNumber);
 
-    public int mapTimeToFrame(Time mediaTime);
+	public int mapTimeToFrame(Time mediaTime);
 
-    public int seek(int frameNumber);
+	public int seek(int frameNumber);
 
-    public int skip(int framesToSkip);
+	public int skip(int framesToSkip);
 }

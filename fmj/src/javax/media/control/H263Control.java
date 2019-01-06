@@ -1,6 +1,6 @@
 package javax.media.control;
 
-import javax.media.*;
+import javax.media.Control;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,39 +10,38 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface H263Control extends Control
-{
-    public boolean getAdvancedPrediction();
+public interface H263Control extends Control {
+	public boolean getAdvancedPrediction();
 
-    public boolean getArithmeticCoding();
+	public boolean getArithmeticCoding();
 
-    public int getBppMaxKb();
+	public int getBppMaxKb();
 
-    public boolean getErrorCompensation();
+	public boolean getErrorCompensation();
 
-    public int getHRD_B();
+	public int getHRD_B();
 
-    public boolean getPBFrames();
+	public boolean getPBFrames();
 
-    public boolean getUnrestrictedVector();
+	public boolean getUnrestrictedVector();
 
-    public boolean isAdvancedPredictionSupported();
+	public boolean isAdvancedPredictionSupported();
 
-    public boolean isArithmeticCodingSupported();
+	public boolean isArithmeticCodingSupported();
 
-    public boolean isErrorCompensationSupported();
+	public boolean isErrorCompensationSupported();
 
-    public boolean isPBFramesSupported();
+	public boolean isPBFramesSupported();
 
-    public boolean isUnrestrictedVectorSupported();
+	public boolean isUnrestrictedVectorSupported();
 
-    public boolean setAdvancedPrediction(boolean newAdvancedPredictionMode);
+	public boolean setAdvancedPrediction(boolean newAdvancedPredictionMode);
 
-    public boolean setArithmeticCoding(boolean newArithmeticCodingMode);
+	public boolean setArithmeticCoding(boolean newArithmeticCodingMode);
 
-    public boolean setErrorCompensation(boolean newtErrorCompensationMode);
+	public boolean setErrorCompensation(boolean newtErrorCompensationMode);
 
-    public boolean setPBFrames(boolean newPBFramesMode);
+	public boolean setPBFrames(boolean newPBFramesMode);
 
-    public boolean setUnrestrictedVector(boolean newUnrestrictedVectorMode);
+	public boolean setUnrestrictedVector(boolean newUnrestrictedVectorMode);
 }

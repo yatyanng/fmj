@@ -1,18 +1,22 @@
 package net.sf.fmj.media.renderer.video;
 
-import java.awt.*;
-import java.io.*;
-import java.util.logging.*;
+import java.awt.Component;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import javax.imageio.*;
-import javax.media.*;
-import javax.media.format.*;
-import javax.media.renderer.*;
+import javax.imageio.ImageIO;
+import javax.media.Buffer;
+import javax.media.Format;
+import javax.media.format.JPEGFormat;
+import javax.media.format.VideoFormat;
+import javax.media.renderer.VideoRenderer;
 
-import net.sf.fmj.media.*;
-import net.sf.fmj.utility.*;
+import com.lti.utils.StringUtils;
 
-import com.lti.utils.*;
+import net.sf.fmj.media.AbstractVideoRenderer;
+import net.sf.fmj.utility.LoggerSingleton;
 
 /**
  *
@@ -28,129 +32,97 @@ import com.lti.utils.*;
  * @author Ken Larson
  *
  */
-public class JPEGRenderer extends AbstractVideoRenderer implements
-        VideoRenderer
-{
-    private static final Logger logger = LoggerSingleton.logger;
+public class JPEGRenderer extends AbstractVideoRenderer implements VideoRenderer {
+	private static final Logger logger = LoggerSingleton.logger;
 
-    private boolean scale;
+	private boolean scale;
 
-    private final Format[] supportedInputFormats = new Format[] { new JPEGFormat() };
+	private final Format[] supportedInputFormats = new Format[] { new JPEGFormat() };
 
-    private JVideoComponent component = new JVideoComponent();
+	private JVideoComponent component = new JVideoComponent();
 
-    private Object[] controls = new Object[] { this };
+	private Object[] controls = new Object[] { this };
 
-    @Override
-    public int doProcess(Buffer buffer)
-    {
-        if (buffer.isEOM())
-        {
-            logger.warning(this.getClass().getSimpleName()
-                    + "passed buffer with EOM flag"); // normally not supposed
-                                                      // to happen, is it?
-            return BUFFER_PROCESSED_OK;
-        }
-        if (buffer.getData() == null)
-        {
-            logger.warning("buffer.getData() == null, eom=" + buffer.isEOM());
-            return BUFFER_PROCESSED_FAILED; // TODO: check for EOM?
-        }
+	@Override
+	public int doProcess(Buffer buffer) {
+		if (buffer.isEOM()) {
+			logger.warning(this.getClass().getSimpleName() + "passed buffer with EOM flag"); // normally not supposed
+																								// to happen, is it?
+			return BUFFER_PROCESSED_OK;
+		}
+		if (buffer.getData() == null) {
+			logger.warning("buffer.getData() == null, eom=" + buffer.isEOM());
+			return BUFFER_PROCESSED_FAILED; // TODO: check for EOM?
+		}
 
-        if (buffer.getLength() == 0)
-        {
-            logger.warning("buffer.getLength() == 0, eom=" + buffer.isEOM());
-            return BUFFER_PROCESSED_FAILED; // TODO: check for EOM?
-        }
+		if (buffer.getLength() == 0) {
+			logger.warning("buffer.getLength() == 0, eom=" + buffer.isEOM());
+			return BUFFER_PROCESSED_FAILED; // TODO: check for EOM?
+		}
 
-        if (buffer.isDiscard())
-        {
-            logger.warning("JPEGRenderer passed buffer with discard flag");
-            return BUFFER_PROCESSED_FAILED;
-        }
+		if (buffer.isDiscard()) {
+			logger.warning("JPEGRenderer passed buffer with discard flag");
+			return BUFFER_PROCESSED_FAILED;
+		}
 
-        final java.awt.Image image;
-        try
-        {
-            image = ImageIO.read(new ByteArrayInputStream((byte[]) buffer
-                    .getData(), buffer.getOffset(), buffer.getLength()));
-        } catch (IOException e)
-        {
-            logger.log(Level.WARNING, "" + e, e);
-            logger.log(
-                    Level.WARNING,
-                    "data: "
-                            + StringUtils.byteArrayToHexString(
-                                    (byte[]) buffer.getData(),
-                                    buffer.getLength(), buffer.getOffset()));
-            return BUFFER_PROCESSED_FAILED;
-        }
+		final java.awt.Image image;
+		try {
+			image = ImageIO
+					.read(new ByteArrayInputStream((byte[]) buffer.getData(), buffer.getOffset(), buffer.getLength()));
+		} catch (IOException e) {
+			logger.log(Level.WARNING, "" + e, e);
+			logger.log(Level.WARNING, "data: " + StringUtils.byteArrayToHexString((byte[]) buffer.getData(),
+					buffer.getLength(), buffer.getOffset()));
+			return BUFFER_PROCESSED_FAILED;
+		}
 
-        if (image == null)
-        {
-            logger.log(Level.WARNING,
-                    "Failed to read image (ImageIO.read returned null).");
-            logger.log(
-                    Level.WARNING,
-                    "data: "
-                            + StringUtils.byteArrayToHexString(
-                                    (byte[]) buffer.getData(),
-                                    buffer.getLength(), buffer.getOffset()));
-            return BUFFER_PROCESSED_FAILED;
-        }
+		if (image == null) {
+			logger.log(Level.WARNING, "Failed to read image (ImageIO.read returned null).");
+			logger.log(Level.WARNING, "data: " + StringUtils.byteArrayToHexString((byte[]) buffer.getData(),
+					buffer.getLength(), buffer.getOffset()));
+			return BUFFER_PROCESSED_FAILED;
+		}
 
-        try
-        {
-            component.setImage(image);
-        } catch (Exception e)
-        {
-            logger.log(Level.WARNING, "" + e, e);
-            logger.log(
-                    Level.WARNING,
-                    "data: "
-                            + StringUtils.byteArrayToHexString(
-                                    (byte[]) buffer.getData(),
-                                    buffer.getLength(), buffer.getOffset()));
-            return BUFFER_PROCESSED_FAILED;
-        }
-        return BUFFER_PROCESSED_OK;
-    }
+		try {
+			component.setImage(image);
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "" + e, e);
+			logger.log(Level.WARNING, "data: " + StringUtils.byteArrayToHexString((byte[]) buffer.getData(),
+					buffer.getLength(), buffer.getOffset()));
+			return BUFFER_PROCESSED_FAILED;
+		}
+		return BUFFER_PROCESSED_OK;
+	}
 
-    @Override
-    public Component getComponent()
-    {
-        return component;
-    }
+	@Override
+	public Component getComponent() {
+		return component;
+	}
 
-    @Override
-    public Object[] getControls()
-    {
-        return controls;
-    }
+	@Override
+	public Object[] getControls() {
+		return controls;
+	}
 
-    // @Override
-    @Override
-    public String getName()
-    {
-        return "JPEG Renderer";
-    }
+	// @Override
+	@Override
+	public String getName() {
+		return "JPEG Renderer";
+	}
 
-    // @Override
-    @Override
-    public Format[] getSupportedInputFormats()
-    {
-        return supportedInputFormats;
-    }
+	// @Override
+	@Override
+	public Format[] getSupportedInputFormats() {
+		return supportedInputFormats;
+	}
 
-    // @Override
-    @Override
-    public Format setInputFormat(Format format)
-    {
-        VideoFormat chosenFormat = (VideoFormat) super.setInputFormat(format);
-        if (chosenFormat != null)
-        {
-            getComponent().setPreferredSize(chosenFormat.getSize());
-        }
-        return chosenFormat;
-    }
+	// @Override
+	@Override
+	public Format setInputFormat(Format format) {
+		VideoFormat chosenFormat = (VideoFormat) super.setInputFormat(format);
+		if (chosenFormat != null) {
+			getComponent().setPreferredSize(chosenFormat.getSize());
+		}
+		return chosenFormat;
+	}
 }

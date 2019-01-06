@@ -1,8 +1,9 @@
 package net.sf.fmj.media.protocol.merge;
 
-import java.io.*;
+import java.io.IOException;
 
-import javax.media.*;
+import javax.media.Duration;
+import javax.media.Time;
 
 /**
  * Protocol handler for "merge" protocol, allowing multiple merged data sources
@@ -13,50 +14,41 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public class DataSource extends javax.media.protocol.DataSource
-{
-    @Override
-    public void connect() throws IOException
-    {
-    }
+public class DataSource extends javax.media.protocol.DataSource {
+	@Override
+	public void connect() throws IOException {
+	}
 
-    @Override
-    public void disconnect()
-    {
-    }
+	@Override
+	public void disconnect() {
+	}
 
-    @Override
-    public String getContentType()
-    {
-        return "merge";
-    }
+	@Override
+	public String getContentType() {
+		return "merge";
+	}
 
-    @Override
-    public Object getControl(String controlType)
-    {
-        return null;
-    }
+	@Override
+	public Object getControl(String controlType) {
+		return null;
+	}
 
-    @Override
-    public Object[] getControls()
-    {
-        return new Object[0];
-    }
+	@Override
+	public Object[] getControls() {
+		return new Object[0];
+	}
 
-    @Override
-    public Time getDuration()
-    {
-        return Duration.DURATION_UNKNOWN;
-    }
+	@Override
+	public Time getDuration() {
+		return Duration.DURATION_UNKNOWN;
+	}
 
-    @Override
-    public void start() throws IOException
-    {
-    }
+	@Override
+	public void start() throws IOException {
+	}
 
-    @Override
-    public void stop() throws IOException
-    {
-    }
+	@Override
+	public void stop() throws IOException {
+	}
 
 }

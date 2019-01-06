@@ -8,7 +8,6 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public interface GainChangeListener
-{
-    public void gainChange(GainChangeEvent event);
+public interface GainChangeListener {
+	public void gainChange(GainChangeEvent event);
 }

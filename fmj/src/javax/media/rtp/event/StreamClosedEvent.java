@@ -1,6 +1,7 @@
 package javax.media.rtp.event;
 
-import javax.media.rtp.*;
+import javax.media.rtp.SendStream;
+import javax.media.rtp.SessionManager;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,10 +11,8 @@ import javax.media.rtp.*;
  * @author Ken Larson
  *
  */
-public class StreamClosedEvent extends SendStreamEvent
-{
-    public StreamClosedEvent(SessionManager from, SendStream sendStream)
-    {
-        super(from, sendStream, null);
-    }
+public class StreamClosedEvent extends SendStreamEvent {
+	public StreamClosedEvent(SessionManager from, SendStream sendStream) {
+		super(from, sendStream, null);
+	}
 }

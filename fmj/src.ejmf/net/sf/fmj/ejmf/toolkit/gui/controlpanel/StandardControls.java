@@ -1,9 +1,22 @@
 package net.sf.fmj.ejmf.toolkit.gui.controlpanel;
 
-import javax.media.*;
-import javax.swing.*;
+import javax.media.Controller;
+import javax.media.ControllerEvent;
+import javax.media.EndOfMediaEvent;
+import javax.media.Player;
+import javax.media.Time;
+import javax.swing.AbstractButton;
 
-import net.sf.fmj.ejmf.toolkit.gui.controls.*;
+import net.sf.fmj.ejmf.toolkit.gui.controls.AbstractListenerControl;
+import net.sf.fmj.ejmf.toolkit.gui.controls.Skin;
+import net.sf.fmj.ejmf.toolkit.gui.controls.StandardFastForwardControl;
+import net.sf.fmj.ejmf.toolkit.gui.controls.StandardGainControl;
+import net.sf.fmj.ejmf.toolkit.gui.controls.StandardGainMeterControl;
+import net.sf.fmj.ejmf.toolkit.gui.controls.StandardPauseControl;
+import net.sf.fmj.ejmf.toolkit.gui.controls.StandardProgressControl;
+import net.sf.fmj.ejmf.toolkit.gui.controls.StandardReverseControl;
+import net.sf.fmj.ejmf.toolkit.gui.controls.StandardStartControl;
+import net.sf.fmj.ejmf.toolkit.gui.controls.StandardStopControl;
 
 /**
  * StandardControls provides a complete set of JMF player control components.
@@ -55,359 +68,326 @@ import net.sf.fmj.ejmf.toolkit.gui.controls.*;
  *
  */
 
-class StandardControls extends AbstractControls
-{
-    public static final String START_CONTROL = "StandardStartControl";
-    public static final String PAUSE_CONTROL = "StandardPauseControl";
-    public static final String FF_CONTROL = "StandardFastForwardControl";
-    public static final String PROGRESS_CONTROL = "StandardProgressControl";
-    public static final String REVERSE_CONTROL = "StandardReverseControl";
-    public static final String STOP_CONTROL = "StandardStopControl";
-    public static final String GAIN_CONTROL = "StandardGainControl";
-    public static final String GAINMETER_CONTROL = "StandardGainMeterControl";
+class StandardControls extends AbstractControls {
+	public static final String START_CONTROL = "StandardStartControl";
+	public static final String PAUSE_CONTROL = "StandardPauseControl";
+	public static final String FF_CONTROL = "StandardFastForwardControl";
+	public static final String PROGRESS_CONTROL = "StandardProgressControl";
+	public static final String REVERSE_CONTROL = "StandardReverseControl";
+	public static final String STOP_CONTROL = "StandardStopControl";
+	public static final String GAIN_CONTROL = "StandardGainControl";
+	public static final String GAINMETER_CONTROL = "StandardGainMeterControl";
 
-    private AbstractListenerControl startControl;
-    private AbstractListenerControl stopControl;
-    private AbstractListenerControl pauseControl;
-    private AbstractListenerControl fastForwardControl;
-    private AbstractListenerControl reverseControl;
+	private AbstractListenerControl startControl;
+	private AbstractListenerControl stopControl;
+	private AbstractListenerControl pauseControl;
+	private AbstractListenerControl fastForwardControl;
+	private AbstractListenerControl reverseControl;
 
-    private AbstractListenerControl gainControl;
-    private AbstractListenerControl gainMeterControl;
-    private StandardProgressControl progressControl;
+	private AbstractListenerControl gainControl;
+	private AbstractListenerControl gainMeterControl;
+	private StandardProgressControl progressControl;
 
-    // Rate for fast forward
-    private float fastForwardRate = 2.0f;
+	// Rate for fast forward
+	private float fastForwardRate = 2.0f;
 
-    /**
-     * Builds the components comprising a player control panel. No layout is
-     * done. Which components are built depends on the attributes of the player.
-     *
-     * @param player
-     *            Player associated with control panel
-     * @see StandardControlPanel
-     */
-    public StandardControls(Skin skin, Player player)
-    {
-        super(skin, player);
-    }
+	/**
+	 * Builds the components comprising a player control panel. No layout is done.
+	 * Which components are built depends on the attributes of the player.
+	 *
+	 * @param player Player associated with control panel
+	 * @see StandardControlPanel
+	 */
+	public StandardControls(Skin skin, Player player) {
+		super(skin, player);
+	}
 
-    // These methods create the standard controls. Subclasses
-    // over-ride them to define their own controls.
+	// These methods create the standard controls. Subclasses
+	// over-ride them to define their own controls.
 
-    /**
-     * This method implements the ControllerListener interface. Each event from
-     * the Controller causes this method to be invoked.
-     * <p>
-     * All it does it rewind media in response to EndOfMedia and then call
-     * super.controllerUpdate.
-     *
-     * @see javax.media.ControllerListener
-     * @see javax.media.Controller
-     */
+	/**
+	 * This method implements the ControllerListener interface. Each event from the
+	 * Controller causes this method to be invoked.
+	 * <p>
+	 * All it does it rewind media in response to EndOfMedia and then call
+	 * super.controllerUpdate.
+	 *
+	 * @see javax.media.ControllerListener
+	 * @see javax.media.Controller
+	 */
 
-    @Override
-    public synchronized void controllerUpdate(ControllerEvent event)
-    {
-        if (event instanceof EndOfMediaEvent)
-        {
-            getPlayer().setMediaTime(new Time(0));
-        }
-        super.controllerUpdate(event);
-    }
+	@Override
+	public synchronized void controllerUpdate(ControllerEvent event) {
+		if (event instanceof EndOfMediaEvent) {
+			getPlayer().setMediaTime(new Time(0));
+		}
+		super.controllerUpdate(event);
+	}
 
-    /**
-     * Create a fast forward control. Subclasses should over-ride this to
-     * customize the the fast forward control.
-     *
-     * @return AbstractListenerControl for fast forward operation
-     */
+	/**
+	 * Create a fast forward control. Subclasses should over-ride this to customize
+	 * the the fast forward control.
+	 *
+	 * @return AbstractListenerControl for fast forward operation
+	 */
 
-    protected final AbstractListenerControl createFastForwardControl(Skin skin)
-    {
-        return new StandardFastForwardControl(skin);
-    }
+	protected final AbstractListenerControl createFastForwardControl(Skin skin) {
+		return new StandardFastForwardControl(skin);
+	}
 
-    /**
-     * Create a gain increase/decrease control. Subclasses should over-ride this
-     * to customize the the gain increase/decrease control.
-     *
-     * @return AbstractListenerControl for gain control operation
-     */
-    protected final AbstractListenerControl createGainControl(Skin skin)
-    {
-        return new StandardGainControl(skin);
-    }
+	/**
+	 * Create a gain increase/decrease control. Subclasses should over-ride this to
+	 * customize the the gain increase/decrease control.
+	 *
+	 * @return AbstractListenerControl for gain control operation
+	 */
+	protected final AbstractListenerControl createGainControl(Skin skin) {
+		return new StandardGainControl(skin);
+	}
 
-    /**
-     * Create a gain meter control. Subclasses should over-ride this to
-     * customize the the gain meter control.
-     *
-     * @return AbstractListenerControl for gain meter operation
-     */
-    protected final AbstractListenerControl createGainMeterControl(Skin skin)
-    {
-        return new StandardGainMeterControl(skin);
-    }
+	/**
+	 * Create a gain meter control. Subclasses should over-ride this to customize
+	 * the the gain meter control.
+	 *
+	 * @return AbstractListenerControl for gain meter operation
+	 */
+	protected final AbstractListenerControl createGainMeterControl(Skin skin) {
+		return new StandardGainMeterControl(skin);
+	}
 
-    /**
-     * Create a pause control. Subclasses should over-ride this to customize the
-     * the pause control.
-     *
-     * @return AbstractListenerControl for pause operation
-     */
+	/**
+	 * Create a pause control. Subclasses should over-ride this to customize the the
+	 * pause control.
+	 *
+	 * @return AbstractListenerControl for pause operation
+	 */
 
-    protected final AbstractListenerControl createPauseControl(Skin skin)
-    {
-        return new StandardPauseControl(skin);
-    }
+	protected final AbstractListenerControl createPauseControl(Skin skin) {
+		return new StandardPauseControl(skin);
+	}
 
-    /**
-     * Create a progress control. Subclasses should over-ride this to customize
-     * the the progress control.
-     *
-     * @return StandardProgressControl for display and operation of progress
-     *         slider.
-     */
-    protected final StandardProgressControl createProgressControl(Skin skin)
-    {
-        return new StandardProgressControl(skin);
-    }
+	/**
+	 * Create a progress control. Subclasses should over-ride this to customize the
+	 * the progress control.
+	 *
+	 * @return StandardProgressControl for display and operation of progress slider.
+	 */
+	protected final StandardProgressControl createProgressControl(Skin skin) {
+		return new StandardProgressControl(skin);
+	}
 
-    /**
-     * Create a reverse control. Subclasses should over-ride this to customize
-     * the the reverse control.
-     *
-     * @return AbstractListenerControl for reverse operation
-     */
+	/**
+	 * Create a reverse control. Subclasses should over-ride this to customize the
+	 * the reverse control.
+	 *
+	 * @return AbstractListenerControl for reverse operation
+	 */
 
-    protected final AbstractListenerControl createReverseControl(Skin skin)
-    {
-        return new StandardReverseControl(skin);
-    }
+	protected final AbstractListenerControl createReverseControl(Skin skin) {
+		return new StandardReverseControl(skin);
+	}
 
-    /**
-     * Create a start control. Subclasses should over-ride this to customize the
-     * the start control.
-     *
-     * @return AbstractListenerControl for start operation
-     */
-    protected final AbstractListenerControl createStartControl(Skin skin)
-    {
-        return new StandardStartControl(skin);
-    }
+	/**
+	 * Create a start control. Subclasses should over-ride this to customize the the
+	 * start control.
+	 *
+	 * @return AbstractListenerControl for start operation
+	 */
+	protected final AbstractListenerControl createStartControl(Skin skin) {
+		return new StandardStartControl(skin);
+	}
 
-    /**
-     * Create a stop control. Subclasses should over-ride this to customize the
-     * the stop control.
-     *
-     * @return AbstractListenerControl for stop operation
-     */
+	/**
+	 * Create a stop control. Subclasses should over-ride this to customize the the
+	 * stop control.
+	 *
+	 * @return AbstractListenerControl for stop operation
+	 */
 
-    protected final AbstractListenerControl createStopControl(Skin skin)
-    {
-        return new StandardStopControl(skin);
-    }
+	protected final AbstractListenerControl createStopControl(Skin skin) {
+		return new StandardStopControl(skin);
+	}
 
-    /**
-     * Retrieve the AbstractListenerControl that performs as the player fast
-     * forward control.
-     *
-     * @return fast forward control as AbstractListenerControl
-     * @see java.swing.AbstractButton
-     */
-    public AbstractListenerControl getFastForwardControl()
-    {
-        return getControl(FF_CONTROL);
-    }
+	/**
+	 * Retrieve the AbstractListenerControl that performs as the player fast forward
+	 * control.
+	 *
+	 * @return fast forward control as AbstractListenerControl
+	 * @see java.swing.AbstractButton
+	 */
+	public AbstractListenerControl getFastForwardControl() {
+		return getControl(FF_CONTROL);
+	}
 
-    /**
-     * Retrieve the AbstractListenerControl that performs as the player gain
-     * control.
-     *
-     * @return gain control as AbstractListenerControl
-     */
-    public AbstractListenerControl getGainControl()
-    {
-        return getControl(GAIN_CONTROL);
-    }
+	/**
+	 * Retrieve the AbstractListenerControl that performs as the player gain
+	 * control.
+	 *
+	 * @return gain control as AbstractListenerControl
+	 */
+	public AbstractListenerControl getGainControl() {
+		return getControl(GAIN_CONTROL);
+	}
 
-    /**
-     * Retrieve the AbstractListenerControl that performs as the player gain
-     * meter control.
-     *
-     * @return gain meter control as AbstractListenerControl
-     */
-    public AbstractListenerControl getGainMeterControl()
-    {
-        return getControl(GAINMETER_CONTROL);
-    }
+	/**
+	 * Retrieve the AbstractListenerControl that performs as the player gain meter
+	 * control.
+	 *
+	 * @return gain meter control as AbstractListenerControl
+	 */
+	public AbstractListenerControl getGainMeterControl() {
+		return getControl(GAINMETER_CONTROL);
+	}
 
-    /**
-     * Return button associated with pause control.
-     *
-     * @return pause button as AbstractButton
-     */
-    public AbstractButton getPauseButton()
-    {
-        return (AbstractButton) getControl(PAUSE_CONTROL).getControlComponent();
-    }
+	/**
+	 * Return button associated with pause control.
+	 *
+	 * @return pause button as AbstractButton
+	 */
+	public AbstractButton getPauseButton() {
+		return (AbstractButton) getControl(PAUSE_CONTROL).getControlComponent();
+	}
 
-    /**
-     * Retrieve the AbstractListenerControl that performs as the player pause
-     * button.
-     *
-     * @return pause control as AbstractListenerControl
-     */
-    public AbstractListenerControl getPauseControl()
-    {
-        return getControl(PAUSE_CONTROL);
-    }
+	/**
+	 * Retrieve the AbstractListenerControl that performs as the player pause
+	 * button.
+	 *
+	 * @return pause control as AbstractListenerControl
+	 */
+	public AbstractListenerControl getPauseControl() {
+		return getControl(PAUSE_CONTROL);
+	}
 
-    /**
-     * Retrieve the ProgressBar component that performs as the player progress
-     * bar.
-     *
-     * @return progress slider as StandardProgressControl
-     */
-    public StandardProgressControl getProgressControl()
-    {
-        return (StandardProgressControl) getControl(PROGRESS_CONTROL);
-    }
+	/**
+	 * Retrieve the ProgressBar component that performs as the player progress bar.
+	 *
+	 * @return progress slider as StandardProgressControl
+	 */
+	public StandardProgressControl getProgressControl() {
+		return (StandardProgressControl) getControl(PROGRESS_CONTROL);
+	}
 
-    /**
-     * Return button associated with reverse control.
-     *
-     * @return reverse button as AbstractButton
-     */
-    public AbstractButton getReverseButton()
-    {
-        return (AbstractButton) getControl(REVERSE_CONTROL)
-                .getControlComponent();
-    }
+	/**
+	 * Return button associated with reverse control.
+	 *
+	 * @return reverse button as AbstractButton
+	 */
+	public AbstractButton getReverseButton() {
+		return (AbstractButton) getControl(REVERSE_CONTROL).getControlComponent();
+	}
 
-    /**
-     * Retrieve the AbstractListenerControl that performs as the player reverse
-     * control.
-     *
-     * @return reverse control as AbstractListenerControl
-     * @see java.swing.AbstractButton
-     */
-    public AbstractListenerControl getReverseControl()
-    {
-        return getControl(REVERSE_CONTROL);
-    }
+	/**
+	 * Retrieve the AbstractListenerControl that performs as the player reverse
+	 * control.
+	 *
+	 * @return reverse control as AbstractListenerControl
+	 * @see java.swing.AbstractButton
+	 */
+	public AbstractListenerControl getReverseControl() {
+		return getControl(REVERSE_CONTROL);
+	}
 
-    // ////////////// End default control creation /////////////////
+	// ////////////// End default control creation /////////////////
 
-    /**
-     * Return button associated with start control.
-     *
-     * @return start button as AbstractButton
-     */
-    public AbstractButton getStartButton()
-    {
-        return (AbstractButton) getControl(START_CONTROL).getControlComponent();
-    }
+	/**
+	 * Return button associated with start control.
+	 *
+	 * @return start button as AbstractButton
+	 */
+	public AbstractButton getStartButton() {
+		return (AbstractButton) getControl(START_CONTROL).getControlComponent();
+	}
 
-    // Miscellaneous Accessor Methods
+	// Miscellaneous Accessor Methods
 
-    /**
-     * Retrieve the AbstractButton that performs as the player start control.
-     *
-     * @return start control as AbstractListenerControl
-     * @see java.swing.AbstractButton
-     */
-    public AbstractListenerControl getStartControl()
-    {
-        return getControl(START_CONTROL);
-    }
+	/**
+	 * Retrieve the AbstractButton that performs as the player start control.
+	 *
+	 * @return start control as AbstractListenerControl
+	 * @see java.swing.AbstractButton
+	 */
+	public AbstractListenerControl getStartControl() {
+		return getControl(START_CONTROL);
+	}
 
-    /**
-     * Return button associated with stop control.
-     *
-     * @return stop button as AbstractButton
-     */
-    public AbstractButton getStopButton()
-    {
-        return (AbstractButton) getControl(STOP_CONTROL).getControlComponent();
-    }
+	/**
+	 * Return button associated with stop control.
+	 *
+	 * @return stop button as AbstractButton
+	 */
+	public AbstractButton getStopButton() {
+		return (AbstractButton) getControl(STOP_CONTROL).getControlComponent();
+	}
 
-    /**
-     * Retrieve the AbstractListenerControl that performs as the player stop
-     * control.
-     *
-     * @return stop control as AbstractListenerControl
-     * @see java.swing.AbstractButton
-     */
-    public AbstractListenerControl getStopControl()
-    {
-        return getControl(STOP_CONTROL);
-    }
+	/**
+	 * Retrieve the AbstractListenerControl that performs as the player stop
+	 * control.
+	 *
+	 * @return stop control as AbstractListenerControl
+	 * @see java.swing.AbstractButton
+	 */
+	public AbstractListenerControl getStopControl() {
+		return getControl(STOP_CONTROL);
+	}
 
-    /**
-     * Build the control components.
-     */
+	/**
+	 * Build the control components.
+	 */
 
-    @Override
-    protected void makeControls(Skin skin)
-    {
-        AbstractListenerControl c;
+	@Override
+	protected void makeControls(Skin skin) {
+		AbstractListenerControl c;
 
-        c = fastForwardControl = createFastForwardControl(skin);
-        addControl(FF_CONTROL, fastForwardControl);
+		c = fastForwardControl = createFastForwardControl(skin);
+		addControl(FF_CONTROL, fastForwardControl);
 
-        c = reverseControl = createReverseControl(skin);
-        addControl(REVERSE_CONTROL, reverseControl);
+		c = reverseControl = createReverseControl(skin);
+		addControl(REVERSE_CONTROL, reverseControl);
 
-        c = startControl = createStartControl(skin);
-        addControl(START_CONTROL, startControl);
+		c = startControl = createStartControl(skin);
+		addControl(START_CONTROL, startControl);
 
-        c = stopControl = createStopControl(skin);
-        addControl(STOP_CONTROL, stopControl);
+		c = stopControl = createStopControl(skin);
+		addControl(STOP_CONTROL, stopControl);
 
-        c = pauseControl = createPauseControl(skin);
-        addControl(PAUSE_CONTROL, pauseControl);
+		c = pauseControl = createPauseControl(skin);
+		addControl(PAUSE_CONTROL, pauseControl);
 
-        c = gainControl = createGainControl(skin);
-        addControl(GAIN_CONTROL, gainControl);
+		c = gainControl = createGainControl(skin);
+		addControl(GAIN_CONTROL, gainControl);
 
-        c = gainMeterControl = createGainMeterControl(skin);
-        addControl(GAINMETER_CONTROL, gainMeterControl);
+		c = gainMeterControl = createGainMeterControl(skin);
+		addControl(GAINMETER_CONTROL, gainMeterControl);
 
-        c = progressControl = createProgressControl(skin);
-        addControl(PROGRESS_CONTROL, progressControl);
-    }
+		c = progressControl = createProgressControl(skin);
+		addControl(PROGRESS_CONTROL, progressControl);
+	}
 
-    /**
-     *
-     * Sets the enable state of the various controls based on the state of the
-     * Controller.
-     *
-     * This method should be over-ridden by subclasses whose 'off' behavior is
-     * different than being disabled. The ejmf.toolkit.gui.EjmfControlPanel is
-     * an example of this.
-     *
-     * If special behavior is needed, this should be over-ridden.
-     *
-     * @param state
-     *            current state of control panel
-     *
-     * @see javax.media.Controller @ @see ejmf.toolkit.gui.EjmfControlPanel
-     */
+	/**
+	 *
+	 * Sets the enable state of the various controls based on the state of the
+	 * Controller.
+	 *
+	 * This method should be over-ridden by subclasses whose 'off' behavior is
+	 * different than being disabled. The ejmf.toolkit.gui.EjmfControlPanel is an
+	 * example of this.
+	 *
+	 * If special behavior is needed, this should be over-ridden.
+	 *
+	 * @param state current state of control panel
+	 *
+	 * @see javax.media.Controller @ @see ejmf.toolkit.gui.EjmfControlPanel
+	 */
 
-    @Override
-    public void setControlComponentState(int state)
-    {
-        boolean on = (state == Controller.Started);
-        getStartButton().setEnabled(!on);
-        getStopButton().setEnabled(on);
-        getPauseButton().setEnabled(on);
-        getReverseButton().setEnabled(on);
-        if (state != Controller.Started)
-        {
-            getProgressControl().setValue(
-                    getPlayer().getMediaTime().getNanoseconds());
-        }
-    }
+	@Override
+	public void setControlComponentState(int state) {
+		boolean on = (state == Controller.Started);
+		getStartButton().setEnabled(!on);
+		getStopButton().setEnabled(on);
+		getPauseButton().setEnabled(on);
+		getReverseButton().setEnabled(on);
+		if (state != Controller.Started) {
+			getProgressControl().setValue(getPlayer().getMediaTime().getNanoseconds());
+		}
+	}
 }

@@ -1,16 +1,21 @@
 package net.sf.fmj.media.protocol.res;
 
-import java.io.*;
-import java.net.*;
-import java.util.logging.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import javax.media.*;
-import javax.media.protocol.*;
+import javax.media.Time;
+import javax.media.protocol.ContentDescriptor;
+import javax.media.protocol.PullDataSource;
+import javax.media.protocol.PullSourceStream;
+import javax.media.protocol.SourceCloneable;
 
-import net.sf.fmj.media.*;
-import net.sf.fmj.utility.*;
+import com.lti.utils.PathUtils;
 
-import com.lti.utils.*;
+import net.sf.fmj.media.MimeManager;
+import net.sf.fmj.utility.LoggerSingleton;
 
 /**
  * Protocol handler for res: protocol, loads stream from Java resource.
@@ -18,232 +23,208 @@ import com.lti.utils.*;
  * @author Ken Larson
  *
  */
-public class DataSource extends PullDataSource implements SourceCloneable
-{
-    class ResSourceStream implements PullSourceStream
-    {
-        private boolean endOfStream = false;
+public class DataSource extends PullDataSource implements SourceCloneable {
+	class ResSourceStream implements PullSourceStream {
+		private boolean endOfStream = false;
 
-        public boolean endOfStream()
-        {
-            return endOfStream;
-        }
+		@Override
+		public boolean endOfStream() {
+			return endOfStream;
+		}
 
-        public ContentDescriptor getContentDescriptor()
-        {
-            return contentType;
-        }
+		@Override
+		public ContentDescriptor getContentDescriptor() {
+			return contentType;
+		}
 
-        public long getContentLength()
-        {
-            return -1; // TODO
-        }
+		@Override
+		public long getContentLength() {
+			return -1; // TODO
+		}
 
-        public Object getControl(String controlType)
-        {
-            return null;
-        }
+		@Override
+		public Object getControl(String controlType) {
+			return null;
+		}
 
-        public Object[] getControls()
-        {
-            return new Object[0];
-        }
+		@Override
+		public Object[] getControls() {
+			return new Object[0];
+		}
 
-        public int read(byte[] buffer, int offset, int length)
-                throws IOException
-        {
-            final int result = inputStream.read(buffer, offset, length); // TODO:
-                                                                         // does
-                                                                         // this
-                                                                         // handle
-                                                                         // the
-                                                                         // requirement
-                                                                         // of
-                                                                         // not
-                                                                         // returning
-                                                                         // 0
-                                                                         // unless
-                                                                         // passed
-                                                                         // in
-                                                                         // 0?
-            if (result == -1) // end of stream
-                endOfStream = true;
+		@Override
+		public int read(byte[] buffer, int offset, int length) throws IOException {
+			final int result = inputStream.read(buffer, offset, length); // TODO:
+																			// does
+																			// this
+																			// handle
+																			// the
+																			// requirement
+																			// of
+																			// not
+																			// returning
+																			// 0
+																			// unless
+																			// passed
+																			// in
+																			// 0?
+			if (result == -1) // end of stream
+				endOfStream = true;
 
-            return result;
-        }
+			return result;
+		}
 
-        public boolean willReadBlock()
-        {
-            try
-            {
-                return inputStream.available() <= 0;
-            } catch (IOException e)
-            {
-                return true;
-            }
-        }
-    }
+		@Override
+		public boolean willReadBlock() {
+			try {
+				return inputStream.available() <= 0;
+			} catch (IOException e) {
+				return true;
+			}
+		}
+	}
 
-    private static final Logger logger = LoggerSingleton.logger;
+	private static final Logger logger = LoggerSingleton.logger;
 
-    private static String getContentTypeFor(String path)
-    {
-        final String ext = PathUtils.extractExtension(path);
-        // TODO: what if ext is null?
-        String result = MimeManager.getMimeType(ext);
+	private static String getContentTypeFor(String path) {
+		final String ext = PathUtils.extractExtension(path);
+		// TODO: what if ext is null?
+		String result = MimeManager.getMimeType(ext);
 
-        // if we can't find it in our mime table, use URLConnection's
+		// if we can't find it in our mime table, use URLConnection's
 
-        if (result != null)
-            return result;
+		if (result != null)
+			return result;
 
-        result = URLConnection.getFileNameMap().getContentTypeFor(path);
-        return result;
+		result = URLConnection.getFileNameMap().getContentTypeFor(path);
+		return result;
 
-    }
+	}
 
-    private InputStream inputStream;
+	private InputStream inputStream;
 
-    private ContentDescriptor contentType;
+	private ContentDescriptor contentType;
 
-    private boolean connected = false;
+	private boolean connected = false;
 
-    private ResSourceStream[] sources;
+	private ResSourceStream[] sources;
 
-    public DataSource()
-    {
-        super();
-    }
+	public DataSource() {
+		super();
+	}
 
-    @Override
-    public void connect() throws IOException
-    {
-        // we allow a re-connection even if we are connected, due to an oddity
-        // in the way Manager works. See comments there
-        // in createPlayer(MediaLocator sourceLocator).
-        // if (connected) // TODO: FMJ tends to call this twice. Check with JMF
-        // to see if that is normal.
-        // return;
+	@Override
+	public void connect() throws IOException {
+		// we allow a re-connection even if we are connected, due to an oddity
+		// in the way Manager works. See comments there
+		// in createPlayer(MediaLocator sourceLocator).
+		// if (connected) // TODO: FMJ tends to call this twice. Check with JMF
+		// to see if that is normal.
+		// return;
 
-        final String path = getLocator().getRemainder();
+		final String path = getLocator().getRemainder();
 
-        inputStream = DataSource.class.getResourceAsStream(path);
+		inputStream = DataSource.class.getResourceAsStream(path);
 
-        final String s = getContentTypeFor(path); // TODO: use our own mime
-                                                  // mapping
-        if (s == null)
-            throw new IOException("Unknown content type for path: " + path);
-        // TODO: what is the right place to apply
-        // ContentDescriptor.mimeTypeToPackageName?
-        contentType = new ContentDescriptor(
-                ContentDescriptor.mimeTypeToPackageName(s));
+		final String s = getContentTypeFor(path); // TODO: use our own mime
+													// mapping
+		if (s == null)
+			throw new IOException("Unknown content type for path: " + path);
+		// TODO: what is the right place to apply
+		// ContentDescriptor.mimeTypeToPackageName?
+		contentType = new ContentDescriptor(ContentDescriptor.mimeTypeToPackageName(s));
 
-        sources = new ResSourceStream[1];
-        sources[0] = new ResSourceStream();
+		sources = new ResSourceStream[1];
+		sources[0] = new ResSourceStream();
 
-        connected = true;
-    }
+		connected = true;
+	}
 
-    public javax.media.protocol.DataSource createClone()
-    {
-        final DataSource d;
+	@Override
+	public javax.media.protocol.DataSource createClone() {
+		final DataSource d;
 
-        d = new DataSource();
-        d.setLocator(getLocator());
+		d = new DataSource();
+		d.setLocator(getLocator());
 
-        if (connected)
-        {
-            try
-            {
-                d.connect();
-            } catch (IOException e)
-            {
-                logger.log(Level.WARNING, "" + e, e);
-                return null; // according to the API, return null on failure.
-            }
-        }
+		if (connected) {
+			try {
+				d.connect();
+			} catch (IOException e) {
+				logger.log(Level.WARNING, "" + e, e);
+				return null; // according to the API, return null on failure.
+			}
+		}
 
-        return d;
-    }
+		return d;
+	}
 
-    @Override
-    public void disconnect()
-    {
-        if (!connected)
-            return;
+	@Override
+	public void disconnect() {
+		if (!connected)
+			return;
 
-        if (inputStream != null)
-        {
-            try
-            {
-                inputStream.close();
-            } catch (IOException e)
-            {
-                logger.log(Level.WARNING, "" + e, e);
-            }
-        }
+		if (inputStream != null) {
+			try {
+				inputStream.close();
+			} catch (IOException e) {
+				logger.log(Level.WARNING, "" + e, e);
+			}
+		}
 
-        connected = false;
-    }
+		connected = false;
+	}
 
-    @Override
-    public String getContentType()
-    {
-        if (!connected)
-            throw new Error("Source is unconnected.");
-        String path = getLocator().getRemainder();
-        String s = getContentTypeFor(path); // TODO: use our own mime mapping
-        return ContentDescriptor.mimeTypeToPackageName(s);
-    }
+	@Override
+	public String getContentType() {
+		if (!connected)
+			throw new Error("Source is unconnected.");
+		String path = getLocator().getRemainder();
+		String s = getContentTypeFor(path); // TODO: use our own mime mapping
+		return ContentDescriptor.mimeTypeToPackageName(s);
+	}
 
-    @Override
-    public Object getControl(String controlName)
-    {
-        return null;
-    }
+	@Override
+	public Object getControl(String controlName) {
+		return null;
+	}
 
-    @Override
-    public Object[] getControls()
-    {
-        return new Object[0];
-    }
+	@Override
+	public Object[] getControls() {
+		return new Object[0];
+	}
 
-    @Override
-    public Time getDuration()
-    {
-        return Time.TIME_UNKNOWN; // TODO: any case where we know the duration?
-    }
+	@Override
+	public Time getDuration() {
+		return Time.TIME_UNKNOWN; // TODO: any case where we know the duration?
+	}
 
-    @Override
-    public PullSourceStream[] getStreams()
-    {
-        if (!connected)
-            throw new Error("Unconnected source.");
-        return sources;
-    }
+	@Override
+	public PullSourceStream[] getStreams() {
+		if (!connected)
+			throw new Error("Unconnected source.");
+		return sources;
+	}
 
-    @Override
-    public void start() throws java.io.IOException
-    {
-        // throw new UnsupportedOperationException(); // TODO - what to do?
-    }
+	@Override
+	public void start() throws java.io.IOException {
+		// throw new UnsupportedOperationException(); // TODO - what to do?
+	}
 
-    @Override
-    public void stop() throws java.io.IOException
-    { // throw new UnsupportedOperationException(); // TODO - what to do?
-    }
+	@Override
+	public void stop() throws java.io.IOException { // throw new UnsupportedOperationException(); // TODO - what to do?
+	}
 
-    /**
-     * Strips trailing ; and anything after it. Is generally only used for
-     * multipart content.
-     */
-    private String stripTrailer(String contentType)
-    {
-        final int index = contentType.indexOf(";");
-        if (index < 0)
-            return contentType;
-        final String result = contentType.substring(0, index);
-        return result;
+	/**
+	 * Strips trailing ; and anything after it. Is generally only used for multipart
+	 * content.
+	 */
+	private String stripTrailer(String contentType) {
+		final int index = contentType.indexOf(";");
+		if (index < 0)
+			return contentType;
+		final String result = contentType.substring(0, index);
+		return result;
 
-    }
+	}
 }

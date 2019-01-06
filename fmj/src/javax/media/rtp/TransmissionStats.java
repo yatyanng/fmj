@@ -8,12 +8,11 @@ package javax.media.rtp;
  * @author Ken Larson
  *
  */
-public interface TransmissionStats
-{
-    public int getBytesTransmitted();
+public interface TransmissionStats {
+	public int getBytesTransmitted();
 
-    public int getPDUTransmitted();
+	public int getPDUTransmitted();
 
-    public int getRTCPSent();
+	public int getRTCPSent();
 
 }

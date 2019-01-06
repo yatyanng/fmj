@@ -10,7 +10,6 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public interface Control
-{
-    public java.awt.Component getControlComponent();
+public interface Control {
+	public java.awt.Component getControlComponent();
 }

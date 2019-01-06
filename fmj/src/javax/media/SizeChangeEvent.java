@@ -1,6 +1,6 @@
 package javax.media;
 
-import javax.media.format.*;
+import javax.media.format.FormatChangeEvent;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,35 +10,30 @@ import javax.media.format.*;
  * @author Ken Larson
  *
  */
-public class SizeChangeEvent extends FormatChangeEvent
-{
-    protected int height;
+public class SizeChangeEvent extends FormatChangeEvent {
+	protected int height;
 
-    protected float scale;
+	protected float scale;
 
-    protected int width;
+	protected int width;
 
-    public SizeChangeEvent(Controller from, int width, int height, float scale)
-    {
-        super(from);
-        this.width = width;
-        this.height = height;
-        this.scale = scale;
+	public SizeChangeEvent(Controller from, int width, int height, float scale) {
+		super(from);
+		this.width = width;
+		this.height = height;
+		this.scale = scale;
 
-    }
+	}
 
-    public int getHeight()
-    {
-        return height;
-    }
+	public int getHeight() {
+		return height;
+	}
 
-    public float getScale()
-    {
-        return scale;
-    }
+	public float getScale() {
+		return scale;
+	}
 
-    public int getWidth()
-    {
-        return width;
-    }
+	public int getWidth() {
+		return width;
+	}
 }

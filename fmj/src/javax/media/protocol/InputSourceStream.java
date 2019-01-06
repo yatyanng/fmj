@@ -1,6 +1,6 @@
 package javax.media.protocol;
 
-import java.io.*;
+import java.io.IOException;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,72 +10,66 @@ import java.io.*;
  * @author Ken Larson
  *
  */
-public class InputSourceStream implements PullSourceStream
-{
-    protected java.io.InputStream stream;
+public class InputSourceStream implements PullSourceStream {
+	protected java.io.InputStream stream;
 
-    protected boolean eosReached;
-    private ContentDescriptor contentDescriptor;
+	protected boolean eosReached;
+	private ContentDescriptor contentDescriptor;
 
-    public InputSourceStream(java.io.InputStream s, ContentDescriptor type)
-    {
-        stream = s;
-        contentDescriptor = type;
-    }
+	public InputSourceStream(java.io.InputStream s, ContentDescriptor type) {
+		stream = s;
+		contentDescriptor = type;
+	}
 
-    public void close() throws java.io.IOException
-    {
-        stream.close();
+	public void close() throws java.io.IOException {
+		stream.close();
 
-    }
+	}
 
-    public boolean endOfStream()
-    {
-        return eosReached;
+	@Override
+	public boolean endOfStream() {
+		return eosReached;
 
-    }
+	}
 
-    public ContentDescriptor getContentDescriptor()
-    {
-        return contentDescriptor;
+	@Override
+	public ContentDescriptor getContentDescriptor() {
+		return contentDescriptor;
 
-    }
+	}
 
-    public long getContentLength()
-    {
-        return LENGTH_UNKNOWN; // TODO
+	@Override
+	public long getContentLength() {
+		return LENGTH_UNKNOWN; // TODO
 
-    }
+	}
 
-    public Object getControl(String controlName)
-    {
-        return null;
-    }
+	@Override
+	public Object getControl(String controlName) {
+		return null;
+	}
 
-    public Object[] getControls()
-    {
-        return new Object[0];
-    }
+	@Override
+	public Object[] getControls() {
+		return new Object[0];
+	}
 
-    public int read(byte[] buffer, int offset, int length)
-            throws java.io.IOException
-    {
-        int result = stream.read(buffer, offset, length);
-        if (result == -1)
-            eosReached = true;
-        return result;
+	@Override
+	public int read(byte[] buffer, int offset, int length) throws java.io.IOException {
+		int result = stream.read(buffer, offset, length);
+		if (result == -1)
+			eosReached = true;
+		return result;
 
-    }
+	}
 
-    public boolean willReadBlock()
-    {
-        try
-        {
-            return stream.available() <= 0;
-        } catch (IOException e)
-        {
-            return true;
-        }
+	@Override
+	public boolean willReadBlock() {
+		try {
+			return stream.available() <= 0;
+		} catch (IOException e) {
+			return true;
+		}
 
-    }
+	}
 }

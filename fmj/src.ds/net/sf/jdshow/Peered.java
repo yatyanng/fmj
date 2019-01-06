@@ -5,20 +5,17 @@ package net.sf.jdshow;
  *
  * @author Ken Larson
  */
-public class Peered
-{
-    private long peerPtr; // use long to support 64-bit machines as well as 32
+public class Peered {
+	private long peerPtr; // use long to support 64-bit machines as well as 32
 
-    public Peered(long ptr)
-    {
-        super();
+	public Peered(long ptr) {
+		super();
 
-        peerPtr = ptr;
-    }
+		peerPtr = ptr;
+	}
 
-    public long getPeerPtr()
-    {
-        return peerPtr;
-    }
+	public long getPeerPtr() {
+		return peerPtr;
+	}
 
 }

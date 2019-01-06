@@ -1,9 +1,9 @@
 package com.sun.media.controls;
 
-import java.awt.*;
+import java.awt.Component;
 
-import javax.media.*;
-import javax.media.control.*;
+import javax.media.Codec;
+import javax.media.control.SilenceSuppressionControl;
 
 /**
  * TODO: stub.
@@ -11,41 +11,38 @@ import javax.media.control.*;
  * @author Ken Larson
  *
  */
-public class SilenceSuppressionAdapter implements SilenceSuppressionControl
-{
-    protected Codec owner;
-    protected boolean silenceSuppression;
-    protected boolean isSetable;
-    Component component;
-    String CONTROL_STRING;
+public class SilenceSuppressionAdapter implements SilenceSuppressionControl {
+	protected Codec owner;
+	protected boolean silenceSuppression;
+	protected boolean isSetable;
+	Component component;
+	String CONTROL_STRING;
 
-    public SilenceSuppressionAdapter(Codec owner, boolean silenceSuppression,
-            boolean isSetable)
-    {
-        this.owner = owner;
-        this.silenceSuppression = silenceSuppression;
-        this.isSetable = isSetable;
-    }
+	public SilenceSuppressionAdapter(Codec owner, boolean silenceSuppression, boolean isSetable) {
+		this.owner = owner;
+		this.silenceSuppression = silenceSuppression;
+		this.isSetable = isSetable;
+	}
 
-    public Component getControlComponent()
-    {
-        return component; // TODO: is null
-    }
+	@Override
+	public Component getControlComponent() {
+		return component; // TODO: is null
+	}
 
-    public boolean getSilenceSuppression()
-    {
-        return silenceSuppression;
-    }
+	@Override
+	public boolean getSilenceSuppression() {
+		return silenceSuppression;
+	}
 
-    public boolean isSilenceSuppressionSupported()
-    {
-        return isSetable;
-    }
+	@Override
+	public boolean isSilenceSuppressionSupported() {
+		return isSetable;
+	}
 
-    public boolean setSilenceSuppression(boolean silenceSuppression)
-    {
-        if (isSetable)
-            this.silenceSuppression = silenceSuppression;
-        return this.silenceSuppression;
-    }
+	@Override
+	public boolean setSilenceSuppression(boolean silenceSuppression) {
+		if (isSetable)
+			this.silenceSuppression = silenceSuppression;
+		return this.silenceSuppression;
+	}
 }

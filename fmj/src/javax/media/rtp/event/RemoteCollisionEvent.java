@@ -1,6 +1,6 @@
 package javax.media.rtp.event;
 
-import javax.media.rtp.*;
+import javax.media.rtp.SessionManager;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,18 +10,15 @@ import javax.media.rtp.*;
  * @author Ken Larson
  *
  */
-public class RemoteCollisionEvent extends RemoteEvent
-{
-    private long collidingSSRC;
+public class RemoteCollisionEvent extends RemoteEvent {
+	private long collidingSSRC;
 
-    public RemoteCollisionEvent(SessionManager from, long ssrc)
-    {
-        super(from);
-        this.collidingSSRC = ssrc;
-    }
+	public RemoteCollisionEvent(SessionManager from, long ssrc) {
+		super(from);
+		this.collidingSSRC = ssrc;
+	}
 
-    public long getSSRC()
-    {
-        return collidingSSRC;
-    }
+	public long getSSRC() {
+		return collidingSSRC;
+	}
 }

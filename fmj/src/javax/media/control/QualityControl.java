@@ -1,6 +1,6 @@
 package javax.media.control;
 
-import javax.media.*;
+import javax.media.Control;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,13 +10,12 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface QualityControl extends Control
-{
-    public float getPreferredQuality();
+public interface QualityControl extends Control {
+	public float getPreferredQuality();
 
-    public float getQuality();
+	public float getQuality();
 
-    public boolean isTemporalSpatialTradeoffSupported();
+	public boolean isTemporalSpatialTradeoffSupported();
 
-    public float setQuality(float newQuality);
+	public float setQuality(float newQuality);
 }

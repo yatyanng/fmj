@@ -1,12 +1,11 @@
 package net.sf.fmj.media.rtp.util;
 
-import java.io.*;
+import java.io.IOException;
 
-public interface PacketSource
-{
-    public abstract void closeSource();
+public interface PacketSource {
+	public abstract void closeSource();
 
-    public abstract Packet receiveFrom() throws IOException;
+	public abstract Packet receiveFrom() throws IOException;
 
-    public abstract String sourceString();
+	public abstract String sourceString();
 }

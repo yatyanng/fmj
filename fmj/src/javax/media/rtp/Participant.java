@@ -1,6 +1,6 @@
 package javax.media.rtp;
 
-import java.util.*;
+import java.util.Vector;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,13 +10,12 @@ import java.util.*;
  * @author Ken Larson
  *
  */
-public interface Participant
-{
-    public String getCNAME();
+public interface Participant {
+	public String getCNAME();
 
-    public Vector getReports();
+	public Vector getReports();
 
-    public Vector getSourceDescription();
+	public Vector getSourceDescription();
 
-    public Vector getStreams();
+	public Vector getStreams();
 }

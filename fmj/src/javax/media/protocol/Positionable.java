@@ -1,6 +1,6 @@
 package javax.media.protocol;
 
-import javax.media.*;
+import javax.media.Time;
 
 /**
  * Standard JMF class -- see <a href=
@@ -12,15 +12,14 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface Positionable
-{
-    public static final int RoundUp = 1;
+public interface Positionable {
+	public static final int RoundUp = 1;
 
-    public static final int RoundDown = 2;
+	public static final int RoundDown = 2;
 
-    public static final int RoundNearest = 3;
+	public static final int RoundNearest = 3;
 
-    public boolean isRandomAccess();
+	public boolean isRandomAccess();
 
-    public Time setPosition(Time where, int rounding);
+	public Time setPosition(Time where, int rounding);
 }

@@ -8,8 +8,7 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public interface DataSinkProxy extends MediaProxy
-{
-    public String getContentType(MediaLocator destination);
+public interface DataSinkProxy extends MediaProxy {
+	public String getContentType(MediaLocator destination);
 
 }

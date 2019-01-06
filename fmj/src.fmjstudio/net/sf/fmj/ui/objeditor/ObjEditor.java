@@ -1,6 +1,6 @@
 package net.sf.fmj.ui.objeditor;
 
-import java.awt.*;
+import java.awt.Component;
 
 /**
  * Generic interface for a control which edits an object.
@@ -8,14 +8,13 @@ import java.awt.*;
  * @author Ken Larson
  *
  */
-public interface ObjEditor
-{
-    public Component getComponent();
+public interface ObjEditor {
+	public Component getComponent();
 
-    public Object getObject();
+	public Object getObject();
 
-    public void setObjectAndUpdateControl(Object o);
+	public void setObjectAndUpdateControl(Object o);
 
-    public boolean validateAndUpdateObj();
+	public boolean validateAndUpdateObj();
 
 }

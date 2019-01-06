@@ -8,6 +8,5 @@ package javax.media.renderer;
  * @author Ken Larson
  *
  */
-public interface VisualContainer
-{
+public interface VisualContainer {
 }

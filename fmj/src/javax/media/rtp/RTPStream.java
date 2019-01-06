@@ -1,7 +1,7 @@
 package javax.media.rtp;
 
-import javax.media.protocol.*;
-import javax.media.rtp.rtcp.*;
+import javax.media.protocol.DataSource;
+import javax.media.rtp.rtcp.SenderReport;
 
 /**
  * Standard JMF class -- see <a href=
@@ -11,14 +11,13 @@ import javax.media.rtp.rtcp.*;
  * @author Ken Larson
  *
  */
-public interface RTPStream
-{
-    public DataSource getDataSource();
+public interface RTPStream {
+	public DataSource getDataSource();
 
-    public Participant getParticipant();
+	public Participant getParticipant();
 
-    public SenderReport getSenderReport();
+	public SenderReport getSenderReport();
 
-    public long getSSRC();
+	public long getSSRC();
 
 }

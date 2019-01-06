@@ -1,7 +1,7 @@
 package javax.media.protocol;
 
-import javax.media.*;
-import javax.media.control.*;
+import javax.media.CaptureDeviceInfo;
+import javax.media.control.FormatControl;
 
 /**
  * Standard JMF class -- see <a href=
@@ -11,17 +11,16 @@ import javax.media.control.*;
  * @author Ken Larson
  *
  */
-public interface CaptureDevice
-{
-    public void connect() throws java.io.IOException;
+public interface CaptureDevice {
+	public void connect() throws java.io.IOException;
 
-    public void disconnect();
+	public void disconnect();
 
-    public CaptureDeviceInfo getCaptureDeviceInfo();
+	public CaptureDeviceInfo getCaptureDeviceInfo();
 
-    public FormatControl[] getFormatControls();
+	public FormatControl[] getFormatControls();
 
-    public void start() throws java.io.IOException;
+	public void start() throws java.io.IOException;
 
-    public void stop() throws java.io.IOException;
+	public void stop() throws java.io.IOException;
 }

@@ -1,7 +1,7 @@
 package javax.media.control;
 
-import javax.media.*;
-import javax.media.rtp.*;
+import javax.media.Control;
+import javax.media.rtp.RTPManager;
 
 /**
  * Standard JMF class -- see <a href=
@@ -11,7 +11,6 @@ import javax.media.rtp.*;
  * @author Ken Larson
  *
  */
-public interface RtspControl extends Control
-{
-    public RTPManager[] getRTPManagers();
+public interface RtspControl extends Control {
+	public RTPManager[] getRTPManagers();
 }

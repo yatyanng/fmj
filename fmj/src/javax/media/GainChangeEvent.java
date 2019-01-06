@@ -8,46 +8,39 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class GainChangeEvent extends MediaEvent
-{
-    GainControl eventSrc;
+public class GainChangeEvent extends MediaEvent {
+	GainControl eventSrc;
 
-    boolean newMute;
-    float newDB;
-    float newLevel;
+	boolean newMute;
+	float newDB;
+	float newLevel;
 
-    public GainChangeEvent(GainControl from, boolean mute, float dB, float level)
-    {
-        super(from);
-        this.eventSrc = from;
-        this.newMute = mute;
-        this.newDB = dB;
-        this.newLevel = level;
-    }
+	public GainChangeEvent(GainControl from, boolean mute, float dB, float level) {
+		super(from);
+		this.eventSrc = from;
+		this.newMute = mute;
+		this.newDB = dB;
+		this.newLevel = level;
+	}
 
-    public float getDB()
-    {
-        return newDB;
-    }
+	public float getDB() {
+		return newDB;
+	}
 
-    public float getLevel()
-    {
-        return newLevel;
-    }
+	public float getLevel() {
+		return newLevel;
+	}
 
-    public boolean getMute()
-    {
-        return newMute;
-    }
+	public boolean getMute() {
+		return newMute;
+	}
 
-    @Override
-    public Object getSource()
-    {
-        return eventSrc;
-    }
+	@Override
+	public Object getSource() {
+		return eventSrc;
+	}
 
-    public GainControl getSourceGainControl()
-    {
-        return eventSrc;
-    }
+	public GainControl getSourceGainControl() {
+		return eventSrc;
+	}
 }

@@ -1,6 +1,6 @@
 package javax.media.renderer;
 
-import javax.media.*;
+import javax.media.Renderer;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,13 +10,12 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface VideoRenderer extends Renderer
-{
-    public java.awt.Rectangle getBounds();
+public interface VideoRenderer extends Renderer {
+	public java.awt.Rectangle getBounds();
 
-    public java.awt.Component getComponent();
+	public java.awt.Component getComponent();
 
-    public void setBounds(java.awt.Rectangle rect);
+	public void setBounds(java.awt.Rectangle rect);
 
-    public boolean setComponent(java.awt.Component comp);
+	public boolean setComponent(java.awt.Component comp);
 }

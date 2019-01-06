@@ -6,7 +6,6 @@ package com.lti.utils.synchronization;
 /**
  * @author Ken Larson
  */
-public interface MessageDrivenThreadListener
-{
-    public void onMessage(MessageDrivenThread sender, Object o);
+public interface MessageDrivenThreadListener {
+	public void onMessage(MessageDrivenThread sender, Object o);
 }

@@ -1,6 +1,6 @@
 package javax.media.datasink;
 
-import javax.media.*;
+import javax.media.DataSink;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,16 +10,13 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public class DataSinkErrorEvent extends DataSinkEvent
-{
-    public DataSinkErrorEvent(DataSink from)
-    {
-        super(from);
-    }
+public class DataSinkErrorEvent extends DataSinkEvent {
+	public DataSinkErrorEvent(DataSink from) {
+		super(from);
+	}
 
-    public DataSinkErrorEvent(DataSink from, String reason)
-    {
-        super(from, reason);
-    }
+	public DataSinkErrorEvent(DataSink from, String reason) {
+		super(from, reason);
+	}
 
 }

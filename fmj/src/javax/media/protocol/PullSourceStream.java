@@ -1,6 +1,6 @@
 package javax.media.protocol;
 
-import java.io.*;
+import java.io.IOException;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,9 +10,8 @@ import java.io.*;
  * @author Ken Larson
  *
  */
-public interface PullSourceStream extends SourceStream
-{
-    public int read(byte[] buffer, int offset, int length) throws IOException;
+public interface PullSourceStream extends SourceStream {
+	public int read(byte[] buffer, int offset, int length) throws IOException;
 
-    public boolean willReadBlock();
+	public boolean willReadBlock();
 }

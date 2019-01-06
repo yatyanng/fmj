@@ -8,11 +8,10 @@ package javax.media.protocol;
  * @author Ken Larson
  *
  */
-public interface Seekable
-{
-    public boolean isRandomAccess();
+public interface Seekable {
+	public boolean isRandomAccess();
 
-    public long seek(long where);
+	public long seek(long where);
 
-    public long tell();
+	public long tell();
 }

@@ -1,6 +1,6 @@
 package net.sf.fmj.media.multiplexer;
 
-import java.io.*;
+import java.io.PipedInputStream;
 
 /**
  * Enhances PipedInputStream to have a larger buffer.
@@ -8,12 +8,10 @@ import java.io.*;
  * @author Ken Larson
  *
  */
-public class BigPipedInputStream extends PipedInputStream
-{
-    public BigPipedInputStream(int size)
-    {
-        super();
-        this.buffer = new byte[size];
-    }
+public class BigPipedInputStream extends PipedInputStream {
+	public BigPipedInputStream(int size) {
+		super();
+		this.buffer = new byte[size];
+	}
 
 }

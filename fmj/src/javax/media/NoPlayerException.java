@@ -9,16 +9,13 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class NoPlayerException extends MediaException
-{
-    public NoPlayerException()
-    {
-        super();
-    }
+public class NoPlayerException extends MediaException {
+	public NoPlayerException() {
+		super();
+	}
 
-    public NoPlayerException(String message)
-    {
-        super(message);
-    }
+	public NoPlayerException(String message) {
+		super(message);
+	}
 
 }

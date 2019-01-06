@@ -1,6 +1,8 @@
 package net.sf.fmj.media;
 
-import javax.media.*;
+import javax.media.Buffer;
+import javax.media.Format;
+import javax.media.Renderer;
 
 /**
  * Abstract implementation of Renderer, useful for subclassing.
@@ -8,27 +10,27 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public abstract class AbstractRenderer extends AbstractPlugIn implements
-        Renderer
-{
-    protected Format inputFormat;
+public abstract class AbstractRenderer extends AbstractPlugIn implements Renderer {
+	protected Format inputFormat;
 
-    public abstract Format[] getSupportedInputFormats();
+	@Override
+	public abstract Format[] getSupportedInputFormats();
 
-    public abstract int process(Buffer buffer);
+	@Override
+	public abstract int process(Buffer buffer);
 
-    public Format setInputFormat(Format format)
-    {
-        this.inputFormat = format;
-        return inputFormat;
-    }
+	@Override
+	public Format setInputFormat(Format format) {
+		this.inputFormat = format;
+		return inputFormat;
+	}
 
-    public void start()
-    {
-    }
+	@Override
+	public void start() {
+	}
 
-    public void stop()
-    {
-    }
+	@Override
+	public void stop() {
+	}
 
 }

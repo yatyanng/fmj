@@ -1,6 +1,6 @@
 package javax.media.control;
 
-import javax.media.*;
+import javax.media.Control;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,11 +10,10 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface H261Control extends Control
-{
-    public boolean getStillImageTransmission();
+public interface H261Control extends Control {
+	public boolean getStillImageTransmission();
 
-    public boolean isStillImageTransmissionSupported();
+	public boolean isStillImageTransmissionSupported();
 
-    public boolean setStillImageTransmission(boolean newStillImageTransmission);
+	public boolean setStillImageTransmission(boolean newStillImageTransmission);
 }

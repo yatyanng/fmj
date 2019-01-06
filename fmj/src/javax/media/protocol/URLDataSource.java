@@ -1,6 +1,6 @@
 package javax.media.protocol;
 
-import java.net.*;
+import java.net.URL;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,16 +10,13 @@ import java.net.*;
  * @author Ken Larson
  *
  */
-public class URLDataSource extends net.sf.fmj.media.protocol.URLDataSource
-{
-    public URLDataSource()
-    {
-        super();
-    }
+public class URLDataSource extends net.sf.fmj.media.protocol.URLDataSource {
+	public URLDataSource() {
+		super();
+	}
 
-    public URLDataSource(URL url)
-    {
-        super(url);
-    }
+	public URLDataSource(URL url) {
+		super(url);
+	}
 
 }

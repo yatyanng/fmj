@@ -1,8 +1,8 @@
 package javax.media.rtp;
 
-import java.io.*;
+import java.io.IOException;
 
-import javax.media.protocol.*;
+import javax.media.protocol.PushSourceStream;
 
 /**
  * Standard JMF class -- see <a href=
@@ -12,28 +12,27 @@ import javax.media.protocol.*;
  * @author Ken Larson
  *
  */
-public interface RTPConnector
-{
-    public void close();
+public interface RTPConnector {
+	public void close();
 
-    public PushSourceStream getControlInputStream() throws IOException;
+	public PushSourceStream getControlInputStream() throws IOException;
 
-    public OutputDataStream getControlOutputStream() throws IOException;
+	public OutputDataStream getControlOutputStream() throws IOException;
 
-    public PushSourceStream getDataInputStream() throws IOException;
+	public PushSourceStream getDataInputStream() throws IOException;
 
-    public OutputDataStream getDataOutputStream() throws IOException;
+	public OutputDataStream getDataOutputStream() throws IOException;
 
-    public int getReceiveBufferSize();
+	public int getReceiveBufferSize();
 
-    public double getRTCPBandwidthFraction();
+	public double getRTCPBandwidthFraction();
 
-    public double getRTCPSenderBandwidthFraction();
+	public double getRTCPSenderBandwidthFraction();
 
-    public int getSendBufferSize();
+	public int getSendBufferSize();
 
-    public void setReceiveBufferSize(int size) throws IOException;
+	public void setReceiveBufferSize(int size) throws IOException;
 
-    public void setSendBufferSize(int size) throws IOException;
+	public void setSendBufferSize(int size) throws IOException;
 
 }

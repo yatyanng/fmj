@@ -8,26 +8,20 @@ package net.sf.fmj.gui.controlpanelfactory;
  * @author Ken Larson
  *
  */
-public final class ControlPanelFactorySingleton
-{
-    private static ControlPanelFactory instance = /*
-                                                   * new
-                                                   * SwingLookControlPanelFactory
-                                                   * ();
-                                                   */new StandardControlPanelFactory();
+public final class ControlPanelFactorySingleton {
+	private static ControlPanelFactory instance = /*
+													 * new SwingLookControlPanelFactory ();
+													 */new StandardControlPanelFactory();
 
-    public static ControlPanelFactory getInstance()
-    {
-        return instance;
-    }
+	public static ControlPanelFactory getInstance() {
+		return instance;
+	}
 
-    public static void setInstance(ControlPanelFactory instance)
-    {
-        ControlPanelFactorySingleton.instance = instance;
-    }
+	public static void setInstance(ControlPanelFactory instance) {
+		ControlPanelFactorySingleton.instance = instance;
+	}
 
-    private ControlPanelFactorySingleton()
-    {
-        super();
-    }
+	private ControlPanelFactorySingleton() {
+		super();
+	}
 }

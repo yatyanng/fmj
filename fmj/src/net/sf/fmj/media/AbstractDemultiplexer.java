@@ -1,9 +1,14 @@
 package net.sf.fmj.media;
 
-import java.io.*;
+import java.io.IOException;
 
-import javax.media.*;
-import javax.media.protocol.*;
+import javax.media.BadHeaderException;
+import javax.media.Demultiplexer;
+import javax.media.IncompatibleSourceException;
+import javax.media.Time;
+import javax.media.Track;
+import javax.media.protocol.ContentDescriptor;
+import javax.media.protocol.DataSource;
 
 /**
  * Abstract base class to implement Demultiplexer.
@@ -11,55 +16,55 @@ import javax.media.protocol.*;
  * @author Ken Larson
  *
  */
-public abstract class AbstractDemultiplexer extends AbstractPlugIn implements
-        Demultiplexer
-{
-    public Time getDuration()
-    {
-        return DURATION_UNKNOWN;
-    }
+public abstract class AbstractDemultiplexer extends AbstractPlugIn implements Demultiplexer {
+	@Override
+	public Time getDuration() {
+		return DURATION_UNKNOWN;
+	}
 
-    public Time getMediaTime()
-    {
-        return Time.TIME_UNKNOWN;
-    }
+	@Override
+	public Time getMediaTime() {
+		return Time.TIME_UNKNOWN;
+	}
 
-    public abstract ContentDescriptor[] getSupportedInputContentDescriptors();
+	@Override
+	public abstract ContentDescriptor[] getSupportedInputContentDescriptors();
 
-    public abstract Track[] getTracks() throws IOException, BadHeaderException;
+	@Override
+	public abstract Track[] getTracks() throws IOException, BadHeaderException;
 
-    public boolean isPositionable()
-    {
-        return false;
-    }
+	@Override
+	public boolean isPositionable() {
+		return false;
+	}
 
-    public boolean isRandomAccess()
-    {
-        return false;
-    }
+	@Override
+	public boolean isRandomAccess() {
+		return false;
+	}
 
-    // subclasses must override if they override isPositionable.
-    public Time setPosition(Time where, int rounding)
-    {
-        return Time.TIME_UNKNOWN;
-        // TODO returning null will cause this:
-        // Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException
-        // at
-        // com.sun.media.BasicSourceModule.setPosition(BasicSourceModule.java:474)
-        // interestingly, BasicSourceModule will call setPosition even if
-        // isPositionable
-        // returns false.
-    }
+	// subclasses must override if they override isPositionable.
+	@Override
+	public Time setPosition(Time where, int rounding) {
+		return Time.TIME_UNKNOWN;
+		// TODO returning null will cause this:
+		// Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException
+		// at
+		// com.sun.media.BasicSourceModule.setPosition(BasicSourceModule.java:474)
+		// interestingly, BasicSourceModule will call setPosition even if
+		// isPositionable
+		// returns false.
+	}
 
-    public abstract void setSource(DataSource source) throws IOException,
-            IncompatibleSourceException;
+	@Override
+	public abstract void setSource(DataSource source) throws IOException, IncompatibleSourceException;
 
-    public void start() throws IOException
-    {
-    }
+	@Override
+	public void start() throws IOException {
+	}
 
-    public void stop()
-    {
-    }
+	@Override
+	public void stop() {
+	}
 
 }

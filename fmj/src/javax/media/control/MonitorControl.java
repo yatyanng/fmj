@@ -1,6 +1,6 @@
 package javax.media.control;
 
-import javax.media.*;
+import javax.media.Control;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,9 +10,8 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface MonitorControl extends Control
-{
-    public boolean setEnabled(boolean on);
+public interface MonitorControl extends Control {
+	public boolean setEnabled(boolean on);
 
-    public float setPreviewFrameRate(float rate);
+	public float setPreviewFrameRate(float rate);
 }

@@ -1,6 +1,6 @@
 package javax.media.control;
 
-import javax.media.*;
+import javax.media.Control;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,11 +10,10 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface SilenceSuppressionControl extends Control
-{
-    public boolean getSilenceSuppression();
+public interface SilenceSuppressionControl extends Control {
+	public boolean getSilenceSuppression();
 
-    public boolean isSilenceSuppressionSupported();
+	public boolean isSilenceSuppressionSupported();
 
-    public boolean setSilenceSuppression(boolean newSilenceSuppression);
+	public boolean setSilenceSuppression(boolean newSilenceSuppression);
 }

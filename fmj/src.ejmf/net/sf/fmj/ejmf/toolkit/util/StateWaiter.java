@@ -1,6 +1,14 @@
 package net.sf.fmj.ejmf.toolkit.util;
 
-import javax.media.*;
+import javax.media.Controller;
+import javax.media.ControllerClosedEvent;
+import javax.media.ControllerEvent;
+import javax.media.ControllerListener;
+import javax.media.Player;
+import javax.media.Processor;
+import javax.media.StopEvent;
+import javax.media.Time;
+import javax.media.TransitionEvent;
 
 /**
  * The StateWaiter class provides routines to allow the current thread to wait
@@ -20,199 +28,176 @@ import javax.media.*;
  *
  * @author Steve Talley and Rob Gordon
  */
-public class StateWaiter implements ControllerListener
-{
-    /**
-     * The state to be waited for
-     */
-    private int state;
+public class StateWaiter implements ControllerListener {
+	/**
+	 * The state to be waited for
+	 */
+	private int state;
 
-    /**
-     * Indicates whether the desired state has been reached
-     */
-    private boolean stateReached = false;
+	/**
+	 * Indicates whether the desired state has been reached
+	 */
+	private boolean stateReached = false;
 
-    /**
-     * Indicates whether this StateWaiter is already a ControllerListener of its
-     * Controller.
-     */
-    private boolean listening = false;
+	/**
+	 * Indicates whether this StateWaiter is already a ControllerListener of its
+	 * Controller.
+	 */
+	private boolean listening = false;
 
-    /**
-     * The Controller on which to wait for the desired state
-     */
-    private Controller controller;
+	/**
+	 * The Controller on which to wait for the desired state
+	 */
+	private Controller controller;
 
-    /**
-     * Construct a StateWaiter object for the given Controller
-     *
-     * @param controller
-     *            the Controller on which to wait for the desired state
-     */
-    public StateWaiter(Controller controller)
-    {
-        this.controller = controller;
-    }
+	/**
+	 * Construct a StateWaiter object for the given Controller
+	 *
+	 * @param controller the Controller on which to wait for the desired state
+	 */
+	public StateWaiter(Controller controller) {
+		this.controller = controller;
+	}
 
-    /**
-     * Adds this StateWaiter as a ControllerListener of the Controller
-     */
-    private void addAsListener()
-    {
-        if (!listening)
-        {
-            controller.addControllerListener(this);
-            listening = true;
-        }
-    }
+	/**
+	 * Adds this StateWaiter as a ControllerListener of the Controller
+	 */
+	private void addAsListener() {
+		if (!listening) {
+			controller.addControllerListener(this);
+			listening = true;
+		}
+	}
 
-    public boolean blockingConfigure()
-    {
-        setState(Processor.Configured);
-        ((Processor) controller).configure();
-        return waitForState();
-    }
+	public boolean blockingConfigure() {
+		setState(Processor.Configured);
+		((Processor) controller).configure();
+		return waitForState();
+	}
 
-    /**
-     * Calls prefetch() on the Controller and blocks the current thread until
-     * the Controller is Prefetched.
-     *
-     * @return boolean indicating whether the transition was successful.
-     */
-    public boolean blockingPrefetch()
-    {
-        setState(Controller.Prefetched);
-        controller.prefetch();
-        return waitForState();
-    }
+	/**
+	 * Calls prefetch() on the Controller and blocks the current thread until the
+	 * Controller is Prefetched.
+	 *
+	 * @return boolean indicating whether the transition was successful.
+	 */
+	public boolean blockingPrefetch() {
+		setState(Controller.Prefetched);
+		controller.prefetch();
+		return waitForState();
+	}
 
-    /**
-     * Calls realize() on the Controller and blocks the current thread until the
-     * Controller is Realized.
-     *
-     * @return boolean indicating whether the transition was successful.
-     */
-    public boolean blockingRealize()
-    {
-        setState(Controller.Realized);
-        controller.realize();
-        return waitForState();
-    }
+	/**
+	 * Calls realize() on the Controller and blocks the current thread until the
+	 * Controller is Realized.
+	 *
+	 * @return boolean indicating whether the transition was successful.
+	 */
+	public boolean blockingRealize() {
+		setState(Controller.Realized);
+		controller.realize();
+		return waitForState();
+	}
 
-    /**
-     * Casts the Controller to a Player, calls start(), and blocks the current
-     * thread until the player is Started.
-     *
-     * @return boolean indicating whether the transition was successful.
-     *
-     * @exception ClassCastException
-     *                If the Controller is not a Player
-     */
-    public boolean blockingStart()
-    {
-        setState(Controller.Started);
-        Player player = (Player) controller;
-        player.start();
-        return waitForState();
-    }
+	/**
+	 * Casts the Controller to a Player, calls start(), and blocks the current
+	 * thread until the player is Started.
+	 *
+	 * @return boolean indicating whether the transition was successful.
+	 *
+	 * @exception ClassCastException If the Controller is not a Player
+	 */
+	public boolean blockingStart() {
+		setState(Controller.Started);
+		Player player = (Player) controller;
+		player.start();
+		return waitForState();
+	}
 
-    /**
-     * Calls syncStart() on the Controller and blocks the current thread until
-     * the Controller is Started. This could throw a ClockStartedError if the
-     * Controller is not in the Prefetched state.
-     *
-     * @return boolean indicating whether the transition was successful.
-     */
-    public boolean blockingSyncStart(Time t)
-    {
-        setState(Controller.Started);
-        controller.syncStart(t);
-        return waitForState();
-    }
+	/**
+	 * Calls syncStart() on the Controller and blocks the current thread until the
+	 * Controller is Started. This could throw a ClockStartedError if the Controller
+	 * is not in the Prefetched state.
+	 *
+	 * @return boolean indicating whether the transition was successful.
+	 */
+	public boolean blockingSyncStart(Time t) {
+		setState(Controller.Started);
+		controller.syncStart(t);
+		return waitForState();
+	}
 
-    public boolean blockingWait(int state)
-    {
-        setState(state);
-        return waitForState();
-    }
+	public boolean blockingWait(int state) {
+		setState(state);
+		return waitForState();
+	}
 
-    /**
-     * Listens for a transition to the state that this StateWaiter is waiting
-     * for. Notifies the the waiting thread and stops listening if any of the
-     * following occur:
-     * <p>
-     * <UL>
-     * <LI>A TransitionEvent to the desired state is posted</LI>
-     * <LI>A StopEvent is posted</LI>
-     * <LI>A ControllerClosedEvent is posted (indicating a failure)</LI>
-     * </UL>
-     *
-     * @param event
-     *            the media event
-     */
-    public synchronized void controllerUpdate(ControllerEvent event)
-    {
-        if (event.getSourceController() != controller)
-        {
-            return;
-        }
+	/**
+	 * Listens for a transition to the state that this StateWaiter is waiting for.
+	 * Notifies the the waiting thread and stops listening if any of the following
+	 * occur:
+	 * <p>
+	 * <UL>
+	 * <LI>A TransitionEvent to the desired state is posted</LI>
+	 * <LI>A StopEvent is posted</LI>
+	 * <LI>A ControllerClosedEvent is posted (indicating a failure)</LI>
+	 * </UL>
+	 *
+	 * @param event the media event
+	 */
+	@Override
+	public synchronized void controllerUpdate(ControllerEvent event) {
+		if (event.getSourceController() != controller) {
+			return;
+		}
 
-        if (event instanceof TransitionEvent)
-        {
-            int currState = ((TransitionEvent) event).getCurrentState();
+		if (event instanceof TransitionEvent) {
+			int currState = ((TransitionEvent) event).getCurrentState();
 
-            stateReached = (currState >= state);
-        }
+			stateReached = (currState >= state);
+		}
 
-        // Is this a stop event or a Controller Error?
-        if (event instanceof StopEvent
-                || event instanceof ControllerClosedEvent || stateReached)
-        {
-            // Stop listening
-            removeAsListener();
+		// Is this a stop event or a Controller Error?
+		if (event instanceof StopEvent || event instanceof ControllerClosedEvent || stateReached) {
+			// Stop listening
+			removeAsListener();
 
-            // Notify threads waiting for state change
-            notifyAll();
-        }
-    }
+			// Notify threads waiting for state change
+			notifyAll();
+		}
+	}
 
-    /**
-     * Removes this StateWaiter as a ControllerListener of the Controller
-     */
-    private void removeAsListener()
-    {
-        controller.removeControllerListener(this);
-        listening = false;
-    }
+	/**
+	 * Removes this StateWaiter as a ControllerListener of the Controller
+	 */
+	private void removeAsListener() {
+		controller.removeControllerListener(this);
+		listening = false;
+	}
 
-    /**
-     * Sets the state to wait for
-     */
-    private void setState(int state)
-    {
-        this.state = state;
-        stateReached = false;
-        addAsListener();
-    }
+	/**
+	 * Sets the state to wait for
+	 */
+	private void setState(int state) {
+		this.state = state;
+		stateReached = false;
+		addAsListener();
+	}
 
-    /**
-     * Blocks the current thread until the Controller has reached the previously
-     * specified state or an error has occurred.
-     *
-     * @return boolean indicating whether the transition was successful.
-     */
-    private synchronized boolean waitForState()
-    {
-        while (listening)
-        {
-            try
-            {
-                wait();
-            } catch (InterruptedException e)
-            {
-            }
-        }
+	/**
+	 * Blocks the current thread until the Controller has reached the previously
+	 * specified state or an error has occurred.
+	 *
+	 * @return boolean indicating whether the transition was successful.
+	 */
+	private synchronized boolean waitForState() {
+		while (listening) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+			}
+		}
 
-        return stateReached;
-    }
+		return stateReached;
+	}
 }

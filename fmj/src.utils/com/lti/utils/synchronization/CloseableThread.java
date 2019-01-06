@@ -7,63 +7,53 @@ package com.lti.utils.synchronization;
  *
  * @author Ken Larson
  */
-public abstract class CloseableThread extends Thread
-{
-    protected final SynchronizedBoolean closing = new SynchronizedBoolean(false);
-    private final SynchronizedBoolean closed = new SynchronizedBoolean(false);
+public abstract class CloseableThread extends Thread {
+	protected final SynchronizedBoolean closing = new SynchronizedBoolean(false);
+	private final SynchronizedBoolean closed = new SynchronizedBoolean(false);
 
-    public CloseableThread()
-    {
-        super();
-    }
+	public CloseableThread() {
+		super();
+	}
 
-    public CloseableThread(String threadName)
-    {
-        super(threadName);
-    }
+	public CloseableThread(String threadName) {
+		super(threadName);
+	}
 
-    /** @deprecated */
-    @Deprecated
-    public CloseableThread(ThreadGroup group, String threadName)
-    {
-        super(group, threadName);
-    }
+	/** @deprecated */
+	@Deprecated
+	public CloseableThread(ThreadGroup group, String threadName) {
+		super(group, threadName);
+	}
 
-    public void close()
-    {
-        closing.setValue(true);
-        interrupt();
-    }
+	public void close() {
+		closing.setValue(true);
+		interrupt();
+	}
 
-    public boolean isClosed()
-    {
-        return closed.getValue();
-    }
+	public boolean isClosed() {
+		return closed.getValue();
+	}
 
-    /**
-     * intended to be checked by thread in its main loop. break out of the main
-     * loop if true.
-     */
-    protected boolean isClosing()
-    {
-        return closing.getValue();
-    }
+	/**
+	 * intended to be checked by thread in its main loop. break out of the main loop
+	 * if true.
+	 */
+	protected boolean isClosing() {
+		return closing.getValue();
+	}
 
-    /**
-     * to be called by the thread upon exit.
-     */
-    protected void setClosed()
-    {
-        closed.setValue(true);
-    }
+	/**
+	 * to be called by the thread upon exit.
+	 */
+	protected void setClosed() {
+		closed.setValue(true);
+	}
 
-    protected void setClosing()
-    {
-        closing.setValue(true);
-    }
+	protected void setClosing() {
+		closing.setValue(true);
+	}
 
-    public void waitUntilClosed() throws InterruptedException
-    {
-        closed.waitUntil(true);
-    }
+	public void waitUntilClosed() throws InterruptedException {
+		closed.waitUntil(true);
+	}
 }

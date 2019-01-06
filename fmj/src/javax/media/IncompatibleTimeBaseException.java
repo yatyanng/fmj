@@ -10,16 +10,13 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class IncompatibleTimeBaseException extends MediaException
-{
-    public IncompatibleTimeBaseException()
-    {
-        super();
-    }
+public class IncompatibleTimeBaseException extends MediaException {
+	public IncompatibleTimeBaseException() {
+		super();
+	}
 
-    public IncompatibleTimeBaseException(String message)
-    {
-        super(message);
-    }
+	public IncompatibleTimeBaseException(String message) {
+		super(message);
+	}
 
 }

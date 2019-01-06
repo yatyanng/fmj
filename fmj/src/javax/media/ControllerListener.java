@@ -8,7 +8,6 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public interface ControllerListener
-{
-    public void controllerUpdate(ControllerEvent event);
+public interface ControllerListener {
+	public void controllerUpdate(ControllerEvent event);
 }

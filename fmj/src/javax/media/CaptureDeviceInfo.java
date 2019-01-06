@@ -1,6 +1,6 @@
 package javax.media;
 
-import java.util.*;
+import java.util.Arrays;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,141 +10,125 @@ import java.util.*;
  * @author Ken Larson
  * @author Lyubomir Marinov
  */
-public class CaptureDeviceInfo implements java.io.Serializable
-{
-    protected Format[] formats;
-    protected MediaLocator locator;
-    protected String name;
+public class CaptureDeviceInfo implements java.io.Serializable {
+	protected Format[] formats;
+	protected MediaLocator locator;
+	protected String name;
 
-    public CaptureDeviceInfo()
-    {
-        super();
-    }
+	public CaptureDeviceInfo() {
+		super();
+	}
 
-    public CaptureDeviceInfo(String name, MediaLocator locator, Format[] formats)
-    {
-        this.name = name;
-        this.locator = locator;
-        this.formats = formats;
-    }
+	public CaptureDeviceInfo(String name, MediaLocator locator, Format[] formats) {
+		this.name = name;
+		this.locator = locator;
+		this.formats = formats;
+	}
 
-    /**
-     * Determines whether a specific object is equal by value to this object.
-     *
-     * @param obj the object to compare by value to this object
-     * @return <tt>true</tt> if the specified <tt>obj</tt> is equal by value to
-     * this object; otherwise, <tt>false</tt>
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (null == obj)
-            return false;
-        if (this == obj)
-            return true;
+	/**
+	 * Determines whether a specific object is equal by value to this object.
+	 *
+	 * @param obj the object to compare by value to this object
+	 * @return <tt>true</tt> if the specified <tt>obj</tt> is equal by value to this
+	 *         object; otherwise, <tt>false</tt>
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (null == obj)
+			return false;
+		if (this == obj)
+			return true;
 
-        if (!(obj instanceof CaptureDeviceInfo))
-            return false;
+		if (!(obj instanceof CaptureDeviceInfo))
+			return false;
 
-        CaptureDeviceInfo cdi = (CaptureDeviceInfo) obj;
+		CaptureDeviceInfo cdi = (CaptureDeviceInfo) obj;
 
-        // name
-        String name = getName();
-        String cdiName = cdi.getName();
+		// name
+		String name = getName();
+		String cdiName = cdi.getName();
 
-        if (name == null)
-        {
-            if (cdiName != null)
-                return false;
-        }
-        else if (!name.equals(cdiName))
-            return false;
+		if (name == null) {
+			if (cdiName != null)
+				return false;
+		} else if (!name.equals(cdiName))
+			return false;
 
-        // locator
-        MediaLocator locator = getLocator();
-        MediaLocator cdiLocator = cdi.getLocator();
+		// locator
+		MediaLocator locator = getLocator();
+		MediaLocator cdiLocator = cdi.getLocator();
 
-        if (locator == null)
-        {
-            if (cdiLocator != null)
-                return false;
-        }
-        else if (!locator.equals(cdiLocator))
-            return false;
+		if (locator == null) {
+			if (cdiLocator != null)
+				return false;
+		} else if (!locator.equals(cdiLocator))
+			return false;
 
-        // formats
-        Format[] formats = getFormats();
-        Format[] cdiFormats = cdi.getFormats();
+		// formats
+		Format[] formats = getFormats();
+		Format[] cdiFormats = cdi.getFormats();
 
-        return Arrays.equals(formats, cdiFormats);
-    }
+		return Arrays.equals(formats, cdiFormats);
+	}
 
-    public Format[] getFormats()
-    {
-        return formats;
-    }
+	public Format[] getFormats() {
+		return formats;
+	}
 
-    public MediaLocator getLocator()
-    {
-        return locator;
-    }
+	public MediaLocator getLocator() {
+		return locator;
+	}
 
-    public String getName()
-    {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    /**
-     * Gets a hash code value for this object for the benefit of hashtables.
-     *
-     * @return a hash code value for this object for the benefit of hashtables
-     */
-    @Override
-    public int hashCode()
-    {
-        int hashCode = 0;
+	/**
+	 * Gets a hash code value for this object for the benefit of hashtables.
+	 *
+	 * @return a hash code value for this object for the benefit of hashtables
+	 */
+	@Override
+	public int hashCode() {
+		int hashCode = 0;
 
-        // name
-        String name = getName();
+		// name
+		String name = getName();
 
-        if (name != null)
-            hashCode += name.hashCode();
+		if (name != null)
+			hashCode += name.hashCode();
 
-        // locator
-        MediaLocator locator = getLocator();
+		// locator
+		MediaLocator locator = getLocator();
 
-        if (locator != null)
-            hashCode += locator.hashCode();
+		if (locator != null)
+			hashCode += locator.hashCode();
 
-        // formats
-        Format[] formats = getFormats();
+		// formats
+		Format[] formats = getFormats();
 
-        if (formats != null)
-        {
-            for (Format format : formats)
-                if (format != null)
-                    hashCode += format.hashCode();
-        }
+		if (formats != null) {
+			for (Format format : formats)
+				if (format != null)
+					hashCode += format.hashCode();
+		}
 
-        return hashCode;
-    }
+		return hashCode;
+	}
 
-    @Override
-    public String toString()
-    {
-        final StringBuffer b = new StringBuffer();
-        b.append(name);
-        b.append(" : ");
-        b.append(locator);
-        b.append("\n");
-        if (formats != null)
-        {
-            for (int i = 0; i < formats.length; ++i)
-            {
-                b.append(formats[i]);
-                b.append("\n");
-            }
-        }
-        return b.toString();
-    }
+	@Override
+	public String toString() {
+		final StringBuffer b = new StringBuffer();
+		b.append(name);
+		b.append(" : ");
+		b.append(locator);
+		b.append("\n");
+		if (formats != null) {
+			for (int i = 0; i < formats.length; ++i) {
+				b.append(formats[i]);
+				b.append("\n");
+			}
+		}
+		return b.toString();
+	}
 }

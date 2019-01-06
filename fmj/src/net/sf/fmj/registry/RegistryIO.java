@@ -1,6 +1,8 @@
 package net.sf.fmj.registry;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Interface to read/write registry contents from/to somewhere.
@@ -9,10 +11,9 @@ import java.io.*;
  * @author Warren Bloomer
  *
  */
-interface RegistryIO
-{
-    public void load(InputStream is) throws IOException;
+interface RegistryIO {
+	public void load(InputStream is) throws IOException;
 
-    public void write(OutputStream os) throws IOException;
+	public void write(OutputStream os) throws IOException;
 
 }

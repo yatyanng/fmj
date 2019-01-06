@@ -1,6 +1,6 @@
 package javax.media.control;
 
-import javax.media.*;
+import javax.media.Control;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,9 +10,8 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface StreamWriterControl extends Control
-{
-    public long getStreamSize();
+public interface StreamWriterControl extends Control {
+	public long getStreamSize();
 
-    public boolean setStreamSizeLimit(long numOfBytes);
+	public boolean setStreamSizeLimit(long numOfBytes);
 }

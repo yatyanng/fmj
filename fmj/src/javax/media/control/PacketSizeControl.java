@@ -1,6 +1,6 @@
 package javax.media.control;
 
-import javax.media.*;
+import javax.media.Control;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,9 +10,8 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface PacketSizeControl extends Control
-{
-    public int getPacketSize();
+public interface PacketSizeControl extends Control {
+	public int getPacketSize();
 
-    public int setPacketSize(int numBytes);
+	public int setPacketSize(int numBytes);
 }

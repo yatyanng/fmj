@@ -8,10 +8,8 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class MediaEvent extends java.util.EventObject
-{
-    public MediaEvent(Object source)
-    {
-        super(source);
-    }
+public class MediaEvent extends java.util.EventObject {
+	public MediaEvent(Object source) {
+		super(source);
+	}
 }

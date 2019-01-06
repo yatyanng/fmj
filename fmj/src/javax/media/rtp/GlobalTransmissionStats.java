@@ -8,18 +8,17 @@ package javax.media.rtp;
  * @author Ken Larson
  *
  */
-public interface GlobalTransmissionStats
-{
-    public int getBytesSent();
+public interface GlobalTransmissionStats {
+	public int getBytesSent();
 
-    public int getLocalColls();
+	public int getLocalColls();
 
-    public int getRemoteColls();
+	public int getRemoteColls();
 
-    public int getRTCPSent();
+	public int getRTCPSent();
 
-    public int getRTPSent();
+	public int getRTPSent();
 
-    public int getTransmitFailed();
+	public int getTransmitFailed();
 
 }

@@ -8,7 +8,6 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public interface Prefetchable
-{
-    public boolean isPrefetched();
+public interface Prefetchable {
+	public boolean isPrefetched();
 }

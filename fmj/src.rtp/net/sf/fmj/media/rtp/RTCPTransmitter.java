@@ -7,24 +7,23 @@ package net.sf.fmj.media.rtp;
  *
  * Created by gpolitis on 8/25/15.
  */
-public interface RTCPTransmitter
-{
-    void bye(String reason);
+public interface RTCPTransmitter {
+	void bye(String reason);
 
-    void close();
+	void close();
 
-    /**
-     * Runs in the reporting thread and it invokes the report() method of the
-     * <tt>RTCPTerminationStrategy</tt> of all the <tt>MediaStream</tt>s of the
-     * associated <tt>RTPTranslator</tt>.
-     */
-    void report();
+	/**
+	 * Runs in the reporting thread and it invokes the report() method of the
+	 * <tt>RTCPTerminationStrategy</tt> of all the <tt>MediaStream</tt>s of the
+	 * associated <tt>RTPTranslator</tt>.
+	 */
+	void report();
 
-    void setSSRCInfo(SSRCInfo info);
+	void setSSRCInfo(SSRCInfo info);
 
-    SSRCInfo getSSRCInfo();
+	SSRCInfo getSSRCInfo();
 
-    SSRCCache getCache();
+	SSRCCache getCache();
 
-    RTCPRawSender getSender();
+	RTCPRawSender getSender();
 }

@@ -8,6 +8,5 @@ package net.sf.fmj.media.processor.merge;
  * @author Ken Larson
  *
  */
-public class Handler extends net.sf.fmj.media.content.merge.Handler
-{
+public class Handler extends net.sf.fmj.media.content.merge.Handler {
 }

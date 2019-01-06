@@ -1,11 +1,12 @@
 package net.sf.fmj.media;
 
-import java.util.logging.*;
+import java.util.logging.Logger;
 
-import javax.media.*;
-import javax.media.protocol.*;
+import javax.media.Format;
+import javax.media.Multiplexer;
+import javax.media.protocol.ContentDescriptor;
 
-import net.sf.fmj.utility.*;
+import net.sf.fmj.utility.LoggerSingleton;
 
 /**
  * Abstract base class to implement Multiplexer.
@@ -13,61 +14,53 @@ import net.sf.fmj.utility.*;
  * @author Ken Larson
  *
  */
-public abstract class AbstractMultiplexer extends AbstractPlugIn implements
-        Multiplexer
-{
-    private static final Logger logger = LoggerSingleton.logger;
+public abstract class AbstractMultiplexer extends AbstractPlugIn implements Multiplexer {
+	private static final Logger logger = LoggerSingleton.logger;
 
-    protected ContentDescriptor outputContentDescriptor;
-    protected Format[] inputFormats;
+	protected ContentDescriptor outputContentDescriptor;
+	protected Format[] inputFormats;
 
-    protected int numTracks;
+	protected int numTracks;
 
-    public ContentDescriptor setContentDescriptor(
-            ContentDescriptor outputContentDescriptor)
-    {
-        this.outputContentDescriptor = outputContentDescriptor;
-        return outputContentDescriptor;
-    }
+	@Override
+	public ContentDescriptor setContentDescriptor(ContentDescriptor outputContentDescriptor) {
+		this.outputContentDescriptor = outputContentDescriptor;
+		return outputContentDescriptor;
+	}
 
-    public Format setInputFormat(Format format, int trackID)
-    {
-        if (trackID >= numTracks)
-        {
-            logger.warning("Rejecting input format for track number out of range: "
-                    + trackID + ": " + format);
-            return null;
-        }
-        boolean match = false;
-        for (Format supported : getSupportedInputFormats())
-        {
-            if (supported.matches(format))
-                match = true;
-        }
-        if (!match)
-        {
-            logger.fine("Rejecting unsupported input format for track "
-                    + trackID + ": " + format);
-            return null;
-        }
+	@Override
+	public Format setInputFormat(Format format, int trackID) {
+		if (trackID >= numTracks) {
+			logger.warning("Rejecting input format for track number out of range: " + trackID + ": " + format);
+			return null;
+		}
+		boolean match = false;
+		for (Format supported : getSupportedInputFormats()) {
+			if (supported.matches(format))
+				match = true;
+		}
+		if (!match) {
+			logger.fine("Rejecting unsupported input format for track " + trackID + ": " + format);
+			return null;
+		}
 
-        // TODO: we want to take the most specific matching input format, and
-        // make the most specific format we can.
+		// TODO: we want to take the most specific matching input format, and
+		// make the most specific format we can.
 
-        logger.finer("setInputFormat " + format + " " + trackID);
-        if (inputFormats != null) // TODO: should we save this somewhere and
-                                  // apply once inputFormats is not null?
-            inputFormats[trackID] = format;
+		logger.finer("setInputFormat " + format + " " + trackID);
+		if (inputFormats != null) // TODO: should we save this somewhere and
+									// apply once inputFormats is not null?
+			inputFormats[trackID] = format;
 
-        return format;
-    }
+		return format;
+	}
 
-    public int setNumTracks(int numTracks)
-    {
-        logger.finer("setNumTracks " + numTracks);
-        inputFormats = new Format[numTracks];
+	@Override
+	public int setNumTracks(int numTracks) {
+		logger.finer("setNumTracks " + numTracks);
+		inputFormats = new Format[numTracks];
 
-        this.numTracks = numTracks;
-        return numTracks;
-    }
+		this.numTracks = numTracks;
+		return numTracks;
+	}
 }

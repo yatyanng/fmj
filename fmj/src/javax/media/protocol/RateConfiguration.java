@@ -8,9 +8,8 @@ package javax.media.protocol;
  * @author Ken Larson
  *
  */
-public interface RateConfiguration
-{
-    public RateRange getRate();
+public interface RateConfiguration {
+	public RateRange getRate();
 
-    public SourceStream[] getStreams();
+	public SourceStream[] getStreams();
 }

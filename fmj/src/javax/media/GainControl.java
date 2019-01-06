@@ -8,21 +8,20 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public interface GainControl extends Control
-{
-    public void addGainChangeListener(GainChangeListener listener);
+public interface GainControl extends Control {
+	public void addGainChangeListener(GainChangeListener listener);
 
-    public float getDB();
+	public float getDB();
 
-    public float getLevel();
+	public float getLevel();
 
-    public boolean getMute();
+	public boolean getMute();
 
-    public void removeGainChangeListener(GainChangeListener listener);
+	public void removeGainChangeListener(GainChangeListener listener);
 
-    public float setDB(float gain);
+	public float setDB(float gain);
 
-    public float setLevel(float level);
+	public float setLevel(float level);
 
-    public void setMute(boolean mute);
+	public void setMute(boolean mute);
 }

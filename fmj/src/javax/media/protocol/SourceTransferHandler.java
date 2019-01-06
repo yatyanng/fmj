@@ -8,7 +8,6 @@ package javax.media.protocol;
  * @author Ken Larson
  *
  */
-public interface SourceTransferHandler
-{
-    public void transferData(PushSourceStream stream);
+public interface SourceTransferHandler {
+	public void transferData(PushSourceStream stream);
 }

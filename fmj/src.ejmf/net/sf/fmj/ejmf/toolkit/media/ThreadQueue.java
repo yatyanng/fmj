@@ -1,8 +1,8 @@
 package net.sf.fmj.ejmf.toolkit.media;
 
-import java.util.*;
+import java.util.Vector;
 
-import com.lti.utils.synchronization.*;
+import com.lti.utils.synchronization.CloseableThread;
 
 /**
  * The ThreadQueue class provides a mechanism to run threads serially. When a
@@ -16,89 +16,76 @@ import com.lti.utils.synchronization.*;
  *
  *         mgodehardt: this is now a closeable thread
  */
-public class ThreadQueue extends CloseableThread
-{
-    private Thread running;
-    private Vector queue = new Vector();
+public class ThreadQueue extends CloseableThread {
+	private Thread running;
+	private Vector queue = new Vector();
 
-    /**
-     * Constructs a ThreadQueue.
-     */
-    public ThreadQueue(String threadName)
-    {
-        super();
-        setName(threadName);
-        setDaemon(true);
-    }
+	/**
+	 * Constructs a ThreadQueue.
+	 */
+	public ThreadQueue(String threadName) {
+		super();
+		setName(threadName);
+		setDaemon(true);
+	}
 
-    /**
-     * Add a thread to this ThreadQueue.
-     *
-     * @param t
-     *            The Thread to add.
-     */
-    public synchronized void addThread(Thread t)
-    {
-        queue.addElement(t);
-        notify();
-    }
+	/**
+	 * Add a thread to this ThreadQueue.
+	 *
+	 * @param t The Thread to add.
+	 */
+	public synchronized void addThread(Thread t) {
+		queue.addElement(t);
+		notify();
+	}
 
-    /**
-     * Monitor the thread queue. When a thread is added, start it and block
-     * until it finishes.
-     * <p>
-     * This method is called when the thread is started. It should not be called
-     * directly.
-     */
-    @Override
-    public void run()
-    {
-        try
-        {
-            while (!isClosing())
-            {
-                // wait for new entries in the queue
-                synchronized (this)
-                {
-                    while (queue.size() == 0)
-                    {
-                        wait();
-                    }
+	/**
+	 * Monitor the thread queue. When a thread is added, start it and block until it
+	 * finishes.
+	 * <p>
+	 * This method is called when the thread is started. It should not be called
+	 * directly.
+	 */
+	@Override
+	public void run() {
+		try {
+			while (!isClosing()) {
+				// wait for new entries in the queue
+				synchronized (this) {
+					while (queue.size() == 0) {
+						wait();
+					}
 
-                    running = (Thread) queue.elementAt(0);
-                    queue.removeElementAt(0);
-                }
+					running = (Thread) queue.elementAt(0);
+					queue.removeElementAt(0);
+				}
 
-                // Start thread
-                running.start();
+				// Start thread
+				running.start();
 
-                // Block until it finishes
-                running.join();
-            }
-        } catch (InterruptedException dontcare)
-        {
-        }
+				// Block until it finishes
+				running.join();
+			}
+		} catch (InterruptedException dontcare) {
+		}
 
-        setClosed();
-    }
+		setClosed();
+	}
 
-    /**
-     * Stop the currently running thread and any threads queued to run. Remove
-     * all threads from the queue.
-     */
-    public synchronized void stopThreads()
-    {
-        if (running != null)
-        {
-            running.stop();
-        }
+	/**
+	 * Stop the currently running thread and any threads queued to run. Remove all
+	 * threads from the queue.
+	 */
+	public synchronized void stopThreads() {
+		if (running != null) {
+			running.stop();
+		}
 
-        for (int i = 0, n = queue.size(); i < n; i++)
-        {
-            Thread t = (Thread) queue.elementAt(i);
-            t.stop();
-        }
+		for (int i = 0, n = queue.size(); i < n; i++) {
+			Thread t = (Thread) queue.elementAt(i);
+			t.stop();
+		}
 
-        queue.removeAllElements();
-    }
+		queue.removeAllElements();
+	}
 }

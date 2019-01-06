@@ -1,6 +1,7 @@
 package javax.media.rtp;
 
-import javax.media.*;
+import javax.media.Control;
+import javax.media.Format;
 
 /**
  * Standard JMF class -- see <a href=
@@ -9,17 +10,16 @@ import javax.media.*;
  *
  * @author Ken Larson
  */
-public interface RTPControl extends Control
-{
-    public void addFormat(Format fmt, int payload);
+public interface RTPControl extends Control {
+	public void addFormat(Format fmt, int payload);
 
-    public Format getFormat();
+	public Format getFormat();
 
-    public Format getFormat(int payload);
+	public Format getFormat(int payload);
 
-    public Format[] getFormatList();
+	public Format[] getFormatList();
 
-    public GlobalReceptionStats getGlobalStats();
+	public GlobalReceptionStats getGlobalStats();
 
-    public ReceptionStats getReceptionStats();
+	public ReceptionStats getReceptionStats();
 }

@@ -1,7 +1,7 @@
 package javax.media.rtp.event;
 
-import javax.media.*;
-import javax.media.rtp.*;
+import javax.media.MediaEvent;
+import javax.media.rtp.SessionManager;
 
 /**
  * Standard JMF class -- see <a href=
@@ -11,30 +11,25 @@ import javax.media.rtp.*;
  * @author Ken Larson
  *
  */
-public class RTPEvent extends MediaEvent
-{
-    private SessionManager eventSrc;
+public class RTPEvent extends MediaEvent {
+	private SessionManager eventSrc;
 
-    public RTPEvent(SessionManager from)
-    {
-        super(from);
-        this.eventSrc = from;
-    }
+	public RTPEvent(SessionManager from) {
+		super(from);
+		this.eventSrc = from;
+	}
 
-    public SessionManager getSessionManager()
-    {
-        return eventSrc;
-    }
+	public SessionManager getSessionManager() {
+		return eventSrc;
+	}
 
-    @Override
-    public Object getSource()
-    {
-        return eventSrc;
-    }
+	@Override
+	public Object getSource() {
+		return eventSrc;
+	}
 
-    @Override
-    public String toString()
-    {
-        return getClass().getName() + "[source = " + eventSrc + "]";
-    }
+	@Override
+	public String toString() {
+		return getClass().getName() + "[source = " + eventSrc + "]";
+	}
 }

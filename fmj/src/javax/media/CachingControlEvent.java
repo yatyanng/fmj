@@ -8,35 +8,28 @@ package javax.media;
  * @author Ken Larson
  *
  */
-public class CachingControlEvent extends ControllerEvent
-{
-    CachingControl cachingControl;
-    long progress;
+public class CachingControlEvent extends ControllerEvent {
+	CachingControl cachingControl;
+	long progress;
 
-    public CachingControlEvent(Controller from, CachingControl cachingControl,
-            long progress)
-    {
-        super(from);
-        this.cachingControl = cachingControl;
-        this.progress = progress;
+	public CachingControlEvent(Controller from, CachingControl cachingControl, long progress) {
+		super(from);
+		this.cachingControl = cachingControl;
+		this.progress = progress;
 
-    }
+	}
 
-    public CachingControl getCachingControl()
-    {
-        return cachingControl;
-    }
+	public CachingControl getCachingControl() {
+		return cachingControl;
+	}
 
-    public long getContentProgress()
-    {
-        return progress;
-    }
+	public long getContentProgress() {
+		return progress;
+	}
 
-    @Override
-    public String toString()
-    {
-        return getClass().getName() + "[source=" + getSource()
-                + ",cachingControl=" + cachingControl + ",progress=" + progress
-                + "]";
-    }
+	@Override
+	public String toString() {
+		return getClass().getName() + "[source=" + getSource() + ",cachingControl=" + cachingControl + ",progress="
+				+ progress + "]";
+	}
 }

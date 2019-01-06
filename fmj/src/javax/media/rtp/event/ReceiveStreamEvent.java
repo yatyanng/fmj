@@ -1,6 +1,8 @@
 package javax.media.rtp.event;
 
-import javax.media.rtp.*;
+import javax.media.rtp.Participant;
+import javax.media.rtp.ReceiveStream;
+import javax.media.rtp.SessionManager;
 
 /**
  * Standard JMF class -- see <a href=
@@ -10,27 +12,22 @@ import javax.media.rtp.*;
  * @author Ken Larson
  *
  */
-public class ReceiveStreamEvent extends RTPEvent
-{
-    private ReceiveStream recvStream;
-    private Participant participant;
+public class ReceiveStreamEvent extends RTPEvent {
+	private ReceiveStream recvStream;
+	private Participant participant;
 
-    public ReceiveStreamEvent(SessionManager from, ReceiveStream stream,
-            Participant participant)
-    {
-        super(from);
-        this.recvStream = stream;
-        this.participant = participant;
+	public ReceiveStreamEvent(SessionManager from, ReceiveStream stream, Participant participant) {
+		super(from);
+		this.recvStream = stream;
+		this.participant = participant;
 
-    }
+	}
 
-    public Participant getParticipant()
-    {
-        return participant;
-    }
+	public Participant getParticipant() {
+		return participant;
+	}
 
-    public ReceiveStream getReceiveStream()
-    {
-        return recvStream;
-    }
+	public ReceiveStream getReceiveStream() {
+		return recvStream;
+	}
 }

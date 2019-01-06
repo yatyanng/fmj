@@ -1,8 +1,9 @@
 package javax.media.protocol;
 
-import java.io.*;
+import java.io.IOException;
 
-import javax.media.*;
+import javax.media.Buffer;
+import javax.media.Format;
 
 /**
  * Standard JMF class -- see <a href=
@@ -12,11 +13,10 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface PullBufferStream extends SourceStream
-{
-    public Format getFormat();
+public interface PullBufferStream extends SourceStream {
+	public Format getFormat();
 
-    public void read(Buffer buffer) throws IOException;
+	public void read(Buffer buffer) throws IOException;
 
-    public boolean willReadBlock();
+	public boolean willReadBlock();
 }

@@ -8,9 +8,8 @@ package javax.media.protocol;
  * @author Ken Larson
  *
  */
-public interface RateConfigureable
-{
-    public RateConfiguration[] getRateConfigurations();
+public interface RateConfigureable {
+	public RateConfiguration[] getRateConfigurations();
 
-    public RateConfiguration setRateConfiguration(RateConfiguration config);
+	public RateConfiguration setRateConfiguration(RateConfiguration config);
 }

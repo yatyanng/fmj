@@ -1,6 +1,6 @@
 package javax.media.control;
 
-import javax.media.*;
+import javax.media.Control;
 
 /**
  * Standard JMF class -- see <a href=
@@ -12,11 +12,10 @@ import javax.media.*;
  * @author Ken Larson
  *
  */
-public interface FrameProcessingControl extends Control
-{
-    public int getFramesDropped();
+public interface FrameProcessingControl extends Control {
+	public int getFramesDropped();
 
-    public void setFramesBehind(float numFrames);
+	public void setFramesBehind(float numFrames);
 
-    public boolean setMinimalProcessing(boolean newMinimalProcessing);
+	public boolean setMinimalProcessing(boolean newMinimalProcessing);
 }
