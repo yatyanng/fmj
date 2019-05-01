@@ -32,5 +32,5 @@
 	<classpathentry kind="lib" path="lib/jogg-0.0.7.jar"/>
 	<classpathentry kind="src" path="src.ds"/>
 	<classpathentry kind="src" path="src.utils"/>
-	<classpathentry kind="output" path="build/classes.eclipse"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>
